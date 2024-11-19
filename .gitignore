@@ -10,14 +10,12 @@ fastdeploy_python.egg-info
 fastdeploy_gpu_python.egg-info
 .setuptools-cmake-build
 fastdeploy/version.py
-fastdeploy/core/config.h
 python/fastdeploy/c_lib_wrap.py
 python/fastdeploy/LICENSE*
 python/build_cpu.sh
 python/fastdeploy/ThirdPartyNotices*
 *.so*
 fpython/astdeploy/libs/third_libs
-fastdeploy/core/config.h
 fastdeploy/pybind/main.cc
 python/fastdeploy/libs/lib*
 python/fastdeploy/libs/third_libs

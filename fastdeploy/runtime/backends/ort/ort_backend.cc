@@ -24,6 +24,11 @@
 #include "paddle2onnx/converter.h"
 #endif
 
+#if defined(WITH_DIRECTML) && __has_include(<dml_provider_factory.h>)
+  #define ENABLE_DML
+  #include <dml_provider_factory.h>
+#endif
+
 #include <memory>
 
 namespace fastdeploy {
@@ -66,7 +71,7 @@ bool OrtBackend::BuildOption(const OrtBackendOption& option) {
 #endif
   }
 
-#ifdef WITH_DIRECTML
+#ifdef ENABLE_DML
   // If use DirectML
   if (option.device == Device::DIRECTML) {
     auto all_providers = Ort::GetAvailableProviders();

@@ -46,7 +46,7 @@ void RuntimeOption::SetEncryptionKey(const std::string& encryption_key) {
 }
 
 void RuntimeOption::UseGpu(int gpu_id) {
-#if defined(WITH_GPU) || defined(WITH_OPENCL)
+#if defined(WITH_GPU) || defined(WITH_OPENCL) || defined(WITH_DIRECTML)
   device = Device::GPU;
   device_id = gpu_id;
 
