@@ -147,6 +147,7 @@ bool Mat::CopyToTensor(FDTensor* tensor) {
 }
 
 void Mat::PrintInfo(const std::string& flag) {
+#ifdef PRINT_INFO
   std::cout << flag << ": "
             << "DataType=" << Type() << ", "
             << "Channel=" << Channels() << ", "
@@ -185,6 +186,7 @@ void Mat::PrintInfo(const std::string& flag) {
     FDASSERT(false, "FastDeploy didn't compiled with -DWITH_GPU=ON");
 #endif
   }
+#endif  // PRINT_INFO
 }
 
 FDDataType Mat::Type() {

@@ -189,16 +189,20 @@ int read_dir_files(const char* dir_path,
   }
 
   do {
+#ifdef PRINT_INFO
     std::cout << "File name = " << fileinfo.name << std::endl;
+#endif  // PRINT_INFO
     if (strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0) {
       files.push_back(fileinfo.name);
     }
   } while (!_findnext(handle, &fileinfo));
 
+#ifdef PRINT_INFO
   std::cout << files.size() << std::endl;
   for (size_t i = 0; i < files.size(); i++) {
     std::cout << files[i] << std::endl;
   }
+#endif  // PRINT_INFO
 
   _findclose(handle);
 #endif

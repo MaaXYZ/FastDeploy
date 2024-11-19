@@ -212,6 +212,7 @@ bool FDTensor::Reshape(const std::vector<int64_t>& new_shape) {
 }
 
 void FDTensor::PrintInfo(const std::string& prefix) const {
+#ifdef PRINT_INFO
   std::cout << prefix << ": name=" << name << ", shape=";
   for (int i = 0; i < shape.size(); ++i) {
     std::cout << shape[i] << " ";
@@ -241,6 +242,7 @@ void FDTensor::PrintInfo(const std::string& prefix) const {
   }
   std::cout << ", dtype=" << Str(dtype) << ", mean=" << mean << ", max=" << max
             << ", min=" << min << std::endl;
+#endif  // PRINT_INFO
 }
 
 bool FDTensor::ReallocFn(size_t nbytes) {

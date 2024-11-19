@@ -494,6 +494,7 @@ std::map<std::string, float> FastDeployModel::PrintStatisInfoOfRuntime() {
     }
   }
   double avg_time = remain_time / (time_of_runtime_.size() - warmup_iter);
+#ifdef PRINT_INFO
   std::cout << "============= Runtime Statis Info(" << ModelName()
             << ") =============" << std::endl;
   std::cout << "Total iterations: " << time_of_runtime_.size() << std::endl;
@@ -504,6 +505,7 @@ std::map<std::string, float> FastDeployModel::PrintStatisInfoOfRuntime() {
             << std::endl;
   std::cout << "Average time of runtime exclude warmup step: "
             << avg_time * 1000 << "ms." << std::endl;
+#endif  // PRINT_INFO
 
   statis_info_of_runtime_dict["total_time"] = warmup_time + remain_time;
   statis_info_of_runtime_dict["warmup_time"] = warmup_time;
