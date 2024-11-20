@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
   if (std::atoi(argv[2]) == 0) {
     option.UseCpu();
   } else {
-    option.UseGpu();
+    option.UseCuda();
   }
   auto backend_type = 0;
   if (argc == 4) {

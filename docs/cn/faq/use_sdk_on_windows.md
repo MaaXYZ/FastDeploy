@@ -9,8 +9,8 @@
 
 - cmake >= 3.12
 - Visual Studio 16 2019
-- cuda >= 11.2 (当WITH_GPU=ON)
-- cudnn >= 8.0 (当WITH_GPU=ON)
+- cuda >= 11.2 (当WITH_CUDA=ON)
+- cudnn >= 8.0 (当WITH_CUDA=ON)
 
 
 1. 根据需求，选择下载对应的C++(CPU/GPU)部署库，下载文档见[安装文档说明](../build_and_install)

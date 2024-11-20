@@ -88,7 +88,7 @@ void KunlunXinInfer(const std::string& tinypose_model_dir,
 void GpuInfer(const std::string& tinypose_model_dir,
               const std::string& image_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
 
   auto tinypose_model_file = tinypose_model_dir + sep + "model.pdmodel";
   auto tinypose_params_file = tinypose_model_dir + sep + "model.pdiparams";
@@ -124,7 +124,7 @@ void TrtInfer(const std::string& tinypose_model_dir,
   auto tinypose_params_file = tinypose_model_dir + sep + "model.pdiparams";
   auto tinypose_config_file = tinypose_model_dir + sep + "infer_cfg.yml";
   auto tinypose_option = fastdeploy::RuntimeOption();
-  tinypose_option.UseGpu();
+  tinypose_option.UseCuda();
   tinypose_option.UseTrtBackend();
   auto tinypose_model = fastdeploy::vision::keypointdetection::PPTinyPose(
       tinypose_model_file, tinypose_params_file, tinypose_config_file,

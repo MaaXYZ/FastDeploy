@@ -164,7 +164,7 @@ bool StridePad::ImplByCvCuda(FDMat* mat) {
 
   // Prepare output tensor
   mat->output_cache->Resize({height, width, mat->Channels()}, mat->Type(),
-                            "output_cache", Device::GPU);
+                            "output_cache", Device::CUDA);
   auto dst_tensor = CreateCvCudaTensorWrapData(*(mat->output_cache));
 
   cvcuda_pad_op_(mat->Stream(), *src_tensor, *dst_tensor, 0, 0,

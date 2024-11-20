@@ -65,7 +65,7 @@ __build_fastdeploy_linux_x86_64_gpu_shared() {
   cd "${BUILD_DIR}" && echo "-- [INFO] Working Dir: ${PWD}"
 
   cmake -DCMAKE_BUILD_TYPE=Release \
-        -DWITH_GPU=ON \
+        -DWITH_CUDA=ON \
         -DTRT_DIRECTORY=${TRT_DIRECTORY} \
         -DCUDA_DIRECTORY=${CUDA_DIRECTORY} \
         -DENABLE_ORT_BACKEND=ON \
@@ -89,7 +89,7 @@ __build_fastdeploy_linux_x86_64_gpu_shared_custom_paddle() {
   cd "${BUILD_DIR}" && echo "-- [INFO] Working Dir: ${PWD}"
 
   cmake -DCMAKE_BUILD_TYPE=Release \
-        -DWITH_GPU=ON \
+        -DWITH_CUDA=ON \
         -DTRT_DIRECTORY=${TRT_DIRECTORY} \
         -DCUDA_DIRECTORY=${CUDA_DIRECTORY} \
         -DENABLE_ORT_BACKEND=ON \

@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 #include <cuda_runtime_api.h>
 #endif
 
@@ -26,7 +26,7 @@ bool FDHostAllocator::operator()(void** ptr, size_t size) const {
 
 void FDHostFree::operator()(void* ptr) const { free(ptr); }
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 
 bool FDDeviceAllocator::operator()(void** ptr, size_t size) const {
   return cudaMalloc(ptr, size) == cudaSuccess;

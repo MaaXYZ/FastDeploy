@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-#define EIGEN_USE_GPU
+#define EIGEN_use_cuda
 #include <unsupported/Eigen/CXX11/src/Tensor/TensorGpuHipCudaDefines.h>
 
 #if !defined(__CUDACC__) && !defined(__HIPCC__)

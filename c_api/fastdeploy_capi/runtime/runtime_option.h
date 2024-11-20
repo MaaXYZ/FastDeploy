@@ -73,7 +73,7 @@ FASTDEPLOY_CAPI_EXPORT extern void FD_C_RuntimeOptionWrapperUseCpu(
  *
  * \param[in] fd_c_runtime_option_wrapper pointer to FD_C_RuntimeOptionWrapper object
  */
-FASTDEPLOY_CAPI_EXPORT extern void FD_C_RuntimeOptionWrapperUseGpu(
+FASTDEPLOY_CAPI_EXPORT extern void FD_C_RuntimeOptionWrapperUseCuda(
     __fd_keep FD_C_RuntimeOptionWrapper* fd_c_runtime_option_wrapper,
     int gpu_id);
 

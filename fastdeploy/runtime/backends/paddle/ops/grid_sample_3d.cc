@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if defined(WITH_GPU)
+#if defined(WITH_CUDA)
 
 #include "grid_sample_3d.h"
 

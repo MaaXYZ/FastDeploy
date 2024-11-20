@@ -87,7 +87,7 @@ void GpuInfer(const std::string& model_dir, const std::string& image_file,
   auto config_file = model_dir + sep + "deploy.yaml";
 
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   option.UsePaddleInferBackend();
   auto model = fastdeploy::vision::matting::PPMatting(model_file, params_file,
                                                       config_file, option);
@@ -119,7 +119,7 @@ void TrtInfer(const std::string& model_dir, const std::string& image_file,
   auto config_file = model_dir + sep + "deploy.yaml";
 
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   option.UseTrtBackend();
   // If use original Tensorrt, not Paddle-TensorRT,
   // comment the following two lines

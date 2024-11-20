@@ -13,7 +13,7 @@
 namespace Eigen {
 namespace internal {
 
-#if defined(EIGEN_USE_GPU) && defined(EIGEN_GPUCC)
+#if defined(EIGEN_use_cuda) && defined(EIGEN_GPUCC)
 // Full reducers for GPU, don't vectorize for now
 
 // Reducer function that enables multiple gpu thread to safely accumulate at the
@@ -1063,7 +1063,7 @@ struct OuterReducer<Self, Op, GpuDevice> {
   }
 };
 
-#endif  // defined(EIGEN_USE_GPU) && defined(EIGEN_GPUCC)
+#endif  // defined(EIGEN_use_cuda) && defined(EIGEN_GPUCC)
 
 }  // end namespace internal
 }  // end namespace Eigen

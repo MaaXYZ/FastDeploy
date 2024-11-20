@@ -66,12 +66,12 @@ int main(int argc, char* argv[]) {
     option.UseCpu();
     option.UseOrtBackend();
   } else if (flag == 1) {
-    option.UseGpu();
+    option.UseCuda();
     option.UseTrtBackend();
     option.SetTrtInputShape("inputs",{1, 3, 640, 640});
     option.SetTrtInputShape("scale_factor",{1,2});
   } else if (flag == 2) {
-    option.UseGpu();
+    option.UseCuda();
     option.UseTrtBackend();
     option.EnablePaddleToTrt();
   }

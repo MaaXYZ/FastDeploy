@@ -60,9 +60,9 @@ FDDataType GetFdDtype(const ONNXTensorElementDataType& ort_dtype) {
 }
 
 Ort::Value CreateOrtValue(FDTensor& tensor, bool is_backend_cuda) {
-  FDASSERT(tensor.device == Device::GPU || tensor.device == Device::CPU,
+  FDASSERT(tensor.device == Device::CUDA || tensor.device == Device::CPU,
            "Only support tensor which device is CPU or GPU for OrtBackend.");
-  if (tensor.device == Device::GPU && is_backend_cuda) {
+  if (tensor.device == Device::CUDA && is_backend_cuda) {
     Ort::MemoryInfo memory_info("Cuda", OrtDeviceAllocator, 0,
                                 OrtMemTypeDefault);
     auto ort_value = Ort::Value::CreateTensor(

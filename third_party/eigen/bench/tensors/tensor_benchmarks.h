@@ -573,7 +573,7 @@ class BenchmarkSuite {
   }
 
   inline void finalizeBenchmark(int64_t num_items) {
-#if defined(EIGEN_USE_GPU) && defined(__CUDACC__)
+#if defined(EIGEN_use_cuda) && defined(__CUDACC__)
     if (Eigen::internal::is_same<Device, Eigen::GpuDevice>::value) {
       device_.synchronize();
     }

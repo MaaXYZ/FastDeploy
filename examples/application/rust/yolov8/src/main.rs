@@ -72,7 +72,7 @@ fn GpuInfer(model_file: *const c_char, image_file: *const c_char) {
 
     unsafe {
         let  option = fd::FD_C_CreateRuntimeOptionWrapper();
-        fd::FD_C_RuntimeOptionWrapperUseGpu(option, 0);
+        fd::FD_C_RuntimeOptionWrapperUseCuda(option, 0);
 
         let  model: *mut fd::FD_C_YOLOv8Wrapper = fd::FD_C_CreateYOLOv8Wrapper(
              model_file, CString::new("").unwrap().as_ptr(), option, fd::FD_C_ModelFormat_ONNX as i32);

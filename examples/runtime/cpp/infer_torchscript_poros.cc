@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
   fd::RuntimeOption runtime_option;
   runtime_option.SetModelPath(model_file, "", fd::ModelFormat::TORCHSCRIPT);
   runtime_option.UsePorosBackend();
-  runtime_option.UseGpu(0);
+  runtime_option.UseCuda(0);
 
   // Compile runtime
   std::unique_ptr<fd::Runtime> runtime =

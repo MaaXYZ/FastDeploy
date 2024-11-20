@@ -18,7 +18,7 @@
 
 #include "fastdeploy/core/float16.h"
 #include "fastdeploy/utils/utils.h"
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 #include <cuda_runtime_api.h>
 #endif
 
@@ -54,8 +54,8 @@ void FDTensor::StopSharing() {
 }
 
 const void* FDTensor::CpuData() const {
-  if (device == Device::GPU) {
-#ifdef WITH_GPU
+  if (device == Device::CUDA) {
+#ifdef WITH_CUDA
     auto* cpu_ptr = const_cast<std::vector<int8_t>*>(&temporary_cpu_buffer);
     cpu_ptr->resize(Nbytes());
     // need to copy cuda mem to cpu first
@@ -72,7 +72,7 @@ const void* FDTensor::CpuData() const {
     return cpu_ptr->data();
 #else
     FDASSERT(false,
-             "The FastDeploy didn't compile under -DWITH_GPU=ON, so this is "
+             "The FastDeploy didn't compile under -DWITH_CUDA=ON, so this is "
              "an unexpected problem happend.");
 #endif
   }
@@ -246,8 +246,8 @@ void FDTensor::PrintInfo(const std::string& prefix) const {
 }
 
 bool FDTensor::ReallocFn(size_t nbytes) {
-  if (device == Device::GPU) {
-#ifdef WITH_GPU
+  if (device == Device::CUDA) {
+#ifdef WITH_CUDA
     size_t original_nbytes = nbytes_allocated;
     if (nbytes > original_nbytes) {
       if (buffer_ != nullptr) {
@@ -260,12 +260,12 @@ bool FDTensor::ReallocFn(size_t nbytes) {
 #else
     FDASSERT(false,
              "The FastDeploy FDTensor allocator didn't compile under "
-             "-DWITH_GPU=ON,"
+             "-DWITH_CUDA=ON,"
              "so this is an unexpected problem happend.");
 #endif
   } else {
     if (is_pinned_memory) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
       size_t original_nbytes = nbytes_allocated;
       if (nbytes > original_nbytes) {
         if (buffer_ != nullptr) {
@@ -278,7 +278,7 @@ bool FDTensor::ReallocFn(size_t nbytes) {
 #else
       FDASSERT(false,
                "The FastDeploy FDTensor allocator didn't compile under "
-               "-DWITH_GPU=ON,"
+               "-DWITH_CUDA=ON,"
                "so this is an unexpected problem happend.");
 #endif
     }
@@ -291,13 +291,13 @@ bool FDTensor::ReallocFn(size_t nbytes) {
 void FDTensor::FreeFn() {
   if (external_data_ptr != nullptr) external_data_ptr = nullptr;
   if (buffer_ != nullptr) {
-    if (device == Device::GPU) {
-#ifdef WITH_GPU
+    if (device == Device::CUDA) {
+#ifdef WITH_CUDA
       FDDeviceFree()(buffer_);
 #endif
     } else {
       if (is_pinned_memory) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
         FDDeviceHostFree()(buffer_);
 #endif
       } else {
@@ -313,24 +313,24 @@ void FDTensor::FreeFn() {
 // should support copy from cpu or gpu  to cpu or gpu
 void FDTensor::CopyBuffer(void* dst, const void* src, size_t nbytes,
                           const Device& device, bool is_pinned_memory) {
-  if (device == Device::GPU) {
-#ifdef WITH_GPU
+  if (device == Device::CUDA) {
+#ifdef WITH_CUDA
     FDASSERT(cudaMemcpy(dst, src, nbytes, cudaMemcpyDeviceToDevice) == 0,
              "[ERROR] Error occurs while copy memory from GPU to GPU");
 #else
     FDASSERT(false,
-             "The FastDeploy didn't compile under -DWITH_GPU=ON, so copying "
+             "The FastDeploy didn't compile under -DWITH_CUDA=ON, so copying "
              "gpu buffer is "
              "an unexpected problem happend.");
 #endif
   } else {
     if (is_pinned_memory) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
       FDASSERT(cudaMemcpy(dst, src, nbytes, cudaMemcpyHostToHost) == 0,
                "[ERROR] Error occurs while copy memory from host to host");
 #else
       FDASSERT(false,
-               "The FastDeploy didn't compile under -DWITH_GPU=ON, so copying "
+               "The FastDeploy didn't compile under -DWITH_CUDA=ON, so copying "
                "gpu buffer is "
                "an unexpected problem happend.");
 #endif

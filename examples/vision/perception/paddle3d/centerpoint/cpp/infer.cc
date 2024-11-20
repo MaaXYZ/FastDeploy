@@ -16,7 +16,7 @@
 
 int main(int argc, char* argv[]) {
   fastdeploy::RuntimeOption option;
-  option.UseGpu();
+  option.UseCuda();
   option.UsePaddleBackend();
 
   std::string model_file = argv[1];

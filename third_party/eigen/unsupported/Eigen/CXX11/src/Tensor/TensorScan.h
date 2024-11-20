@@ -340,7 +340,7 @@ struct ScanLauncher<Self, Reducer, ThreadPoolDevice, Vectorize> {
 };
 #endif  // EIGEN_USE_THREADS
 
-#if defined(EIGEN_USE_GPU) && (defined(EIGEN_GPUCC))
+#if defined(EIGEN_use_cuda) && (defined(EIGEN_GPUCC))
 
 // GPU implementation of scan
 // TODO(ibab) This placeholder implementation performs multiple scans in
@@ -382,7 +382,7 @@ struct ScanLauncher<Self, Reducer, GpuDevice, false> {
                       self.device(), self, total_size, data);
   }
 };
-#endif  // EIGEN_USE_GPU && (EIGEN_GPUCC)
+#endif  // EIGEN_use_cuda && (EIGEN_GPUCC)
 
 }  // namespace internal
 

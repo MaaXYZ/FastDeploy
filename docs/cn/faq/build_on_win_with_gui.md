@@ -35,7 +35,7 @@
 
 <div id="CMakeGuiAndVS2019CPU"></div>  
 
-步骤一：勾选CPU版本对应的编译选项。注意CPU版本，请`不要`勾选WITH_GPU和ENABLE_TRT_BACKEND
+步骤一：勾选CPU版本对应的编译选项。注意CPU版本，请`不要`勾选WITH_CUDA和ENABLE_TRT_BACKEND
 
 ![image](https://user-images.githubusercontent.com/31974251/192095848-b3cfdf19-e378-41e0-b44e-5edb49461eeb.png)
 
@@ -55,7 +55,7 @@
 ### 编译GPU版本 C++ SDK设置
 <div id="CMakeGuiAndVS2019GPU"></div>  
 
-步骤一：勾选GPU版本对应的编译选项。注意GPU版本，请`需要`勾选WITH_GPU
+步骤一：勾选GPU版本对应的编译选项。注意GPU版本，请`需要`勾选WITH_CUDA
 
 ![image](https://user-images.githubusercontent.com/31974251/192099254-9f82abb0-8a29-41ce-a0ce-da6aacf23582.png)
 

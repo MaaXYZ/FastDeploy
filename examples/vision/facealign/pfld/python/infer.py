@@ -33,7 +33,7 @@ def build_option(args):
     backend = args.backend
     enable_trt_fp16 = args.enable_trt_fp16
     if device == "gpu":
-        option.use_gpu()
+        option.use_cuda()
         if backend == "ort":
             option.use_ort_backend()
         elif backend == "paddle":

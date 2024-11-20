@@ -53,7 +53,7 @@ void GpuInfer(const std::string& model_dir, const std::string& image_file) {
   auto config_file = model_dir + sep + "infer_cfg.yml";
 
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   auto model = fastdeploy::vision::detection::PPYOLOESOD(model_file, params_file,
                                                       config_file, option);
   if (!model.Initialized()) {
@@ -81,7 +81,7 @@ void TrtInfer(const std::string& model_dir, const std::string& image_file) {
   auto config_file = model_dir + sep + "infer_cfg.yml";
 
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   option.UseTrtBackend();
   auto model = fastdeploy::vision::detection::PPYOLOESOD(model_file, params_file,
                                                       config_file, option);

@@ -64,7 +64,7 @@ void CpuInfer(const char* model_file, const char* image_file) {
 
 void GpuInfer(const char* model_file, const char* image_file) {
   FD_C_RuntimeOptionWrapper* option = FD_C_CreateRuntimeOptionWrapper();
-  FD_C_RuntimeOptionWrapperUseGpu(option, 0);
+  FD_C_RuntimeOptionWrapperUseCuda(option, 0);
 
   FD_C_YOLOv5Wrapper* model =
       FD_C_CreateYOLOv5Wrapper(model_file, "", option, FD_C_ModelFormat_ONNX);

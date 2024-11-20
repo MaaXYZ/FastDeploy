@@ -200,12 +200,12 @@ class RuntimeOption:
         """
         return self._option.set_encryption_key(encryption_key)
 
-    def use_gpu(self, device_id=0):
+    def use_cuda(self, device_id=0):
         """Inference with Nvidia GPU
 
         :param device_id: (int)The index of GPU will be used for inference, default 0
         """
-        if not C.is_built_with_gpu():
+        if not C.is_built_WITH_CUDA():
             logging.warning(
                 "The installed fastdeploy-python package is not built with GPU, will force to use CPU. To use GPU, following the commands to install fastdeploy-gpu-python."
             )
@@ -216,7 +216,7 @@ class RuntimeOption:
                 "    python -m pip install fastdeploy-gpu-python -f https://www.paddlepaddle.org.cn/whl/fastdeploy.html"
             )
             return
-        return self._option.use_gpu(device_id)
+        return self._option.use_cuda(device_id)
 
     def use_kunlunxin(self,
                       device_id=0,
@@ -569,7 +569,7 @@ class RuntimeOption:
         logging.warning("    ==============================================")
         logging.warning("    import fastdeploy as fd")
         logging.warning("    option = fd.RuntimeOption()")
-        logging.warning("    option.use_gpu(0)")
+        logging.warning("    option.use_cuda(0)")
         logging.warning("    option.use_paddle_infer_backend()")
         logging.warning("    option.paddle_infer_option.enable_trt = True")
         logging.warning("    ==============================================")

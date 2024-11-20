@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARGS=`getopt -a -o w:n:h:hs:tv -l WITH_GPU:,docker_name:,http_proxy:,https_proxy:,trt_version: -- "$@"`
+ARGS=`getopt -a -o w:n:h:hs:tv -l WITH_CUDA:,docker_name:,http_proxy:,https_proxy:,trt_version: -- "$@"`
 
 eval set -- "${ARGS}"
 echo "parse start"
@@ -21,8 +21,8 @@ echo "parse start"
 while true
 do
         case "$1" in
-        -w|--WITH_GPU)
-                WITH_GPU="$2"
+        -w|--WITH_CUDA)
+                WITH_CUDA="$2"
                 shift;;
         -n|--docker_name)
                 docker_name="$2"
@@ -43,15 +43,15 @@ do
 shift
 done
 
-if [ -z $WITH_GPU ];then
-    WITH_GPU="ON"
+if [ -z $WITH_CUDA ];then
+    WITH_CUDA="ON"
 fi
 
 if [ -z $docker_name ];then
     docker_name="build_fd"
 fi
 
-if [ $WITH_GPU == "ON" ]; then
+if [ $WITH_CUDA == "ON" ]; then
 
 if [ -z $trt_version ]; then
     # The optional value of trt_version: ["8.4.1.5", "8.5.2.2"]
@@ -98,7 +98,7 @@ nvidia-docker run -i --rm --name ${docker_name} \
             unset https_proxy
             ln -s /usr/bin/python3 /usr/bin/python;
             export PATH=/workspace/fastdeploy/serving/cmake-3.18.6-Linux-x86_64/bin:$PATH;
-            export WITH_GPU=ON;
+            export WITH_CUDA=ON;
             export ENABLE_TRT_BACKEND=OFF;
             export TRT_DIRECTORY=/workspace/fastdeploy/serving/TensorRT-${trt_version}/;
             export ENABLE_ORT_BACKEND=OFF;
@@ -110,7 +110,7 @@ nvidia-docker run -i --rm --name ${docker_name} \
             python setup.py bdist_wheel;
             cd /workspace/fastdeploy;
             rm -rf build; mkdir -p build;cd build;
-            cmake .. -DENABLE_TRT_BACKEND=ON -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install -DWITH_GPU=ON -DTRT_DIRECTORY=/workspace/fastdeploy/serving/TensorRT-${trt_version}/ -DENABLE_PADDLE_BACKEND=ON -DENABLE_ORT_BACKEND=ON -DENABLE_OPENVINO_BACKEND=ON -DENABLE_VISION=OFF -DBUILD_FASTDEPLOY_PYTHON=OFF -DENABLE_PADDLE2ONNX=ON -DENABLE_TEXT=OFF -DLIBRARY_NAME=fastdeploy_runtime;
+            cmake .. -DENABLE_TRT_BACKEND=ON -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install -DWITH_CUDA=ON -DTRT_DIRECTORY=/workspace/fastdeploy/serving/TensorRT-${trt_version}/ -DENABLE_PADDLE_BACKEND=ON -DENABLE_ORT_BACKEND=ON -DENABLE_OPENVINO_BACKEND=ON -DENABLE_VISION=OFF -DBUILD_FASTDEPLOY_PYTHON=OFF -DENABLE_PADDLE2ONNX=ON -DENABLE_TEXT=OFF -DLIBRARY_NAME=fastdeploy_runtime;
             make -j`nproc`;
             make install;
             cd /workspace/fastdeploy/serving;
@@ -137,7 +137,7 @@ docker run -i --rm --name ${docker_name} \
             cd /workspace/fastdeploy/python;
             rm -rf .setuptools-cmake-build dist build fastdeploy/libs/third_libs;
             ln -s /usr/bin/python3 /usr/bin/python;
-            export WITH_GPU=OFF;
+            export WITH_CUDA=OFF;
             export ENABLE_ORT_BACKEND=OFF;
             export ENABLE_PADDLE_BACKEND=OFF;
             export ENABLE_OPENVINO_BACKEND=OFF;
@@ -149,7 +149,7 @@ docker run -i --rm --name ${docker_name} \
             python setup.py bdist_wheel;
             cd /workspace/fastdeploy;
             rm -rf build; mkdir build; cd build;
-            cmake .. -DENABLE_TRT_BACKEND=OFF -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install -DWITH_GPU=OFF -DENABLE_PADDLE_BACKEND=ON -DENABLE_ORT_BACKEND=ON -DENABLE_OPENVINO_BACKEND=ON -DENABLE_VISION=OFF -DBUILD_FASTDEPLOY_PYTHON=OFF -DENABLE_PADDLE2ONNX=ON -DENABLE_TEXT=OFF -DLIBRARY_NAME=fastdeploy_runtime;
+            cmake .. -DENABLE_TRT_BACKEND=OFF -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install -DWITH_CUDA=OFF -DENABLE_PADDLE_BACKEND=ON -DENABLE_ORT_BACKEND=ON -DENABLE_OPENVINO_BACKEND=ON -DENABLE_VISION=OFF -DBUILD_FASTDEPLOY_PYTHON=OFF -DENABLE_PADDLE2ONNX=ON -DENABLE_TEXT=OFF -DLIBRARY_NAME=fastdeploy_runtime;
             make -j`nproc`;
             make install;
             cd /workspace/fastdeploy/serving;

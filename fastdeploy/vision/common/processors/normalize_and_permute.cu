@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 #include "fastdeploy/vision/common/processors/normalize_and_permute.h"
 
 namespace fastdeploy {
@@ -49,16 +49,16 @@ bool NormalizeAndPermute::ImplByCuda(FDMat* mat) {
 
   // Prepare output tensor
   mat->output_cache->Resize({src->shape[2], src->shape[0], src->shape[1]},
-                            FDDataType::FP32, "output_cache", Device::GPU);
+                            FDDataType::FP32, "output_cache", Device::CUDA);
 
   // Copy alpha and beta to GPU
   gpu_alpha_.Resize({1, 1, static_cast<int>(alpha_.size())}, FDDataType::FP32,
-                    "alpha", Device::GPU);
+                    "alpha", Device::CUDA);
   cudaMemcpy(gpu_alpha_.Data(), alpha_.data(), gpu_alpha_.Nbytes(),
              cudaMemcpyHostToDevice);
 
   gpu_beta_.Resize({1, 1, static_cast<int>(beta_.size())}, FDDataType::FP32,
-                   "beta", Device::GPU);
+                   "beta", Device::CUDA);
   cudaMemcpy(gpu_beta_.Data(), beta_.data(), gpu_beta_.Nbytes(),
              cudaMemcpyHostToDevice);
 
@@ -84,7 +84,7 @@ bool NormalizeAndPermute::ImplByCuda(FDMatBatch* mat_batch) {
 
   // Prepare output tensor
   mat_batch->output_cache->Resize(src->Shape(), FDDataType::FP32,
-                                  "batch_output_cache", Device::GPU);
+                                  "batch_output_cache", Device::CUDA);
   // NHWC -> NCHW
   std::swap(mat_batch->output_cache->shape[1],
             mat_batch->output_cache->shape[3]);
@@ -93,12 +93,12 @@ bool NormalizeAndPermute::ImplByCuda(FDMatBatch* mat_batch) {
 
   // Copy alpha and beta to GPU
   gpu_alpha_.Resize({1, 1, static_cast<int>(alpha_.size())}, FDDataType::FP32,
-                    "alpha", Device::GPU);
+                    "alpha", Device::CUDA);
   cudaMemcpy(gpu_alpha_.Data(), alpha_.data(), gpu_alpha_.Nbytes(),
              cudaMemcpyHostToDevice);
 
   gpu_beta_.Resize({1, 1, static_cast<int>(beta_.size())}, FDDataType::FP32,
-                   "beta", Device::GPU);
+                   "beta", Device::CUDA);
   cudaMemcpy(gpu_beta_.Data(), beta_.data(), gpu_beta_.Nbytes(),
              cudaMemcpyHostToDevice);
 

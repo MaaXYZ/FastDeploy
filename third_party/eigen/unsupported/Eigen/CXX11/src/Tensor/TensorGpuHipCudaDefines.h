@@ -8,19 +8,19 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#if defined(EIGEN_USE_GPU) && \
+#if defined(EIGEN_use_cuda) && \
     !defined(EIGEN_CXX11_TENSOR_GPU_HIP_CUDA_DEFINES_H)
 #define EIGEN_CXX11_TENSOR_GPU_HIP_CUDA_DEFINES_H
 
 // Note that we are using EIGEN_USE_HIP here instead of EIGEN_HIPCC...this is by
 // design
-// There is code in the Tensorflow codebase that will define EIGEN_USE_GPU,  but
+// There is code in the Tensorflow codebase that will define EIGEN_use_cuda,  but
 // for some reason gets sent to the gcc/host compiler instead of the
 // gpu/nvcc/hipcc compiler
 // When compiling such files, gcc will end up trying to pick up the CUDA headers
 // by
 // default (see the code within "unsupported/Eigen/CXX11/Tensor" that is guarded
-// by EIGEN_USE_GPU)
+// by EIGEN_use_cuda)
 // This will obviously not work when trying to compile tensorflow on a system
 // with no CUDA
 // To work around this issue for HIP systems (and leave the default behaviour

@@ -83,7 +83,7 @@ void GpuInfer(const char *model_dir, const char *image_file) {
            "inference_cls.yaml");
 
   FD_C_RuntimeOptionWrapper *option = FD_C_CreateRuntimeOptionWrapper();
-  FD_C_RuntimeOptionWrapperUseGpu(option, 0);
+  FD_C_RuntimeOptionWrapperUseCuda(option, 0);
 
   FD_C_PaddleClasModelWrapper *model = FD_C_CreatePaddleClasModelWrapper(
       model_file, params_file, config_file, option, FD_C_ModelFormat_PADDLE);

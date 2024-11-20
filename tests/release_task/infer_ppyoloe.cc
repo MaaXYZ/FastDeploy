@@ -80,7 +80,7 @@ void GpuInfer(const std::string& model_dir, const std::string& image_file) {
   auto config_file = model_dir + sep + "infer_cfg.yml";
 
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   if (FLAGS_backend == "ort") {
     option.UseOrtBackend();
   } else if (FLAGS_backend == "paddle") {

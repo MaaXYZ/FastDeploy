@@ -63,7 +63,7 @@ Linux上编译需满足:
 git clone https://github.com/PaddlePaddle/FastDeploy.git -b develop
 cd FastDeploy
 mkdir build && cd build
-cmake .. -DWITH_GPU=ON \
+cmake .. -DWITH_CUDA=ON \
          -DENABLE_ORT_BACKEND=ON \
          -DENABLE_PADDLE_BACKEND=ON \
          -DENABLE_OPENVINO_BACKEND=ON \
@@ -93,7 +93,7 @@ make -j4
 注：如果需要指定特定的Paddle Inference包，可以通过 -DPADDLEINFERENCE_URL 或 -DPADDLEINFERENCE_DIRECTORY 指定。如：
 
 ```bash
-cmake .. -DWITH_GPU=ON \
+cmake .. -DWITH_CUDA=ON \
          -DENABLE_ORT_BACKEND=ON \
          -DENABLE_PADDLE_BACKEND=ON \
          -DENABLE_OPENVINO_BACKEND=ON \

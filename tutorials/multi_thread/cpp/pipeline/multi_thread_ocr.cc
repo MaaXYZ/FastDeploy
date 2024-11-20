@@ -153,12 +153,12 @@ int main(int argc, char* argv[]) {
   if (flag == 0) {
     option.UseCpu(); 
   } else if (flag == 1) {
-    option.UseGpu();
+    option.UseCuda();
   } else if (flag == 2) {
-    option.UseGpu();
+    option.UseCuda();
     option.UseTrtBackend();
   } else if (flag == 3) {
-    option.UseGpu();
+    option.UseCuda();
     option.UseTrtBackend();
     option.EnablePaddleTrtCollectShape();
     option.EnablePaddleToTrt();

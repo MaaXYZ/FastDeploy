@@ -43,8 +43,8 @@ std::vector<TensorInfo> PorosBackend::GetOutputInfos() {
 }
 
 void PorosBackend::BuildOption(const PorosBackendOption& option) {
-  _options.device = (option.device == Device::GPU)
-                        ? baidu::mirana::poros::Device::GPU
+  _options.device = (option.device == Device::CUDA)
+                        ? baidu::mirana::poros::Device::CUDA
                         : baidu::mirana::poros::Device::CPU;
   _options.long_to_int = option.long_to_int;
   _options.use_nvidia_tf32 = option.use_nvidia_tf32;
@@ -68,7 +68,7 @@ bool PorosBackend::Compile(const std::string& model_file,
   torch::jit::Module mod;
   mod = torch::jit::load(model_file);
   mod.eval();
-  if (option.device == Device::GPU) {
+  if (option.device == Device::CUDA) {
     mod.to(at::kCUDA);
   } else {
     mod.to(at::kCPU);
@@ -80,7 +80,7 @@ bool PorosBackend::Compile(const std::string& model_file,
   _numinputs = inputs.size() - 1;
   // FDTensor to at::Tensor
   std::vector<std::vector<c10::IValue>> prewarm_datas;
-  bool is_backend_cuda = (option.device == Device::GPU);
+  bool is_backend_cuda = (option.device == Device::CUDA);
   for (size_t i = 0; i < prewarm_tensors.size(); ++i) {
     std::vector<c10::IValue> prewarm_data;
     for (size_t j = 0; j < prewarm_tensors[i].size(); ++j) {
@@ -127,7 +127,7 @@ bool PorosBackend::Infer(std::vector<FDTensor>& inputs,
   // Convert FD Tensor to PyTorch Tensor
   std::vector<torch::jit::IValue> poros_inputs;
   bool is_backend_cuda =
-      _options.device == baidu::mirana::poros::Device::GPU ? true : false;
+      _options.device == baidu::mirana::poros::Device::CUDA ? true : false;
   for (size_t i = 0; i < inputs.size(); ++i) {
     poros_inputs.push_back(CreatePorosValue(inputs[i], is_backend_cuda));
   }

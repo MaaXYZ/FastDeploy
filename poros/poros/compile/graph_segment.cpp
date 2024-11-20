@@ -762,7 +762,7 @@ bool AddInputTensorandScalarimplict(std::shared_ptr<Graph>& group_graph, torch::
     }
     torch::jit::Value* device_value = nullptr;
     c10::optional<at::Device> output_device;
-    if (PorosGlobalContext::instance().get_poros_options().device == Device::GPU) {
+    if (PorosGlobalContext::instance().get_poros_options().device == Device::CUDA) {
         device_value = group_graph->insertConstant(torch::Device(torch::DeviceType::CUDA, 0));
         output_device = torch::Device(at::kCUDA, 0);
     } else {
@@ -933,7 +933,7 @@ bool AddOutputTensorandScalarimplict(std::shared_ptr<Graph>& group_graph, torch:
     }
     torch::jit::Value* device_value = nullptr;
     c10::optional<at::Device> output_device;
-    if (PorosGlobalContext::instance().get_poros_options().device == Device::GPU) {
+    if (PorosGlobalContext::instance().get_poros_options().device == Device::CUDA) {
         device_value = group_graph->insertConstant(torch::Device(torch::DeviceType::CUDA, 0));
         output_device = torch::Device(at::kCUDA, 0);
     } else {

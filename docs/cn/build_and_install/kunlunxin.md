@@ -40,7 +40,7 @@ mkdir build && cd build
 
 # CMake configuration with KunlunXin xpu toolchain
 cmake -DWITH_KUNLUNXIN=ON  \
-      -DWITH_GPU=OFF  \ # 不编译 GPU
+      -DWITH_CUDA=OFF  \ # 不编译 GPU
       -DCMAKE_INSTALL_PREFIX=fastdeploy-kunlunxin \
       -DENABLE_VISION=ON \ # 是否编译集成视觉模型的部署模块，可选择开启
       -DOPENCV_DIRECTORY=/usr/lib/x86_64-linux-gnu/cmake/opencv4 \ # 指定系统自带的 opencv 路径
@@ -58,7 +58,7 @@ make install
 git clone https://github.com/PaddlePaddle/FastDeploy.git
 cd FastDeploy/python
 export WITH_KUNLUNXIN=ON
-export WITH_GPU=OFF
+export WITH_CUDA=OFF
 export ENABLE_VISION=ON
 # OPENCV_DIRECTORY 可选，不指定会自动下载 FastDeploy 提供的预编译 OpenCV 库
 export OPENCV_DIRECTORY=/usr/lib/x86_64-linux-gnu/cmake/opencv4

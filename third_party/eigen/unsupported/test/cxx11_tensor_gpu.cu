@@ -10,7 +10,7 @@
 #define EIGEN_TEST_NO_LONGDOUBLE
 #define EIGEN_TEST_NO_COMPLEX
 
-#define EIGEN_USE_GPU
+#define EIGEN_use_cuda
 
 #include <unsupported/Eigen/CXX11/Tensor>
 #include "main.h"

@@ -5,7 +5,7 @@ export ENABLE_TRT_BACKEND=ON
 export TRT_DIRECTORY=/fastdeploy/libs/TensorRT-8.4.1.5
 export CUDA_DIRECTORY=/usr/local/cuda
 export ENABLE_VISION=ON
-export WITH_GPU=ON
+export WITH_CUDA=ON
 export CMAKE_CXX_COMPILER=/usr/local/gcc-8.2/bin/g++
 
 python setup.py build

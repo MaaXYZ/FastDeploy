@@ -58,7 +58,7 @@ def main():
             default=4096,
             help='分片输出参数文件时，每片文件的大小，单位：KB，非必要参数，默认4096KB',
             required=False)
-        p.add_argument('--useGPUOpt', help='转换模型是否执行GPU优化方法', required=False)
+        p.add_argument('--UseCudaOpt', help='转换模型是否执行GPU优化方法', required=False)
 
         args = p.parse_args()
         # 获取当前用户使用的 python 解释器 bin 位置

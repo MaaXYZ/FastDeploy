@@ -163,9 +163,9 @@ void GpuInfer(const char *det_model_dir, const char *cls_model_dir,
   FD_C_RuntimeOptionWrapper *det_option = FD_C_CreateRuntimeOptionWrapper();
   FD_C_RuntimeOptionWrapper *cls_option = FD_C_CreateRuntimeOptionWrapper();
   FD_C_RuntimeOptionWrapper *rec_option = FD_C_CreateRuntimeOptionWrapper();
-  FD_C_RuntimeOptionWrapperUseGpu(det_option, 0);
-  FD_C_RuntimeOptionWrapperUseGpu(cls_option, 0);
-  FD_C_RuntimeOptionWrapperUseGpu(rec_option, 0);
+  FD_C_RuntimeOptionWrapperUseCuda(det_option, 0);
+  FD_C_RuntimeOptionWrapperUseCuda(cls_option, 0);
+  FD_C_RuntimeOptionWrapperUseCuda(rec_option, 0);
 
   FD_C_DBDetectorWrapper *det_model = FD_C_CreateDBDetectorWrapper(
       det_model_file, det_params_file, det_option, FD_C_ModelFormat_PADDLE);

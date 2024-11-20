@@ -86,7 +86,7 @@ void AdaptivePool2dKernel::Compute(OrtKernelContext* context) {
 #endif
   float* output_data = output.GetTensorMutableData<float>();
   if (!strcmp(this->provider_, "CUDAExecutionProvider")) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
     auto compute_stream =
 #if ORT_API_VERSION >= 14
         ort_context.GetGPUComputeStream();
@@ -96,7 +96,7 @@ void AdaptivePool2dKernel::Compute(OrtKernelContext* context) {
     CudaAdaptivePool(input_size, output_size_, output_data, input_data,
                      compute_stream, pooling_type_);
 #else
-    FDWARNING << "FastDeploy didn't compile with WITH_GPU. "
+    FDWARNING << "FastDeploy didn't compile with WITH_CUDA. "
               << "Will force to use CPU to run." << std::endl;
     CpuAdaptivePool(input_size, output_size_, input_data, output_data);
 #endif

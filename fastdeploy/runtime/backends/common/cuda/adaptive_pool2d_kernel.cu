@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 
 #include "adaptive_pool2d_kernel.h"
 

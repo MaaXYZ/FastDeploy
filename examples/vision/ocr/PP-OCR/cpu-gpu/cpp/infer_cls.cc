@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
   if (flag == 0) {
     option.UseCpu();
   } else if (flag == 1) {
-    option.UseGpu();
+    option.UseCuda();
   }
 
   std::string cls_model_dir = argv[1];

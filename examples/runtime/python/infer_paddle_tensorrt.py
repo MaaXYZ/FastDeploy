@@ -25,7 +25,7 @@ option.set_model_path("mobilenetv2/inference.pdmodel",
                       "mobilenetv2/inference.pdiparams")
 
 # **** GPU 配置 ***
-option.use_gpu(0)
+option.use_cuda(0)
 option.use_trt_backend()
 # using TensorRT integrated in Paddle Inference
 # option.enable_paddle_to_trt()

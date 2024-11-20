@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 #include "fastdeploy/vision/common/processors/normalize.h"
 
 namespace fastdeploy {
@@ -73,16 +73,16 @@ bool Normalize::ImplByCuda(FDMatBatch* mat_batch) {
 
   // Prepare output tensor
   mat_batch->output_cache->Resize(src->Shape(), FDDataType::FP32,
-                                  "batch_output_cache", Device::GPU);
+                                  "batch_output_cache", Device::CUDA);
 
   // Copy alpha and beta to GPU
   gpu_alpha_.Resize({1, 1, static_cast<int>(alpha_.size())}, FDDataType::FP32,
-                    "alpha", Device::GPU);
+                    "alpha", Device::CUDA);
   cudaMemcpy(gpu_alpha_.Data(), alpha_.data(), gpu_alpha_.Nbytes(),
              cudaMemcpyHostToDevice);
 
   gpu_beta_.Resize({1, 1, static_cast<int>(beta_.size())}, FDDataType::FP32,
-                   "beta", Device::GPU);
+                   "beta", Device::CUDA);
   cudaMemcpy(gpu_beta_.Data(), beta_.data(), gpu_beta_.Nbytes(),
              cudaMemcpyHostToDevice);
 

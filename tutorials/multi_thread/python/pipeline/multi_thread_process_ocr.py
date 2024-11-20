@@ -109,7 +109,7 @@ def get_image_list(image_path):
 def build_option(args):
     option = fd.RuntimeOption()
     if args.device.lower() == "gpu":
-        option.use_gpu(args.device_id)
+        option.use_cuda(args.device_id)
 
     option.set_cpu_thread_num(args.cpu_thread_num)
 

@@ -88,8 +88,8 @@ console.log(res.points);
 # 安装paddlejsconverter
 pip3 install paddlejsconverter
 # 转换模型格式，输入模型为inference模型
-paddlejsconverter --modelPath=./inference.pdmodel --paramPath=./inference.pdiparams --outputDir=./  --useGPUOpt=True
-# 注意：useGPUOpt 选项默认不开启，如果模型用在 gpu backend（webgl/webgpu），则开启 useGPUOpt，如果模型运行在（wasm/plain js）则不要开启。
+paddlejsconverter --modelPath=./inference.pdmodel --paramPath=./inference.pdiparams --outputDir=./  --UseCudaOpt=True
+# 注意：UseCudaOpt 选项默认不开启，如果模型用在 gpu backend（webgl/webgpu），则开启 UseCudaOpt，如果模型运行在（wasm/plain js）则不要开启。
 ```
 
 导出成功后，本地目录下会出现 `model.json chunk_1.dat`等文件，分别是对应js模型的网络结构、模型参数二进制文件。

@@ -53,7 +53,7 @@
 #include "ThreadPool"
 #endif
 
-#ifdef EIGEN_USE_GPU
+#ifdef EIGEN_use_cuda
   #include <iostream>
   #if defined(EIGEN_USE_HIP)
     #include <hip/hip_runtime.h>

@@ -7,7 +7,7 @@
 无论是在何平台编译，编译时仅根据需求修改如下选项，勿修改其它参数
 | 选项                      | 支持平台 | 说明                                                                        |
 |:------------------------|:------- | :--------------------------------------------------------------------------|
-| WITH_GPU | Linux(x64)/Windows(x64) | 默认OFF，当编译支持Nvidia-GPU时，需设置为ON |
+| WITH_CUDA | Linux(x64)/Windows(x64) | 默认OFF，当编译支持Nvidia-GPU时，需设置为ON |
 | ENABLE_ORT_BACKEND      | Linux(x64/aarch64)/Windows(x64)/Mac OSX(arm64/x86) | 默认OFF, 是否编译集成ONNX Runtime后端    |
 | ENABLE_PADDLE_BACKEND   | Linux(x64)/Windows(x64) | 默认OFF，是否编译集成Paddle Inference后端                             |  
 | ENABLE_TRT_BACKEND   | Linux(x64)/Windows(x64) | 默认OFF，是否编译集成TensorRT后端                             |  
@@ -49,7 +49,7 @@ cmake .. -DENABLE_ORT_BACKEND=ON \
          -DENABLE_PADDLE_BACKEND=ON \
          -DENABLE_OPENVINO_BACKEND=ON \
          -DENABLE_TRT_BACKEND=ON \
-         -DWITH_GPU=ON \
+         -DWITH_CUDA=ON \
          -DTRT_DIRECTORY=/Paddle/TensorRT-8.4.1.5 \
          -DCUDA_DIRECTORY=/usr/local/cuda \
          -DCMAKE_INSTALL_PREFIX=${PWD}/compiled_fastdeploy_sdk \
@@ -84,7 +84,7 @@ cmake .. -G "Visual Studio 16 2019" -A x64 ^
          -DENABLE_TRT_BACKEND=ON ^
          -DENABLE_VISION=ON ^
          -DENABLE_TEXT=ON ^
-         -DWITH_GPU=ON ^
+         -DWITH_CUDA=ON ^
          -DTRT_DIRECTORY="D:\Paddle\TensorRT-8.4.1.5" ^
          -DCUDA_DIRECTORY="C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2" ^
          -DCMAKE_INSTALL_PREFIX="D:\Paddle\compiled_fastdeploy"
@@ -122,7 +122,7 @@ export ENABLE_OPENVINO_BACKEND=ON
 export ENABLE_VISION=ON
 export ENABLE_TEXT=ON
 export ENABLE_TRT_BACKEND=ON
-export WITH_GPU=ON
+export WITH_CUDA=ON
 export TRT_DIRECTORY=/Paddle/TensorRT-8.4.1.5
 export CUDA_DIRECTORY=/usr/local/cuda
 # OPENCV_DIRECTORY可选，不指定会在编译过程下载FastDeploy预编译的OpenCV库
@@ -152,7 +152,7 @@ set ENABLE_OPENVINO_BACKEND=ON
 set ENABLE_VISION=ON
 set ENABLE_TEXT=ON
 set ENABLE_TRT_BACKEND=ON
-set WITH_GPU=ON
+set WITH_CUDA=ON
 set TRT_DIRECTORY=D:\Paddle\TensorRT-8.4.1.5
 set CUDA_DIRECTORY=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2
 

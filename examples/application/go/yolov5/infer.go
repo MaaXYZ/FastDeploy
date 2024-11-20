@@ -78,7 +78,7 @@ func CpuInfer(modelFile *C.char, imageFile *C.char) {
 func GpuInfer(modelFile *C.char, imageFile *C.char) {
 
 	var option *C.FD_C_RuntimeOptionWrapper = C.FD_C_CreateRuntimeOptionWrapper()
-	C.FD_C_RuntimeOptionWrapperUseGpu(option, 0)
+	C.FD_C_RuntimeOptionWrapperUseCuda(option, 0)
 
 	var model *C.FD_C_YOLOv5Wrapper = C.FD_C_CreateYOLOv5Wrapper(
 		modelFile, C.CString(""), option, C.FD_C_ModelFormat_ONNX)

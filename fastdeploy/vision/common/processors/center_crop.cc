@@ -64,7 +64,7 @@ bool CenterCrop::ImplByCvCuda(FDMat* mat) {
 
   // Prepare output tensor
   mat->output_cache->Resize({height_, width_, mat->Channels()}, src->Dtype(),
-                            "output_cache", Device::GPU);
+                            "output_cache", Device::CUDA);
   auto dst_tensor = CreateCvCudaTensorWrapData(*(mat->output_cache));
 
   int offset_x = static_cast<int>((mat->Width() - width_) / 2);
@@ -75,7 +75,7 @@ bool CenterCrop::ImplByCvCuda(FDMat* mat) {
   mat->SetTensor(mat->output_cache);
   mat->SetWidth(width_);
   mat->SetHeight(height_);
-  mat->device = Device::GPU;
+  mat->device = Device::CUDA;
   mat->mat_type = ProcLib::CVCUDA;
   return true;
 }
@@ -86,7 +86,7 @@ bool CenterCrop::ImplByCvCuda(FDMatBatch* mat_batch) {
       return false;
     }
   }
-  mat_batch->device = Device::GPU;
+  mat_batch->device = Device::CUDA;
   mat_batch->mat_type = ProcLib::CVCUDA;
   return true;
 }

@@ -24,7 +24,7 @@
 
 #include "fastdeploy/utils/utils.h"
 
-#if defined(WITH_GPU)
+#if defined(WITH_CUDA)
 namespace fastdeploy {
 namespace paddle_custom_ops {
 

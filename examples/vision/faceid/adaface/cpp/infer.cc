@@ -94,7 +94,7 @@ void KunlunXinInfer(const std::string &model_file, const std::string &params_fil
 void GpuInfer(const std::string &model_file, const std::string &params_file,
               const std::vector<std::string> &image_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   auto model =
       fastdeploy::vision::faceid::AdaFace(model_file, params_file, option);
   if (!model.Initialized()) {
@@ -134,7 +134,7 @@ void GpuInfer(const std::string &model_file, const std::string &params_file,
 void TrtInfer(const std::string &model_file, const std::string &params_file,
               const std::vector<std::string> &image_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   option.UseTrtBackend();
   option.SetTrtInputShape("data", {1, 3, 112, 112});
   auto model =

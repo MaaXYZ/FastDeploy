@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
   // Use NVIDIA GPU to inference
   // If need to configure TensorRT backend for more option, we can configure runtime_option.trt_option
   // refer https://baidu-paddle.github.io/fastdeploy-api/cpp/html/structfastdeploy_1_1TrtBackendOption.html
-  runtime_option.UseGpu(0);
+  runtime_option.UseCuda(0);
   // Use float16 inference to improve performance
   runtime_option.trt_option.enable_fp16 = true;
   // Cache trt engine to reduce time cost in model initialize

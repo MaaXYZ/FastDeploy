@@ -36,7 +36,7 @@ void CpuInfer(const std::string& model_file, const std::string& image_file) {
 
 void GpuInfer(const std::string& model_file, const std::string& image_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   auto model =
       fastdeploy::vision::detection::NanoDetPlus(model_file, "", option);
   if (!model.Initialized()) {
@@ -60,7 +60,7 @@ void GpuInfer(const std::string& model_file, const std::string& image_file) {
 
 void TrtInfer(const std::string& model_file, const std::string& image_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   option.UseTrtBackend();
   option.SetTrtInputShape("images", {1, 3, 320, 320});
   auto model =

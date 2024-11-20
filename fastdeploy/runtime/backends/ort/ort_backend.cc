@@ -117,7 +117,7 @@ bool OrtBackend::BuildOption(const OrtBackendOption& option) {
 #endif
 
   // CUDA
-  if (option.device == Device::GPU) {
+  if (option.device == Device::CUDA) {
     auto all_providers = Ort::GetAvailableProviders();
     bool support_cuda = false;
     std::string providers_msg = "";
@@ -148,10 +148,10 @@ bool OrtBackend::BuildOption(const OrtBackendOption& option) {
 }
 
 bool OrtBackend::Init(const RuntimeOption& option) {
-  if (option.device != Device::CPU && option.device != Device::GPU &&
+  if (option.device != Device::CPU && option.device != Device::CUDA &&
       option.device != Device::DIRECTML) {
     FDERROR
-        << "Backend::ORT only supports Device::CPU/Device::GPU, but now its "
+        << "Backend::ORT only supports Device::CPU/Device::CUDA, but now its "
         << option.device << "." << std::endl;
     return false;
   }
@@ -393,7 +393,7 @@ bool OrtBackend::Infer(std::vector<FDTensor>& inputs,
   // from FDTensor to Ort Inputs
   RUNTIME_PROFILE_LOOP_H2D_D2H_BEGIN
   for (size_t i = 0; i < inputs.size(); ++i) {
-    auto ort_value = CreateOrtValue(inputs[i], option_.device == Device::GPU);
+    auto ort_value = CreateOrtValue(inputs[i], option_.device == Device::CUDA);
     binding_->BindInput(inputs[i].name.c_str(), ort_value);
   }
 
@@ -471,7 +471,7 @@ void OrtBackend::InitCustomOperators() {
   if (custom_operators_.size() == 0) {
     MultiClassNmsOp* multiclass_nms = new MultiClassNmsOp{};
     custom_operators_.push_back(multiclass_nms);
-    if (option_.device == Device::GPU) {
+    if (option_.device == Device::CUDA) {
       AdaptivePool2dOp* adaptive_pool2d =
           new AdaptivePool2dOp{"CUDAExecutionProvider"};
       custom_operators_.push_back(adaptive_pool2d);

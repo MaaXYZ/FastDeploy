@@ -30,7 +30,7 @@ docker run -i --rm --name build_fd_xpu_auth_108_dev \
             cd /workspace/fastdeploy/python;
             rm -rf .setuptools-cmake-build dist build fastdeploy/libs/third_libs;
             ln -s /usr/bin/python3 /usr/bin/python;
-            export WITH_GPU=OFF;
+            export WITH_CUDA=OFF;
             export ENABLE_ORT_BACKEND=OFF;
             export ENABLE_PADDLE_BACKEND=OFF;
             export ENABLE_OPENVINO_BACKEND=OFF;

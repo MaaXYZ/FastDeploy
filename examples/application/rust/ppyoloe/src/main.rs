@@ -105,7 +105,7 @@ fn GpuInfer(model_dir: *const c_char, image_file: *const c_char) {
         snprintf(config_file,  max_size, fmt.as_ptr(), model_dir, '/', config_path.as_ptr());
 
         let  option = fd::FD_C_CreateRuntimeOptionWrapper();
-        fd::FD_C_RuntimeOptionWrapperUseGpu(option, 0);
+        fd::FD_C_RuntimeOptionWrapperUseCuda(option, 0);
 
         let  model: *mut fd::FD_C_PPYOLOEWrapper = fd::FD_C_CreatePPYOLOEWrapper(
               model_file, params_file, config_file, option, fd::FD_C_ModelFormat_PADDLE as i32);

@@ -29,7 +29,7 @@ rec_params_file = os.path.join(rec_model_dir, "inference.pdiparams")
 # Setup runtime option to select hardware, backend, etc.
 option = fd.RuntimeOption()
 if device.lower() == 'gpu':
-    option.use_gpu()
+    option.use_cuda()
 if backend == 'trt':
     option.use_trt_backend()
 else:

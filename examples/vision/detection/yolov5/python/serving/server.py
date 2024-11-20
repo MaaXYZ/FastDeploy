@@ -17,7 +17,7 @@ params_file = os.path.join(model_dir, "model.pdiparams")
 # Setup runtime option to select hardware, backend, etc.
 option = fd.RuntimeOption()
 if device.lower() == 'gpu':
-    option.use_gpu()
+    option.use_cuda()
 if use_trt:
     option.use_trt_backend()
     option.set_trt_input_shape("images", [1, 3, 640, 640])

@@ -49,7 +49,7 @@ std::unique_ptr<fastdeploy::Runtime> CreateRuntime(
   fastdeploy::RuntimeOption runtime_option;
   runtime_option.SetModelPath(model_file, params_file,
                               fastdeploy::ModelFormat::PADDLE);
-  runtime_option.UseGpu();
+  runtime_option.UseCuda();
   if (!use_trt_backend) {
     runtime_option.UsePaddleBackend();
   } else {

@@ -68,7 +68,7 @@ void FD_C_RuntimeOptionWrapperUseCpu(
 > * **fd_c_runtime_option_wrapper**(FD_C_RuntimeOptionWrapper*): Pointer to manipulate RuntimeOption object.
 
 ```c
-void FD_C_RuntimeOptionWrapperUseGpu(
+void FD_C_RuntimeOptionWrapperUseCuda(
     FD_C_RuntimeOptionWrapper* fd_c_runtime_option_wrapper,
     int gpu_id)
 ```

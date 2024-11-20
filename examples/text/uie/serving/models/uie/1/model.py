@@ -68,7 +68,7 @@ class TritonPythonModel:
         runtime_option = fastdeploy.RuntimeOption()
         options = None
         if (args['model_instance_kind'] == 'GPU'):
-            runtime_option.use_gpu(int(args['model_instance_device_id']))
+            runtime_option.use_cuda(int(args['model_instance_device_id']))
             options = self.model_config['optimization'][
                 'execution_accelerators']['gpu_execution_accelerator']
         else:

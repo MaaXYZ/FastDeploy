@@ -31,7 +31,7 @@ option.set_cpu_thread_num(12)
 
 # **** GPU 配置 ***
 # 如需使用GPU，使用如下注释代码
-# option.use_gpu(0)
+# option.use_cuda(0)
 
 # **** IPU 配置 ***
 # 如需使用IPU，使用如下注释代码

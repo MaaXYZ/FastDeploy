@@ -60,7 +60,7 @@ __build_fastdeploy_linux_x86_64_shared() {
   cd "${BUILD_DIR}" && echo "-- [INFO] Working Dir: ${PWD}"
 
   cmake -DCMAKE_BUILD_TYPE=Release \
-        -DWITH_GPU=OFF \
+        -DWITH_CUDA=OFF \
         -DENABLE_ORT_BACKEND=ON \
         -DENABLE_PADDLE_BACKEND=OFF \
         -DENABLE_OPENVINO_BACKEND=OFF \
@@ -82,7 +82,7 @@ __build_fastdeploy_linux_x86_64_shared_custom_paddle() {
   cd "${BUILD_DIR}" && echo "-- [INFO] Working Dir: ${PWD}"
 
   cmake -DCMAKE_BUILD_TYPE=Release \
-        -DWITH_GPU=OFF \
+        -DWITH_CUDA=OFF \
         -DENABLE_ORT_BACKEND=ON \
         -DENABLE_PADDLE_BACKEND=OFF \
         -DENABLE_OPENVINO_BACKEND=OFF \

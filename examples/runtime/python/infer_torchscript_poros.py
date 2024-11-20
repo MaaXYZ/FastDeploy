@@ -47,7 +47,7 @@ if __name__ == '__main__':
     fd.download(model_url, path=".")
 
     option = fd.RuntimeOption()
-    option.use_gpu(0)
+    option.use_cuda(0)
     option.use_poros_backend()
     option.set_model_path(
         "std_resnet50_script.pt", model_format=ModelFormat.TORCHSCRIPT)

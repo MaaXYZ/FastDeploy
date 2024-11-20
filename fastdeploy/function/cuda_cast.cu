@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 #include "fastdeploy/function/cuda_cast.h"
 namespace fastdeploy {
 namespace function {

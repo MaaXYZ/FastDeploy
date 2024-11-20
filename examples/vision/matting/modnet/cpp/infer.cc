@@ -44,7 +44,7 @@ void CpuInfer(const std::string& model_file, const std::string& image_file,
 void GpuInfer(const std::string& model_file, const std::string& image_file,
               const std::string& background_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   auto model = fastdeploy::vision::matting::MODNet(model_file, "", option);
   if (!model.Initialized()) {
     std::cerr << "Failed to initialize." << std::endl;
@@ -74,7 +74,7 @@ void GpuInfer(const std::string& model_file, const std::string& image_file,
 void TrtInfer(const std::string& model_file, const std::string& image_file,
               const std::string& background_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   option.UseTrtBackend();
   option.SetTrtInputShape("input", {1, 3, 256, 256});
   auto model = fastdeploy::vision::matting::MODNet(model_file, "", option);

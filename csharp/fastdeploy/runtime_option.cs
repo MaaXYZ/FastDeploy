@@ -60,8 +60,8 @@ public class RuntimeOption {
   }
 
   /// Use Nvidia GPU to inference
-  public void UseGpu(int gpu_id = 0) {
-    FD_C_RuntimeOptionWrapperUseGpu(fd_runtime_option_wrapper, gpu_id);
+  public void UseCuda(int gpu_id = 0) {
+    FD_C_RuntimeOptionWrapperUseCuda(fd_runtime_option_wrapper, gpu_id);
   }
 
   /// Use RKNPU2 e.g RK3588/RK356X to inference
@@ -342,9 +342,9 @@ public class RuntimeOption {
   private static extern void
   FD_C_RuntimeOptionWrapperUseCpu(IntPtr fd_runtime_option_wrapper);
 
-  [DllImport("fastdeploy.dll", EntryPoint = "FD_C_RuntimeOptionWrapperUseGpu")]
+  [DllImport("fastdeploy.dll", EntryPoint = "FD_C_RuntimeOptionWrapperUseCuda")]
   private static extern void
-  FD_C_RuntimeOptionWrapperUseGpu(IntPtr fd_runtime_option_wrapper, int gpu_id);
+  FD_C_RuntimeOptionWrapperUseCuda(IntPtr fd_runtime_option_wrapper, int gpu_id);
 
   [DllImport("fastdeploy.dll",
              EntryPoint = "FD_C_RuntimeOptionWrapperUseRKNPU2")]

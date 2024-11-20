@@ -40,7 +40,7 @@ namespace Test
             if(device_option==0){
                 runtimeoption.UseCpu();
             }else{
-                runtimeoption.UseGpu();
+                runtimeoption.UseCuda();
             }
             fastdeploy.vision.detection.YOLOv5 model = new fastdeploy.vision.detection.YOLOv5(model_path, "", runtimeoption, ModelFormat.ONNX);
             if(!model.Initialized()){

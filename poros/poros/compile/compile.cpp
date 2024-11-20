@@ -183,7 +183,7 @@ int Compiler::segment_graph(std::shared_ptr<torch::jit::Graph>& g) {
 
     IEngine* engine(nullptr);
     std::string engine_name("");
-    if (_options.device == Device::GPU) {
+    if (_options.device == Device::CUDA) {
         engine_name = "TensorrtEngine";
     } else if (_options.device == Device::XPU) {
         engine_name = "XtclEngine";
@@ -213,7 +213,7 @@ IEngine* Compiler::select_engine(const torch::jit::Node* n) {
 
     IEngine* engine(nullptr);
     std::string engine_name("");
-    if (_options.device == Device::GPU) {
+    if (_options.device == Device::CUDA) {
         engine_name = "TensorrtEngine";
     } else if (_options.device == Device::XPU) {
         engine_name = "XtclEngine";
@@ -463,7 +463,7 @@ std::unique_ptr<PorosModule> Compile(const torch::jit::Module& module,
         std::unique_ptr<PorosModule> poros_module(new PorosModule(*compiled_module));
         poros_module->_options = options;
 
-        if (options.device == Device::GPU) {
+        if (options.device == Device::CUDA) {
             poros_module->to(at::kCUDA);
         }
 

@@ -83,13 +83,13 @@ class TensorExecutor {
   typedef typename Expression::Index StorageIndex;
 
   // Including `unsupported/Eigen/CXX11/Tensor` in different translation units
-  // with/without `EIGEN_USE_THREADS` or `EIGEN_USE_GPU` is a potential ODR
+  // with/without `EIGEN_USE_THREADS` or `EIGEN_use_cuda` is a potential ODR
   // violation. If this template is instantiated with a non-default device, it
   // means that this header file was included without defining
-  // `EIGEN_USE_THREADS`, `EIGEN_USE_GPU` or `EIGEN_USE_SYCL`.
+  // `EIGEN_USE_THREADS`, `EIGEN_use_cuda` or `EIGEN_USE_SYCL`.
   static_assert(std::is_same<Device, DefaultDevice>::value,
                 "Default executor instantiated with non-default device. "
-                "You must #define EIGEN_USE_THREADS, EIGEN_USE_GPU or "
+                "You must #define EIGEN_USE_THREADS, EIGEN_use_cuda or "
                 "EIGEN_USE_SYCL before including Eigen headers.");
 
   EIGEN_DEVICE_FUNC
@@ -539,7 +539,7 @@ class TensorAsyncExecutor<Expression, ThreadPoolDevice, DoneCallback,
 #endif  // EIGEN_USE_THREADS
 
 // GPU: the evaluation of the expression is offloaded to a GPU.
-#if defined(EIGEN_USE_GPU)
+#if defined(EIGEN_use_cuda)
 
 template <typename Expression, bool Vectorizable, TiledEvaluation Tiling>
 class TensorExecutor<Expression, GpuDevice, Vectorizable, Tiling> {
@@ -618,7 +618,7 @@ EIGEN_STRONG_INLINE void TensorExecutor<Expression, GpuDevice, Vectorizable,
 }
 
 #endif  // EIGEN_GPUCC
-#endif  // EIGEN_USE_GPU
+#endif  // EIGEN_use_cuda
 
 // SYCL Executor policy
 #ifdef EIGEN_USE_SYCL

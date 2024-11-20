@@ -17,7 +17,7 @@ namespace internal {
 // Make sure this is only available when targeting a GPU: we don't want to
 // introduce conflicts between these packet_traits definitions and the ones
 // we'll use on the host side (SSE, AVX, ...)
-#if defined(EIGEN_GPUCC) && defined(EIGEN_USE_GPU)
+#if defined(EIGEN_GPUCC) && defined(EIGEN_use_cuda)
 template <>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE float4 plog<float4>(const float4& a) {
   return make_float4(logf(a.x), logf(a.y), logf(a.z), logf(a.w));

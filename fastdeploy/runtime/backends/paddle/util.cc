@@ -17,7 +17,7 @@
 
 namespace fastdeploy {
 paddle_infer::PlaceType ConvertFDDeviceToPlace(Device device) {
-  if (device == Device::GPU) {
+  if (device == Device::CUDA) {
     return paddle_infer::PlaceType::kGPU;
   } else if (device == Device::KUNLUNXIN) {
     return paddle_infer::PlaceType::kXPU;
@@ -174,7 +174,7 @@ void PaddleTensorToFDTensor(std::unique_ptr<paddle_infer::Tensor>& tensor,
     }
     Device device = Device::CPU;
     if (place == paddle_infer::PlaceType::kGPU) {
-      device = Device::GPU;
+      device = Device::CUDA;
     } else if (place == paddle_infer::PlaceType::kXPU) {
       device = Device::KUNLUNXIN;
       FDASSERT(false,

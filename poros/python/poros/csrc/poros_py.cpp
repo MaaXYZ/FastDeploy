@@ -66,7 +66,7 @@ torch::jit::Module load(const std::string& filename, const baidu::mirana::poros:
 
 PYBIND11_MODULE(_C, m) {
     py::enum_<baidu::mirana::poros::Device>(m, "Device", "Enum to specify device kind to build poros Module")
-        .value("GPU", baidu::mirana::poros::Device::GPU, "Spiecify using GPU as the backend of poros Module")
+        .value("GPU", baidu::mirana::poros::Device::CUDA, "Spiecify using GPU as the backend of poros Module")
         .value("CPU", baidu::mirana::poros::Device::CPU, "Spiecify using CPU as the backend of poros Module")
         .value("XPU", baidu::mirana::poros::Device::XPU, "Spiecify using XPU as the backend of poros Module")
         .export_values();

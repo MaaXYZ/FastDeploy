@@ -66,7 +66,7 @@ bool CreateRuntimeOption(fastdeploy::RuntimeOption* option) {
     option->UsePaddleLiteBackend();
     return true;
   } else if (FLAGS_device == "gpu") {
-    option->UseGpu();
+    option->UseCuda();
   } else if (FLAGS_device == "cpu") {
     option->UseCpu();
   } else {

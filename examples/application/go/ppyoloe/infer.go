@@ -119,7 +119,7 @@ func GpuInfer(modelDir *C.char, imageFile *C.char) {
 	configFile = C.GetConfigFilePath(modelDir, configFile, C.int(maxSize))
 
 	var option *C.FD_C_RuntimeOptionWrapper = C.FD_C_CreateRuntimeOptionWrapper()
-	C.FD_C_RuntimeOptionWrapperUseGpu(option, 0)
+	C.FD_C_RuntimeOptionWrapperUseCuda(option, 0)
 
 	var model *C.FD_C_PPYOLOEWrapper = C.FD_C_CreatePPYOLOEWrapper(
 		modelFile, paramsFile, configFile, option, C.FD_C_ModelFormat_PADDLE)

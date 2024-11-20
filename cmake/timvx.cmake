@@ -24,9 +24,9 @@ if(${ENABLE_TRT_BACKEND})
     set(ENABLE_TRT_BACKEND OFF)
 endif()
 
-if(${WITH_GPU})
-    message(WARNING "While compiling with -DWITH_TIMVX=ON, will force to set -DWITH_GPU=OFF")
-    set(WITH_GPU OFF)
+if(${WITH_CUDA})
+    message(WARNING "While compiling with -DWITH_TIMVX=ON, will force to set -DWITH_CUDA=OFF")
+    set(WITH_CUDA OFF)
 endif()
 
 if(${ENABLE_TEXT})

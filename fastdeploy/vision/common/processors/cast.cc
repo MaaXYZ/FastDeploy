@@ -92,7 +92,7 @@ bool Cast::ImplByCvCuda(FDMat* mat) {
 
   // Prepare output tensor
   mat->output_cache->Resize(src->Shape(), dst_dtype, "output_cache",
-                            Device::GPU);
+                            Device::CUDA);
   auto dst_tensor =
       CreateCvCudaTensorWrapData(*(mat->output_cache), mat->layout);
 

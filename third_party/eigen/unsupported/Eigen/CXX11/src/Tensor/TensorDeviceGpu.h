@@ -7,7 +7,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#if defined(EIGEN_USE_GPU) && !defined(EIGEN_CXX11_TENSOR_TENSOR_DEVICE_GPU_H)
+#if defined(EIGEN_use_cuda) && !defined(EIGEN_CXX11_TENSOR_TENSOR_DEVICE_GPU_H)
 #define EIGEN_CXX11_TENSOR_TENSOR_DEVICE_GPU_H
 
 // This header file container defines fo gpu* macros which will resolve to

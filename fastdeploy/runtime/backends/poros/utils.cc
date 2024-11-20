@@ -14,7 +14,7 @@
 
 #include "fastdeploy/runtime/backends/poros/poros_backend.h"
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 #include <cuda_runtime_api.h>
 #endif
 
@@ -84,7 +84,7 @@ FDDataType GetFdDtype(const at::ScalarType& poros_dtype) {
 }
 
 at::Tensor CreatePorosValue(FDTensor& tensor, bool is_backend_cuda) {
-  FDASSERT(tensor.device == Device::GPU || tensor.device == Device::CPU,
+  FDASSERT(tensor.device == Device::CUDA || tensor.device == Device::CPU,
            "Only support tensor which device is CPU or GPU for PorosBackend.");
   auto data_type = GetPorosDtype(tensor.dtype);
   size_t numel = tensor.Numel();

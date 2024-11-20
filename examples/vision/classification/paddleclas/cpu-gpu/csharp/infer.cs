@@ -42,7 +42,7 @@ namespace Test
             if(device_option==0){
                 runtimeoption.UseCpu();
             }else{
-                runtimeoption.UseGpu();
+                runtimeoption.UseCuda();
             }
             fastdeploy.vision.classification.PaddleClasModel model = new fastdeploy.vision.classification.PaddleClasModel(model_file, params_file, config_file, runtimeoption, ModelFormat.PADDLE);
             if(!model.Initialized()){

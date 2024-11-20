@@ -39,7 +39,7 @@ struct FASTDEPLOY_DECL FDTensor {
    * \param[in] data_type The data type of tensor
    * \param[in] data_buffer The pointer of data buffer memory
    * \param[in] copy Whether to copy memory from data_buffer to tensor, if false, this tensor will share memory with data_buffer, and the data is managed by userself
-   * \param[in] data_device The device of data_buffer, e.g if data_buffer is a pointer to GPU data, the device should be Device::GPU
+   * \param[in] data_device The device of data_buffer, e.g if data_buffer is a pointer to GPU data, the device should be Device::CUDA
    * \param[in] data_device_id The device id of data_buffer
    */
   void SetData(const std::vector<int64_t>& tensor_shape, const FDDataType& data_type, void* data_buffer, bool copy = false, const Device& data_device = Device::CPU, int data_device_id = -1) {

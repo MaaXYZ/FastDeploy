@@ -70,7 +70,7 @@ def build_option(args):
         runtime_option.use_cpu()
         runtime_option.set_cpu_thread_num(args.cpu_num_threads)
     else:
-        runtime_option.use_gpu(args.device_id)
+        runtime_option.use_cuda(args.device_id)
 
     # Set backend
     if args.backend == 'onnx_runtime':

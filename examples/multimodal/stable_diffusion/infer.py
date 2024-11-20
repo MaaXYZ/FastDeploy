@@ -98,7 +98,7 @@ def parse_arguments():
 def create_ort_runtime(model_dir, model_prefix, model_format, device_id=0):
     option = fd.RuntimeOption()
     option.use_ort_backend()
-    option.use_gpu(device_id)
+    option.use_cuda(device_id)
     if model_format == "paddle":
         model_file = os.path.join(model_dir, model_prefix, "inference.pdmodel")
         params_file = os.path.join(model_dir, model_prefix,
@@ -121,7 +121,7 @@ def create_paddle_inference_runtime(model_dir,
     if device_id == -1:
         option.use_cpu()
     else:
-        option.use_gpu(device_id)
+        option.use_cuda(device_id)
     if use_trt:
         option.use_trt_backend()
         option.enable_paddle_to_trt()
@@ -152,7 +152,7 @@ def create_trt_runtime(model_dir,
                        device_id=0):
     option = fd.RuntimeOption()
     option.use_trt_backend()
-    option.use_gpu(device_id)
+    option.use_cuda(device_id)
     option.enable_trt_fp16()
     option.set_trt_max_workspace_size(workspace)
     if dynamic_shape is not None:

@@ -74,7 +74,7 @@ bool FastDeployModel::InitRuntimeWithSpecifiedBackend() {
     return false;
   }
 
-  bool use_gpu = (runtime_option.device == Device::GPU);
+  bool use_cuda = (runtime_option.device == Device::CUDA);
   bool use_ipu = (runtime_option.device == Device::IPU);
   bool use_rknpu = (runtime_option.device == Device::RKNPU);
   bool use_horizon = (runtime_option.device == Device::SUNRISENPU);
@@ -84,7 +84,7 @@ bool FastDeployModel::InitRuntimeWithSpecifiedBackend() {
   bool use_directml = (runtime_option.device == Device::DIRECTML);
   bool use_kunlunxin = (runtime_option.device == Device::KUNLUNXIN);
 
-  if (use_gpu) {
+  if (use_cuda) {
     if (!IsSupported(valid_gpu_backends, runtime_option.backend)) {
       FDERROR << "The valid gpu backends of model " << ModelName() << " are "
               << Str(valid_gpu_backends) << ", " << runtime_option.backend
@@ -167,8 +167,8 @@ bool FastDeployModel::InitRuntimeWithSpecifiedBackend() {
 bool FastDeployModel::InitRuntimeWithSpecifiedDevice() {
   if (runtime_option.device == Device::CPU) {
     return CreateCpuBackend();
-  } else if (runtime_option.device == Device::GPU) {
-#ifdef WITH_GPU
+  } else if (runtime_option.device == Device::CUDA) {
+#ifdef WITH_CUDA
     return CreateGpuBackend();
 #else
     FDERROR << "The compiled FastDeploy library doesn't support GPU now."

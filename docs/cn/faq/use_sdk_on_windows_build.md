@@ -26,8 +26,8 @@
 
 - cmake >= 3.12
 - Visual Studio 2019
-- cuda >= 11.2 (当WITH_GPU=ON)
-- cudnn >= 8.0 (当WITH_GPU=ON)
+- cuda >= 11.2 (当WITH_CUDA=ON)
+- cudnn >= 8.0 (当WITH_CUDA=ON)
 
 ## 2. 下载 FastDeploy Windows 10 C++ SDK
 <div id="Download"></div>  

@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
   fd::RuntimeOption runtime_option;
   runtime_option.SetModelPath(model_file, params_file);
   runtime_option.UsePaddleInferBackend();
-   runtime_option.UseGpu(0);
+   runtime_option.UseCuda(0);
  
   // Enable Paddle Inference + TensorRT
   // If need to configure Paddle Inference backend for more option, we can configure runtime_option.paddle_infer_option

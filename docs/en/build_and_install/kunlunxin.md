@@ -40,7 +40,7 @@ mkdir build && cd build
 
 # CMake configuration with KunlunXin xpu toolchain
 cmake -DWITH_KUNLUNXIN=ON  \
-      -DWITH_GPU=OFF  \
+      -DWITH_CUDA=OFF  \
       -DCMAKE_INSTALL_PREFIX=fastdeploy-kunlunxin \
       -DENABLE_VISION=ON \
       -DOPENCV_DIRECTORY=/usr/lib/x86_64-linux-gnu/cmake/opencv4 \
@@ -58,7 +58,7 @@ The compilation command is as follows:
 git clone https://github.com/PaddlePaddle/FastDeploy.git
 cd FastDeploy/python
 export WITH_KUNLUNXIN=ON
-export WITH_GPU=OFF
+export WITH_CUDA=OFF
 export ENABLE_VISION=ON
 # The OPENCV_DIRECTORY is optional, if not exported, a prebuilt OpenCV library will be downloaded
 export OPENCV_DIRECTORY=/usr/lib/x86_64-linux-gnu/cmake/opencv4

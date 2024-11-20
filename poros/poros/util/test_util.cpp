@@ -43,7 +43,7 @@ static inline void clone_tensor_vector(const std::vector<at::Tensor> &old_vec, s
 
 static std::string get_engine_name(const baidu::mirana::poros::PorosOptions &poros_option) {
     std::string engine_name("");
-    if (poros_option.device == Device::GPU) {
+    if (poros_option.device == Device::CUDA) {
         engine_name = "TensorrtEngine";
     } else if (poros_option.device == Device::XPU) {
         engine_name = "XtclEngine";
@@ -118,12 +118,12 @@ static std::vector<at::Tensor> run_graph(const std::shared_ptr<torch::jit::Graph
     }
     // 执行graph
     std::clock_t start, end;
-    if (poros_option.device == Device::GPU) {
+    if (poros_option.device == Device::CUDA) {
         cudaDeviceSynchronize();
     }
     start = std::clock();
     graph_exe.run(graph_input);
-    if (poros_option.device == Device::GPU) {
+    if (poros_option.device == Device::CUDA) {
         cudaDeviceSynchronize();
     }
     end = std::clock();
@@ -260,7 +260,7 @@ static std::vector<at::Tensor> run_engine(std::shared_ptr<torch::jit::Graph> &gr
 
     // 测试engine输出
     std::clock_t start, end;
-    if (poros_option.device == Device::GPU) {
+    if (poros_option.device == Device::CUDA) {
         cudaDeviceSynchronize();
     }
     start = std::clock();
@@ -275,7 +275,7 @@ static std::vector<at::Tensor> run_engine(std::shared_ptr<torch::jit::Graph> &gr
     } else {
         engine_output = engine->excute_engine(input_data);
     }
-    if (poros_option.device == Device::GPU) {
+    if (poros_option.device == Device::CUDA) {
         cudaDeviceSynchronize();
     }
     end = std::clock();

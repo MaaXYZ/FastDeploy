@@ -42,24 +42,24 @@ class FASTDEPLOY_DECL ProcessorManager {
 
   bool CudaUsed();
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   cudaStream_t Stream() const { return stream_; }
 #endif
 
   void SetStream(FDMat* mat) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
     mat->SetStream(stream_);
 #endif
   }
 
   void SetStream(FDMatBatch* mat_batch) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
     mat_batch->SetStream(stream_);
 #endif
   }
 
   void SyncStream() {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
     FDASSERT(cudaStreamSynchronize(stream_) == cudaSuccess,
              "[ERROR] Error occurs while sync cuda stream.");
 #endif
@@ -92,7 +92,7 @@ class FASTDEPLOY_DECL ProcessorManager {
   ProcLib proc_lib_ = ProcLib::DEFAULT;
 
  private:
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   cudaStream_t stream_ = nullptr;
 #endif
   int device_id_ = -1;

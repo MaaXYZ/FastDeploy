@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if defined(WITH_GPU)
+#if defined(WITH_CUDA)
 
 #include <cuda.h>
 #include <cuda_runtime_api.h>
@@ -118,5 +118,5 @@ PD_BUILD_OP(centerpoint_postprocess)
     .SetInferShapeFn(PD_INFER_SHAPE(fastdeploy::paddle_custom_ops::PostProcessInferShape))
     .SetInferDtypeFn(PD_INFER_DTYPE(fastdeploy::paddle_custom_ops::PostProcessInferDtype));
 
-#endif // WITH_GPU
+#endif // WITH_CUDA
 

@@ -88,7 +88,7 @@ void ResourceUsageMonitor::Start() {
             std::max(max_cpu_mem_, static_cast<float>(res.ru_maxrss / 1024.0));
       }
 #endif
-#if defined(WITH_GPU)
+#if defined(WITH_CUDA)
       std::string gpu_mem_info = GetCurrentGpuMemoryInfo(gpu_id_);
       // get max_gpu_mem and max_gpu_util
       std::vector<std::string> gpu_tokens;
@@ -131,7 +131,7 @@ void ResourceUsageMonitor::StopInternal() {
 
 std::string ResourceUsageMonitor::GetCurrentGpuMemoryInfo(int device_id) {
   std::string result = "";
-#if defined(__linux__) && defined(WITH_GPU)
+#if defined(__linux__) && defined(WITH_CUDA)
   std::string command = "nvidia-smi --id=" + std::to_string(device_id) +
                         " --query-gpu=index,uuid,name,timestamp,memory.total,"
                         "memory.free,memory.used,utilization.gpu,utilization."

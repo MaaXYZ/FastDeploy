@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
     int warm_up_cycle = 50;
     if (FLAGS_test_mode == "poros") {
         baidu::mirana::poros::PorosOptions option;
-        option.device = baidu::mirana::poros::Device::GPU;
+        option.device = baidu::mirana::poros::Device::CUDA;
         option.is_dynamic = FLAGS_is_dynamic;
         option.debug = true;
 

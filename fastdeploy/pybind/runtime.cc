@@ -149,7 +149,7 @@ void BindRuntime(pybind11::module& m) {
   pybind11::enum_<Device>(m, "Device", pybind11::arithmetic(),
                           "Device for inference.")
       .value("CPU", Device::CPU)
-      .value("GPU", Device::GPU)
+      .value("GPU", Device::CUDA)
       .value("IPU", Device::IPU)
       .value("RKNPU", Device::RKNPU)
       .value("SOPHGOTPU", Device::SOPHGOTPUD);

@@ -142,7 +142,7 @@ bool Resize::ImplByCvCuda(FDMat* mat) {
 
   // Prepare output tensor
   mat->output_cache->Resize({height_, width_, mat->Channels()}, mat->Type(),
-                            "output_cache", Device::GPU);
+                            "output_cache", Device::CUDA);
   auto dst_tensor = CreateCvCudaTensorWrapData(*(mat->output_cache));
 
   // CV-CUDA Interp value is compatible with OpenCV
@@ -152,7 +152,7 @@ bool Resize::ImplByCvCuda(FDMat* mat) {
   mat->SetTensor(mat->output_cache);
   mat->SetWidth(width_);
   mat->SetHeight(height_);
-  mat->device = Device::GPU;
+  mat->device = Device::CUDA;
   mat->mat_type = ProcLib::CVCUDA;
   return true;
 }

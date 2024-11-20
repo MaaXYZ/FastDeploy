@@ -18,7 +18,7 @@ Written by Shaoshuai Shi
 All Rights Reserved 2019-2020.
 */
 
-#if defined(WITH_GPU)
+#if defined(WITH_CUDA)
 
 #include <cuda.h>
 #include <cuda_runtime_api.h>

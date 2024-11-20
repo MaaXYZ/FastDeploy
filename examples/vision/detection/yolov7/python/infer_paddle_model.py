@@ -23,7 +23,7 @@ def parse_arguments():
 def build_option(args):
     option = fd.RuntimeOption()
     if args.device.lower() == "gpu":
-        option.use_gpu(0)
+        option.use_cuda(0)
 
     if args.device.lower() == "kunlunxin":
         option.use_kunlunxin()

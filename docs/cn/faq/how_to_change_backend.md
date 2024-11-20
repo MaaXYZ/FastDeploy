@@ -18,7 +18,7 @@ option = fd.RuntimeOption()
 
 # 切换使用CPU/GPU
 option.use_cpu()
-option.use_gpu()
+option.use_cuda()
 
 # 切换不同后端
 option.use_paddle_backend() # Paddle Inference
@@ -34,7 +34,7 @@ fastdeploy::RuntimeOption option;
 
 // 切换使用CPU/GPU
 option.UseCpu();
-option.UseGpu();
+option.UseCuda();
 
 // 切换不同后端
 option.UsePaddleBackend(); // Paddle Inference

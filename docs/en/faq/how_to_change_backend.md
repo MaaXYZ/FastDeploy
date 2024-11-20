@@ -18,7 +18,7 @@ option = fd.RuntimeOption()
 
 # Change CPU/GPU
 option.use_cpu()
-option.use_gpu()
+option.use_cuda()
 
 # Change the Backend
 option.use_paddle_backend() # Paddle Inference
@@ -34,7 +34,7 @@ fastdeploy::RuntimeOption option;
 
 // Change CPU/GPU
 option.UseCpu();
-option.UseGpu();
+option.UseCuda();
 
 // Change the Backend
 option.UsePaddleBackend(); // Paddle Inference

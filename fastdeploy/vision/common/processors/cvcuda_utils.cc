@@ -107,7 +107,7 @@ nvcv::ImageWrapData CreateImageWrapData(const FDTensor& tensor) {
 void CreateCvCudaImageBatchVarShape(std::vector<FDTensor*>& tensors,
                                     nvcv::ImageBatchVarShape& img_batch) {
   for (size_t i = 0; i < tensors.size(); ++i) {
-    FDASSERT(tensors[i]->device == Device::GPU, "Tensor must on GPU.");
+    FDASSERT(tensors[i]->device == Device::CUDA, "Tensor must on GPU.");
     img_batch.pushBack(CreateImageWrapData(*(tensors[i])));
   }
 }

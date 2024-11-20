@@ -32,7 +32,7 @@ docker run -it --rm --name build_fd_vison \
             ln -s /usr/bin/python3 /usr/bin/python;
             pip3 install wheel;
             export PATH=/workspace/fastdeploy/serving/cmake-3.18.6-Linux-x86_64/bin:$PATH;
-            export WITH_GPU=OFF;
+            export WITH_CUDA=OFF;
             export WITH_IPU=ON;
             export ENABLE_PADDLE_BACKEND=ON;
             export ENABLE_VISION=ON;

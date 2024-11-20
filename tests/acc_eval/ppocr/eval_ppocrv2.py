@@ -70,7 +70,7 @@ def build_option(args):
         option.use_ascend()
 
     if args.device.lower() == "gpu":
-        option.use_gpu()
+        option.use_cuda()
 
     return option
 

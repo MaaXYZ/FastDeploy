@@ -532,7 +532,7 @@ TRITONSERVER_Error* ModelState::LoadModel(
 #ifdef TRITON_ENABLE_GPU
     if ((instance_group_kind == TRITONSERVER_INSTANCEGROUPKIND_GPU) ||
         (instance_group_kind == TRITONSERVER_INSTANCEGROUPKIND_AUTO)) {
-      runtime_options_->UseGpu(instance_group_device_id);
+      runtime_options_->UseCuda(instance_group_device_id);
       runtime_options_->SetExternalStream((void*)stream);
     } else if (runtime_options_->device != fastdeploy::Device::IPU) {
       runtime_options_->UseCpu();
@@ -1231,7 +1231,7 @@ TRITONSERVER_Error* ModelInstanceState::SetInputTensors(
     fastdeploy::Device device;
     if (memory_type == TRITONSERVER_MEMORY_GPU) {
       device_id = DeviceId();
-      device = fastdeploy::Device::GPU;
+      device = fastdeploy::Device::CUDA;
     } else {
       device = fastdeploy::Device::CPU;
     }
@@ -1286,7 +1286,7 @@ TRITONSERVER_Error* ModelInstanceState::ReadOutputTensors(
     }
     TRITONSERVER_MemoryType memory_type = TRITONSERVER_MEMORY_CPU;
     int64_t memory_type_id = 0;
-    if (output_tensor->device == fastdeploy::Device::GPU) {
+    if (output_tensor->device == fastdeploy::Device::CUDA) {
       memory_type = TRITONSERVER_MEMORY_GPU;
       memory_type_id = DeviceId();
     }

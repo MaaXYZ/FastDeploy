@@ -94,7 +94,7 @@ void GpuInfer(const std::string& model_dir, const std::string& image_file_path, 
   auto params_file = model_dir + sep + "inference.pdiparams";
   auto config_file = model_dir + sep + "inference_cls.yaml";
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   option.UsePaddleBackend();
   auto model = fastdeploy::vision::classification::PaddleClasModel(
       model_file, params_file, config_file, option);
@@ -126,7 +126,7 @@ void TrtInfer(const std::string& model_dir, const std::string& image_file_path, 
   auto params_file = model_dir + sep + "inference.pdiparams";
   auto config_file = model_dir + sep + "inference_cls.yaml";
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   option.UseTrtBackend();
   // for model.Clone() must SetTrtInputShape first
   option.SetTrtInputShape("inputs", {1, 3, 224, 224});

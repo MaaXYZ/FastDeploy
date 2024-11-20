@@ -32,7 +32,7 @@ namespace internal {
 // Make sure this is only available when targeting a GPU: we don't want to
 // introduce conflicts between these packet_traits definitions and the ones
 // we'll use on the host side (SSE, AVX, ...)
-#if defined(EIGEN_GPUCC) && defined(EIGEN_USE_GPU)
+#if defined(EIGEN_GPUCC) && defined(EIGEN_use_cuda)
 
 template <>
 struct is_arithmetic<float4> {
@@ -608,7 +608,7 @@ EIGEN_DEVICE_FUNC inline void ptranspose(PacketBlock<double2, 2>& kernel) {
   kernel.packet[1].x = tmp;
 }
 
-#endif  // defined(EIGEN_GPUCC) && defined(EIGEN_USE_GPU)
+#endif  // defined(EIGEN_GPUCC) && defined(EIGEN_use_cuda)
 
 // Packet4h2 must be defined in the macro without EIGEN_CUDA_ARCH, meaning
 // its corresponding packet_traits<Eigen::half> must be visible on host.

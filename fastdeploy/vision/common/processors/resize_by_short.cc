@@ -92,7 +92,7 @@ bool ResizeByShort::ImplByCvCuda(FDMat* mat) {
 
   // Prepare output tensor
   mat->output_cache->Resize({height, width, mat->Channels()}, mat->Type(),
-                            "output_cache", Device::GPU);
+                            "output_cache", Device::CUDA);
   auto dst_tensor = CreateCvCudaTensorWrapData(*(mat->output_cache));
 
   cvcuda_resize_op_(mat->Stream(), *src_tensor, *dst_tensor,
@@ -101,7 +101,7 @@ bool ResizeByShort::ImplByCvCuda(FDMat* mat) {
   mat->SetTensor(mat->output_cache);
   mat->SetWidth(width);
   mat->SetHeight(height);
-  mat->device = Device::GPU;
+  mat->device = Device::CUDA;
   mat->mat_type = ProcLib::CVCUDA;
   return true;
 }
@@ -129,7 +129,7 @@ bool ResizeByShort::ImplByCvCuda(FDMatBatch* mat_batch) {
     int width = static_cast<int>(round(scale * mat->Width()));
     int height = static_cast<int>(round(scale * mat->Height()));
     mat->output_cache->Resize({height, width, mat->Channels()}, mat->Type(),
-                              "output_cache", Device::GPU);
+                              "output_cache", Device::CUDA);
     dst_tensors.push_back(mat->output_cache);
   }
   nvcv::ImageBatchVarShape dst_batch(mat_batch->mats->size());
@@ -144,10 +144,10 @@ bool ResizeByShort::ImplByCvCuda(FDMatBatch* mat_batch) {
     mat->SetTensor(dst_tensors[i]);
     mat->SetWidth(dst_tensors[i]->Shape()[1]);
     mat->SetHeight(dst_tensors[i]->Shape()[0]);
-    mat->device = Device::GPU;
+    mat->device = Device::CUDA;
     mat->mat_type = ProcLib::CVCUDA;
   }
-  mat_batch->device = Device::GPU;
+  mat_batch->device = Device::CUDA;
   mat_batch->mat_type = ProcLib::CVCUDA;
   return true;
 }

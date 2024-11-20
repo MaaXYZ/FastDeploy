@@ -81,7 +81,7 @@ def build_option(args):
 
     if args.device.lower() == "gpu":
         option.use_paddle_backend()
-        option.use_gpu()
+        option.use_cuda()
 
     if args.device.lower() == "ipu":
         option.use_ipu()

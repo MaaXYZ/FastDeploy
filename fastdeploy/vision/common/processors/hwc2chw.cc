@@ -71,7 +71,7 @@ bool HWC2CHW::ImplByCvCuda(FDMat* mat) {
 
   // Prepare output tensor
   mat->output_cache->Resize({mat->Channels(), mat->Height(), mat->Width()},
-                            src->Dtype(), "output_cache", Device::GPU);
+                            src->Dtype(), "output_cache", Device::CUDA);
   auto dst_tensor =
       CreateCvCudaTensorWrapData(*(mat->output_cache), Layout::CHW);
 

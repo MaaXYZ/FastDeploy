@@ -32,7 +32,7 @@ def build_picodet_option(args):
     option = fd.RuntimeOption()
 
     if args.device.lower() == "gpu":
-        option.use_gpu()
+        option.use_cuda()
 
     if args.use_trt:
         option.use_trt_backend()
@@ -45,7 +45,7 @@ def build_tinypose_option(args):
     option = fd.RuntimeOption()
 
     if args.device.lower() == "gpu":
-        option.use_gpu()
+        option.use_cuda()
 
     if args.device.lower() == "kunlunxin":
         option.use_kunlunxin()

@@ -63,12 +63,12 @@ void FD_C_RuntimeOptionWrapperUseCpu(
   runtime_option->UseCpu();
 }
 
-void FD_C_RuntimeOptionWrapperUseGpu(
+void FD_C_RuntimeOptionWrapperUseCuda(
     __fd_keep FD_C_RuntimeOptionWrapper* fd_c_runtime_option_wrapper,
     int gpu_id) {
   auto& runtime_option = CHECK_AND_CONVERT_FD_TYPE(RuntimeOptionWrapper,
                                                    fd_c_runtime_option_wrapper);
-  runtime_option->UseGpu(gpu_id);
+  runtime_option->UseCuda(gpu_id);
 }
 
 void FD_C_RuntimeOptionWrapperUseRKNPU2(

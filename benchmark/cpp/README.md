@@ -63,7 +63,7 @@ Linux上编译需满足:
 git clone https://github.com/PaddlePaddle/FastDeploy.git -b develop
 cd FastDeploy
 mkdir build && cd build
-cmake .. -DWITH_GPU=ON \
+cmake .. -DWITH_CUDA=ON \
          -DENABLE_ORT_BACKEND=ON \
          -DENABLE_PADDLE_BACKEND=ON \
          -DENABLE_OPENVINO_BACKEND=ON \

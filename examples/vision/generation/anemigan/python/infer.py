@@ -21,7 +21,7 @@ def parse_arguments():
 def build_option(args):
     option = fd.RuntimeOption()
     if args.device.lower() == "gpu":
-        option.use_gpu()
+        option.use_cuda()
     else:
         option.set_paddle_mkldnn(False)
     return option

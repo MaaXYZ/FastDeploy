@@ -25,6 +25,6 @@ pip3 install paddlejsconverter
 ## Usage
 
 ```shell
-paddlejsconverter --modelPath=user_model_path --paramPath=user_model_params_path --outputDir=model_saved_path --useGPUOpt=True
+paddlejsconverter --modelPath=user_model_path --paramPath=user_model_params_path --outputDir=model_saved_path --UseCudaOpt=True
 ```
-Note: The option useGPUOpt is not turned on by default. Turn on useGPUOpt if the model is used on gpu backend (webgl/webgpu), don't turn on if is running on (wasm/plain js).
+Note: The option UseCudaOpt is not turned on by default. Turn on UseCudaOpt if the model is used on gpu backend (webgl/webgpu), don't turn on if is running on (wasm/plain js).

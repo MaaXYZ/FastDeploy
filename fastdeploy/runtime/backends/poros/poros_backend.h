@@ -37,7 +37,7 @@ std::string AtType2String(const at::ScalarType& dtype);
 
 // Create at::Tensor
 // is_backend_cuda specify if Poros use GPU Device
-// While is_backend_cuda = true, and tensor.device = Device::GPU
+// While is_backend_cuda = true, and tensor.device = Device::CUDA
 at::Tensor CreatePorosValue(FDTensor& tensor, bool is_backend_cuda = false);
 
 // Copy memory data from at::Tensor to fastdeploy::FDTensor

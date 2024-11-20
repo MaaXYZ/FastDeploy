@@ -9,7 +9,7 @@
 [WARNING] fastdeploy/backends/tensorrt/trt_backend.cc(556)::CreateTrtEngineFromOnnx	Input 0: TensorInfo(name: image, shape: [-1, 3, 320, 320], dtype: FDDataType::FP32)
 [WARNING] fastdeploy/backends/tensorrt/trt_backend.cc(556)::CreateTrtEngineFromOnnx	Input 1: TensorInfo(name: scale_factor, shape: [1, 2], dtype: FDDataType::FP32)
 [WARNING] fastdeploy/backends/tensorrt/trt_backend.cc(558)::CreateTrtEngineFromOnnx	FastDeploy will build the engine while inference with input data, and will also collect the input shape range information. You should be noticed that FastDeploy will rebuild the engine while new input shape is out of the collected shape range, this may bring some time consuming problem, refer https://github.com/PaddlePaddle/FastDeploy/docs/backends/tensorrt.md for more details.
-[INFO] fastdeploy/fastdeploy_runtime.cc(270)::Init	Runtime initialized with Backend::TRT in device Device::GPU.
+[INFO] fastdeploy/fastdeploy_runtime.cc(270)::Init	Runtime initialized with Backend::TRT in device Device::CUDA.
 [INFO] fastdeploy/vision/detection/ppdet/ppyoloe.cc(65)::Initialize	Detected operator multiclass_nms3 in your model, will replace it with fastdeploy::backend::MultiClassNMS(background_label=-1, keep_top_k=100, nms_eta=1, nms_threshold=0.6, score_threshold=0.025, nms_top_k=1000, normalized=1).
 [WARNING] fastdeploy/backends/tensorrt/utils.cc(40)::Update	[New Shape Out of Range] input name: image, shape: [1, 3, 320, 320], The shape range before: min_shape=[-1, 3, 320, 320], max_shape=[-1, 3, 320, 320].
 [WARNING] fastdeploy/backends/tensorrt/utils.cc(52)::Update	[New Shape Out of Range] The updated shape range now: min_shape=[1, 3, 320, 320], max_shape=[1, 3, 320, 320].

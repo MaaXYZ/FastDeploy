@@ -34,7 +34,7 @@ cv::Mat* Mat::GetOpenCVMat() {
     FDASSERT(false, "FastDeploy didn't compiled with FlyCV!");
 #endif
   } else if (mat_type == ProcLib::CUDA || mat_type == ProcLib::CVCUDA) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
     FDASSERT(cudaStreamSynchronize(stream) == cudaSuccess,
              "[ERROR] Error occurs while sync cuda stream.");
     cpu_mat = CreateZeroCopyOpenCVMatFromTensor(*fd_tensor, layout);
@@ -42,7 +42,7 @@ cv::Mat* Mat::GetOpenCVMat() {
     device = Device::CPU;
     return &cpu_mat;
 #else
-    FDASSERT(false, "FastDeploy didn't compiled with -DWITH_GPU=ON");
+    FDASSERT(false, "FastDeploy didn't compiled with -DWITH_CUDA=ON");
 #endif
   } else {
     FDASSERT(false, "The mat_type of custom Mat can not be ProcLib::DEFAULT");
@@ -75,7 +75,7 @@ void* Mat::Data() {
              "FastDeploy didn't compile with FlyCV, but met data type with "
              "fcv::Mat.");
 #endif
-  } else if (device == Device::GPU) {
+  } else if (device == Device::CUDA) {
     return fd_tensor->Data();
   }
   return cpu_mat.ptr();
@@ -173,7 +173,7 @@ void Mat::PrintInfo(const std::string& flag) {
     }
     std::cout << std::endl;
   } else if (mat_type == ProcLib::CUDA || mat_type == ProcLib::CVCUDA) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
     FDASSERT(cudaStreamSynchronize(stream) == cudaSuccess,
              "[ERROR] Error occurs while sync cuda stream.");
     cv::Mat tmp_mat = CreateZeroCopyOpenCVMatFromTensor(*fd_tensor, layout);
@@ -183,7 +183,7 @@ void Mat::PrintInfo(const std::string& flag) {
     }
     std::cout << std::endl;
 #else
-    FDASSERT(false, "FastDeploy didn't compiled with -DWITH_GPU=ON");
+    FDASSERT(false, "FastDeploy didn't compiled with -DWITH_CUDA=ON");
 #endif
   }
 #endif  // PRINT_INFO
@@ -305,20 +305,20 @@ bool CheckShapeConsistency(std::vector<Mat>* mats) {
 }
 
 FDTensor* CreateCachedGpuInputTensor(Mat* mat) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   FDTensor* src = mat->Tensor();
   // Need to make sure the tensor is pointed to the input_cache.
   if (src->Data() == mat->output_cache->Data()) {
     std::swap(mat->input_cache, mat->output_cache);
     std::swap(mat->input_cache->name, mat->output_cache->name);
   }
-  if (src->device == Device::GPU) {
+  if (src->device == Device::CUDA) {
     return src;
   } else if (src->device == Device::CPU) {
     // Tensor on CPU, we need copy it from CPU to GPU
     FDASSERT(src->Shape().size() == 3, "The CPU tensor must has 3 dims.")
     mat->output_cache->Resize(src->Shape(), src->Dtype(), "output_cache",
-                              Device::GPU);
+                              Device::CUDA);
     FDASSERT(
         cudaMemcpyAsync(mat->output_cache->Data(), src->Data(), src->Nbytes(),
                         cudaMemcpyHostToDevice, mat->Stream()) == 0,
@@ -330,7 +330,7 @@ FDTensor* CreateCachedGpuInputTensor(Mat* mat) {
     FDASSERT(false, "FDMat is on unsupported device: %d", src->device);
   }
 #else
-  FDASSERT(false, "FastDeploy didn't compile with WITH_GPU.");
+  FDASSERT(false, "FastDeploy didn't compile with WITH_CUDA.");
 #endif
   return nullptr;
 }

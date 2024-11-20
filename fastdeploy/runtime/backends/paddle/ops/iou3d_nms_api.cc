@@ -42,7 +42,7 @@ std::vector<paddle::DataType> NMSInferDtype(paddle::DataType boxes_dtype) {
 }  // namespace fastdeploy
 }  // namespace paddle_custom_ops
 
-#if defined(WITH_GPU)
+#if defined(WITH_CUDA)
 
 PD_BUILD_OP(nms_gpu)
     .Inputs({"boxes"})

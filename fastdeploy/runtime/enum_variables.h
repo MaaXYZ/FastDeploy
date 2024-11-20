@@ -55,7 +55,7 @@ FASTDEPLOY_DECL bool IsBackendAvailable(const Backend& backend);
 
 enum FASTDEPLOY_DECL Device {
   CPU,
-  GPU,
+  CUDA,
   RKNPU,
   IPU,
   TIMVX,
@@ -96,7 +96,7 @@ static std::map<Device, std::vector<Backend>>
     s_default_backends_by_device = {
   {Device::CPU, {Backend::LITE, Backend::PDINFER, Backend::ORT,
                 Backend::OPENVINO, Backend::POROS, Backend::TVM}},
-  {Device::GPU, {Backend::LITE, Backend::PDINFER, Backend::ORT,
+  {Device::CUDA, {Backend::LITE, Backend::PDINFER, Backend::ORT,
                 Backend::TRT, Backend::POROS, Backend::TVM}},
   {Device::RKNPU, {Backend::RKNPU2}},
   {Device::SUNRISENPU, {Backend::HORIZONNPU}},

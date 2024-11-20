@@ -104,7 +104,7 @@ void GpuInfer(const std::string& model_dir, const std::string& video_file,
   auto params_file = model_dir + sep + "model.pdiparams";
 
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   auto model =
       fastdeploy::vision::sr::BasicVSR(model_file, params_file, option);
 
@@ -183,7 +183,7 @@ void TrtInfer(const std::string& model_dir, const std::string& video_file,
   auto model_file = model_dir + sep + "model.pdmodel";
   auto params_file = model_dir + sep + "model.pdiparams";
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   // use paddle-TRT
   option.UseTrtBackend();
   option.EnablePaddleTrtCollectShape();

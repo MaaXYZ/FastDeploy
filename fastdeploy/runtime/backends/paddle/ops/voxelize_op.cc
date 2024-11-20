@@ -149,7 +149,7 @@ std::vector<paddle::Tensor> hard_voxelize_cpu(
 }
 
 
-#if defined(PADDLE_WITH_CUDA) && defined(WITH_GPU)
+#if defined(PADDLE_WITH_CUDA) && defined(WITH_CUDA)
 std::vector<paddle::Tensor> hard_voxelize_cuda(
     const paddle::Tensor &points, const std::vector<float> &voxel_size,
     const std::vector<float> &point_cloud_range, int max_num_points_in_voxel,
@@ -163,7 +163,7 @@ std::vector<paddle::Tensor> hard_voxelize(
   if (points.is_cpu()) {
     return hard_voxelize_cpu(points, voxel_size, point_cloud_range,
                              max_num_points_in_voxel, max_voxels);
-#if defined(PADDLE_WITH_CUDA) && defined(WITH_GPU)
+#if defined(PADDLE_WITH_CUDA) && defined(WITH_CUDA)
   } else if (points.is_gpu() || points.is_gpu_pinned()) {
     return hard_voxelize_cuda(points, voxel_size, point_cloud_range,
                               max_num_points_in_voxel, max_voxels);

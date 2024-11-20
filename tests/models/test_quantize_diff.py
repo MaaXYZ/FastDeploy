@@ -82,7 +82,7 @@ def test_quant_trt():
 
     option = fd.RuntimeOption()
     option.use_trt_backend()
-    option.use_gpu()
+    option.use_cuda()
 
     option.set_model_path(model_file, params_file)
     runtime = fd.Runtime(option)

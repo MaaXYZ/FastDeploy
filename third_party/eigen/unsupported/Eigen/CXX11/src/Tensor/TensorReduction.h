@@ -482,7 +482,7 @@ struct GenericReducer {
 };
 #endif
 
-#if defined(EIGEN_USE_GPU) && (defined(EIGEN_GPUCC))
+#if defined(EIGEN_use_cuda) && (defined(EIGEN_GPUCC))
 template <int B, int N, typename S, typename R, typename I_>
 __global__ EIGEN_HIP_LAUNCH_BOUNDS_1024 void FullReductionKernel(
     R, const S, I_, typename S::CoeffReturnType*, unsigned int*);
@@ -1019,7 +1019,7 @@ struct TensorReductionEvaluatorBase<
   template <typename S, typename O, bool V>
   friend struct internal::FullReducerShard;
 #endif
-#if defined(EIGEN_USE_GPU) && (defined(EIGEN_GPUCC))
+#if defined(EIGEN_use_cuda) && (defined(EIGEN_GPUCC))
   template <int B, int N, typename S, typename R, typename I_>
   KERNEL_FRIEND void internal::FullReductionKernel(R, const S, I_,
                                                    typename S::CoeffReturnType*,
@@ -1131,7 +1131,7 @@ struct TensorReductionEvaluatorBase<
   Op m_reducer;
 
 // For full reductions
-#if defined(EIGEN_USE_GPU) && (defined(EIGEN_GPUCC))
+#if defined(EIGEN_use_cuda) && (defined(EIGEN_GPUCC))
   static const bool RunningOnGPU =
       internal::is_same<Device, Eigen::GpuDevice>::value;
   static const bool RunningOnSycl = false;

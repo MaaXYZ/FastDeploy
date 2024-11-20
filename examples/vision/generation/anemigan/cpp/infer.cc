@@ -28,7 +28,7 @@ void PrintUsage() {
 
 bool CreateRuntimeOption(fastdeploy::RuntimeOption* option) {
   if (FLAGS_device == "gpu") {
-    option->UseGpu();
+    option->UseCuda();
     } 
   else if (FLAGS_device == "cpu") {
     option->SetPaddleMKLDNN(false);

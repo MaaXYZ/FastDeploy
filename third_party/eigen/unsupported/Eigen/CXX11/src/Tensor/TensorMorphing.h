@@ -402,7 +402,7 @@ struct MemcpyTriggerForSlicing {
 
 // It is very expensive to start the memcpy kernel on GPU: we therefore only
 // use it for large copies.
-#ifdef EIGEN_USE_GPU
+#ifdef EIGEN_use_cuda
 template <typename Index, bool BlockAccess>
 struct MemcpyTriggerForSlicing<Index, GpuDevice, BlockAccess> {
   EIGEN_DEVICE_FUNC MemcpyTriggerForSlicing(const GpuDevice&) {}

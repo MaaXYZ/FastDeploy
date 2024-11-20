@@ -84,7 +84,7 @@ void GpuInfer(const char* model_dir, const char* image_file) {
   snprintf(config_file, max_size, "%s%c%s", model_dir, sep, "deploy.yaml");
 
   FD_C_RuntimeOptionWrapper* option = FD_C_CreateRuntimeOptionWrapper();
-  FD_C_RuntimeOptionWrapperUseGpu(option, 0);
+  FD_C_RuntimeOptionWrapperUseCuda(option, 0);
 
   FD_C_PaddleSegModelWrapper* model = FD_C_CreatePaddleSegModelWrapper(
       model_file, params_file, config_file, option, FD_C_ModelFormat_PADDLE);

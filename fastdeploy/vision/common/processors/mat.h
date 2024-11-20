@@ -20,7 +20,7 @@
 #include "flycv.h"  // NOLINT
 #endif
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 #include <cuda_runtime_api.h>
 #endif
 
@@ -96,7 +96,7 @@ struct FASTDEPLOY_DECL Mat {
 #ifdef ENABLE_FLYCV
   fcv::Mat fcv_mat;
 #endif
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   cudaStream_t stream = nullptr;
 #endif
   // Currently, fd_tensor is only used by CUDA and CV-CUDA,
@@ -116,7 +116,7 @@ struct FASTDEPLOY_DECL Mat {
   // refer to manager.cc
   FDTensor* input_cache = nullptr;
   FDTensor* output_cache = nullptr;
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   cudaStream_t Stream() const { return stream; }
   void SetStream(cudaStream_t s) { stream = s; }
 #endif

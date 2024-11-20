@@ -10,7 +10,7 @@ This tutorial is for GPU environment. For CPU-Only enviroment, you can tailor it
 
 - No need for CUDA, TensorRT, datacenter-gpu-manager and other GPU dependencies
 - When compiling tritonserver, remove --enable-gpu and --enable-gpu-metrics
-- Disable GPU-related options such as WITH_GPU and ENABLE_TRT_BACKEND when compiling FastDeploy Runtime
+- Disable GPU-related options such as WITH_CUDA and ENABLE_TRT_BACKEND when compiling FastDeploy Runtime
 
 ## 1. Environments
 
@@ -123,7 +123,7 @@ mkdir build && cd build
 CC=/opt/gcc-9.4.0/bin/gcc CXX=/opt/gcc-9.4.0/bin/g++ cmake .. \
   -DENABLE_TRT_BACKEND=ON \
   -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install \
-  -DWITH_GPU=ON \
+  -DWITH_CUDA=ON \
   -DTRT_DIRECTORY=/workspace/TensorRT-8.4.3.1 \
   -DENABLE_PADDLE_BACKEND=ON \
   -DENABLE_ORT_BACKEND=ON \

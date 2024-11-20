@@ -121,8 +121,8 @@ bool TrtBackend::Init(const RuntimeOption& runtime_option) {
   trt_option.gpu_id = runtime_option.device_id;
   trt_option.enable_pinned_memory = runtime_option.enable_pinned_memory;
   trt_option.external_stream_ = runtime_option.external_stream_;
-  if (runtime_option.device != Device::GPU) {
-    FDERROR << "TrtBackend only supports Device::GPU, but now it's "
+  if (runtime_option.device != Device::CUDA) {
+    FDERROR << "TrtBackend only supports Device::CUDA, but now it's "
             << runtime_option.device << "." << std::endl;
     return false;
   }
@@ -359,23 +359,23 @@ bool TrtBackend::Infer(std::vector<FDTensor>& inputs,
       FDTensor output_tensor;
       output_tensor.SetExternalData(
           (*outputs)[i].shape, model_output_dtype,
-          outputs_device_buffer_[(*outputs)[i].name].data(), Device::GPU);
+          outputs_device_buffer_[(*outputs)[i].name].data(), Device::CUDA);
 
       casted_output_tensors_[(*outputs)[i].name].Resize(
           (*outputs)[i].shape, (*outputs)[i].dtype, (*outputs)[i].name,
-          Device::GPU);
+          Device::CUDA);
       function::CudaCast(output_tensor,
                          &casted_output_tensors_[(*outputs)[i].name], stream_);
       if (!copy_to_fd) {
         (*outputs)[i].SetExternalData(
             (*outputs)[i].shape, model_output_dtype,
             casted_output_tensors_[(*outputs)[i].name].MutableData(),
-            Device::GPU, option_.gpu_id);
+            Device::CUDA, option_.gpu_id);
       }
     } else {
       casted_output_tensors_[(*outputs)[i].name].SetExternalData(
           (*outputs)[i].shape, model_output_dtype,
-          outputs_device_buffer_[(*outputs)[i].name].data(), Device::GPU);
+          outputs_device_buffer_[(*outputs)[i].name].data(), Device::CUDA);
     }
   }
   if (copy_to_fd) {
@@ -450,13 +450,13 @@ void TrtBackend::SetInputs(const std::vector<FDTensor>& inputs) {
     auto dims = ToDims(shape);
     context_->setBindingDimensions(idx, dims);
 
-    if (item.device == Device::GPU) {
+    if (item.device == Device::CUDA) {
       if (item.dtype == FDDataType::INT64) {
         inputs_device_buffer_[item.name].resize(dims);
         FDTensor input_tensor;
         input_tensor.SetExternalData(item.shape, FDDataType::INT32,
                                      inputs_device_buffer_[item.name].data(),
-                                     Device::GPU);
+                                     Device::CUDA);
         function::CudaCast(item, &input_tensor, stream_);
       } else {
         // no copy
@@ -541,7 +541,7 @@ void TrtBackend::AllocateOutputsBuffer(std::vector<FDTensor>* outputs,
     } else {
       (*outputs)[ori_idx].name = outputs_desc_[i].name;
       (*outputs)[ori_idx].SetExternalData(
-          shape, outputs_desc_[i].original_dtype, bindings_[idx], Device::GPU,
+          shape, outputs_desc_[i].original_dtype, bindings_[idx], Device::CUDA,
           option_.gpu_id);
     }
   }

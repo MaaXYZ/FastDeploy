@@ -11,7 +11,7 @@
 #define EIGEN_TEST_NO_COMPLEX
 
 #define EIGEN_DEFAULT_DENSE_INDEX_TYPE int
-#define EIGEN_USE_GPU
+#define EIGEN_use_cuda
 
 #include <unsupported/Eigen/CXX11/Tensor>
 #include "main.h"

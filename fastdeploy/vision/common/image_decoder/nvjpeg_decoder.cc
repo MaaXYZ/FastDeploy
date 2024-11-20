@@ -136,7 +136,7 @@ static int prepare_buffers(FileData& file_data, std::vector<size_t>& file_len,
     }
 
     output_buffers[i]->Resize({heights[0], widths[0], mul * channels},
-                              FDDataType::UINT8, "output_cache", Device::GPU);
+                              FDDataType::UINT8, "output_cache", Device::CUDA);
 
     uint8_t* cur_buffer = reinterpret_cast<uint8_t*>(output_buffers[i]->Data());
 

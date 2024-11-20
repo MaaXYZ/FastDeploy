@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if(NOT WITH_GPU)
-  message(FATAL_ERROR "ENABLE_CVCUDA is available on Linux and WITH_GPU=ON, but now WITH_GPU=OFF.")
+if(NOT WITH_CUDA)
+  message(FATAL_ERROR "ENABLE_CVCUDA is available on Linux and WITH_CUDA=ON, but now WITH_CUDA=OFF.")
 endif()
 
 if(APPLE OR ANDROID OR IOS OR WIN32)

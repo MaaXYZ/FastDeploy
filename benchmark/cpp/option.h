@@ -71,7 +71,7 @@ static bool CreateRuntimeOption(fastdeploy::RuntimeOption* option,
     option->trt_option.max_workspace_size = max_workspace_size;
   }
   if (config_info["device"] == "gpu") {
-    option->UseGpu(std::stoi(config_info["device_id"]));
+    option->UseCuda(std::stoi(config_info["device_id"]));
     if (config_info["backend"] == "ort") {
       option->UseOrtBackend();
     } else if (config_info["backend"] == "paddle") {

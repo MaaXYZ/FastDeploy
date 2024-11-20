@@ -30,7 +30,7 @@ def build_option(args):
     option = fd.RuntimeOption()
 
     if args.device.lower() == "gpu":
-        # option.use_gpu()
+        # option.use_cuda()
         print(
             """GPU inference with Backend::Paddle in python has not been supported yet. \
           \nWill ignore this option.""")

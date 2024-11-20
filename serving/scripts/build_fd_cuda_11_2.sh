@@ -38,7 +38,7 @@ docker run -it --rm --name build_fd_libs \
             apt-get install -y --no-install-recommends patchelf python3-dev python3-pip rapidjson-dev git;
             ln -s /usr/bin/python3 /usr/bin/python;
             export PATH=/workspace/fastdeploy/serving/cmake-3.18.6-Linux-x86_64/bin:$PATH;
-            export WITH_GPU=ON;
+            export WITH_CUDA=ON;
             export ENABLE_TRT_BACKEND=OFF;
             export TRT_DIRECTORY=/workspace/fastdeploy/serving/TensorRT-8.4.1.5/;
             export ENABLE_ORT_BACKEND=OFF;
@@ -50,7 +50,7 @@ docker run -it --rm --name build_fd_libs \
             python setup.py bdist_wheel;
             cd /workspace/fastdeploy;
             rm -rf build; mkdir -p build;cd build;
-            cmake .. -DENABLE_TRT_BACKEND=ON -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install -DWITH_GPU=ON -DTRT_DIRECTORY=/workspace/fastdeploy/serving/TensorRT-8.4.1.5/ -DENABLE_PADDLE_BACKEND=ON -DENABLE_ORT_BACKEND=ON -DENABLE_OPENVINO_BACKEND=ON -DENABLE_VISION=ON -DBUILD_FASTDEPLOY_PYTHON=OFF -DENABLE_PADDLE2ONNX=ON -DENABLE_TEXT=OFF -DLIBRARY_NAME=fastdeploy_runtime;
+            cmake .. -DENABLE_TRT_BACKEND=ON -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install -DWITH_CUDA=ON -DTRT_DIRECTORY=/workspace/fastdeploy/serving/TensorRT-8.4.1.5/ -DENABLE_PADDLE_BACKEND=ON -DENABLE_ORT_BACKEND=ON -DENABLE_OPENVINO_BACKEND=ON -DENABLE_VISION=ON -DBUILD_FASTDEPLOY_PYTHON=OFF -DENABLE_PADDLE2ONNX=ON -DENABLE_TEXT=OFF -DLIBRARY_NAME=fastdeploy_runtime;
             make -j`nproc`;
             make install;
             cd /workspace/fastdeploy/serving;

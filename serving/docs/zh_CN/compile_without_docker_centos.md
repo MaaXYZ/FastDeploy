@@ -123,7 +123,7 @@ mkdir build && cd build
 CC=/opt/gcc-9.4.0/bin/gcc CXX=/opt/gcc-9.4.0/bin/g++ cmake .. \
   -DENABLE_TRT_BACKEND=ON \
   -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install \
-  -DWITH_GPU=ON \
+  -DWITH_CUDA=ON \
   -DTRT_DIRECTORY=/workspace/TensorRT-8.4.3.1 \
   -DENABLE_PADDLE_BACKEND=ON \
   -DENABLE_ORT_BACKEND=ON \

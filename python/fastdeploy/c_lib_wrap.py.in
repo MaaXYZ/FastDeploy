@@ -19,8 +19,8 @@ import sys
 user_specified_dirs = ['@OPENCV_DIRECTORY@', '@ORT_DIRECTORY@', ]
 
 
-def is_built_with_gpu() -> bool:
-    return True if "@WITH_GPU@" == "ON" else False
+def is_built_WITH_CUDA() -> bool:
+    return True if "@WITH_CUDA@" == "ON" else False
 
 
 def is_built_with_ort() -> bool:
@@ -44,13 +44,13 @@ def is_built_with_openvino() ->bool:
 
 
 def get_default_cuda_directory() -> str:
-    if not is_built_with_gpu():
+    if not is_built_WITH_CUDA():
        return ""
     return r"@CUDA_DIRECTORY@".strip()
 
 
 def get_default_cuda_major_version() -> str:
-    if not is_built_with_gpu():
+    if not is_built_WITH_CUDA():
        return ""
     # TODO(qiuyanjun): get cuda version from cmake.
     return "11"
@@ -95,7 +95,7 @@ def add_dll_search_dir(dir_path):
 
 
 def add_custom_cuda_path():
-    if is_built_with_gpu():
+    if is_built_WITH_CUDA():
         # if FastDeploy built with gpu and want to run
         # in windows, we need to add CUDA_DIRECTORY into
         # dll search paths to make sure FastDeploy.dll
@@ -142,7 +142,7 @@ def add_custom_cuda_path():
 
 if os.name == "nt":
     # cuda/cudnn libs
-    if is_built_with_gpu():
+    if is_built_WITH_CUDA():
         add_system_search_paths()
         if not find_cudart_from_sys():
             add_custom_cuda_path()

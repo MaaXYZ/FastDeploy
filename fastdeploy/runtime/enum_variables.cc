@@ -47,8 +47,8 @@ std::ostream& operator<<(std::ostream& out, const Device& d) {
     case Device::CPU:
       out << "Device::CPU";
       break;
-    case Device::GPU:
-      out << "Device::GPU";
+    case Device::CUDA:
+      out << "Device::CUDA";
       break;
     case Device::RKNPU:
       out << "Device::RKNPU";

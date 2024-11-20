@@ -68,17 +68,17 @@ int main(int argc, char *argv[]) {
     option.UseCpu();
     option.UseLiteBackend();  // Paddle Lite
   } else if (flag == 4) {
-    option.UseGpu();
+    option.UseCuda();
     option.UsePaddleBackend();  // Paddle Inference
   } else if (flag == 5) {
-    option.UseGpu();
+    option.UseCuda();
     option.UsePaddleInferBackend();
     option.paddle_infer_option.enable_trt = true;
   } else if (flag == 6) {
-    option.UseGpu();
+    option.UseCuda();
     option.UseOrtBackend();  // ONNX Runtime
   } else if (flag == 7) {
-    option.UseGpu();
+    option.UseCuda();
     option.UseTrtBackend();  // TensorRT
   }
 

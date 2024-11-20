@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
   runtime_option.SetCpuThreadNum(12);
 
   // Use Gpu to inference
-  // runtime_option.UseGpu(0);
+  // runtime_option.UseCuda(0);
   // If need to configure ONNX Runtime backend for more option, we can configure runtime_option.ort_option
   // refer https://baidu-paddle.github.io/fastdeploy-api/cpp/html/structfastdeploy_1_1OrtBackendOption.html
 

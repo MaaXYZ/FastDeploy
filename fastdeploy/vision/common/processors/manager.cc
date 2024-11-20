@@ -17,7 +17,7 @@ namespace fastdeploy {
 namespace vision {
 
 void ProcessorManager::UseCuda(bool enable_cv_cuda, int gpu_id) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   if (gpu_id >= 0) {
     device_id_ = gpu_id;
     FDASSERT(cudaSetDevice(device_id_) == cudaSuccess,
@@ -27,7 +27,7 @@ void ProcessorManager::UseCuda(bool enable_cv_cuda, int gpu_id) {
            "[ERROR] Error occurs while creating cuda stream.");
   proc_lib_ = ProcLib::CUDA;
 #else
-  FDASSERT(false, "FastDeploy didn't compile with WITH_GPU.");
+  FDASSERT(false, "FastDeploy didn't compile with WITH_CUDA.");
 #endif
 
   if (enable_cv_cuda) {

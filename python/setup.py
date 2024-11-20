@@ -51,7 +51,7 @@ if os.getenv("BUILD_ON_CPU", "OFF") == "ON":
     os.environ["ENABLE_OPENVINO_BACKEND"] = "ON"
     os.environ["ENABLE_VISION"] = "ON"
     os.environ["ENABLE_TEXT"] = "ON"
-    os.environ["WITH_GPU"] = "OFF"
+    os.environ["WITH_CUDA"] = "OFF"
 
 setup_configs = dict()
 setup_configs["LIBRARY_NAME"] = PACKAGE_NAME
@@ -73,7 +73,7 @@ setup_configs["ENABLE_CVCUDA"] = os.getenv("ENABLE_CVCUDA", "OFF")
 setup_configs["ENABLE_TEXT"] = os.getenv("ENABLE_TEXT", "OFF")
 setup_configs["ENABLE_BENCHMARK"] = os.getenv("ENABLE_BENCHMARK", "OFF")
 # Hardware options
-setup_configs["WITH_GPU"] = os.getenv("WITH_GPU", "OFF")
+setup_configs["WITH_CUDA"] = os.getenv("WITH_CUDA", "OFF")
 setup_configs["WITH_IPU"] = os.getenv("WITH_IPU", "OFF")
 setup_configs["WITH_OPENCL"] = os.getenv("WITH_OPENCL", "OFF")
 setup_configs["WITH_TIMVX"] = os.getenv("WITH_TIMVX", "OFF")
@@ -103,7 +103,7 @@ if setup_configs["RKNN2_TARGET_SOC"] != "" or setup_configs[
         "BUILD_ON_JETSON"] != "OFF":
     REQUIRED_PACKAGES = REQUIRED_PACKAGES.replace("opencv-python", "")
 
-if setup_configs["WITH_GPU"] == "ON" or setup_configs[
+if setup_configs["WITH_CUDA"] == "ON" or setup_configs[
         "BUILD_ON_JETSON"] == "ON":
     wheel_name = "fastdeploy-gpu-python"
 elif setup_configs["WITH_IPU"] == "ON":
@@ -150,13 +150,13 @@ if setup_configs["PADDLEINFERENCE_VERSION"] != "":
 with open(os.path.join(TOP_DIR, 'VERSION_NUMBER')) as version_file:
     VersionInfo = namedtuple('VersionInfo', [
         'version', 'git_version', 'extra_version_info', 'enable_trt_backend',
-        'enable_paddle_backend', 'with_gpu'
+        'enable_paddle_backend', 'WITH_CUDA'
     ])(version=version_file.read().strip(),
        git_version=git_version,
        extra_version_info=extra_version_info.strip("."),
        enable_trt_backend=setup_configs["ENABLE_TRT_BACKEND"],
        enable_paddle_backend=setup_configs["ENABLE_PADDLE_BACKEND"],
-       with_gpu=setup_configs["WITH_GPU"])
+       WITH_CUDA=setup_configs["WITH_CUDA"])
 
 ################################################################################
 # Pre Check
@@ -221,7 +221,7 @@ class create_version(ONNXCommand):
             extra_version_info = '{extra_version_info}'
             enable_trt_backend = '{enable_trt_backend}'
             enable_paddle_backend = '{enable_paddle_backend}'
-            with_gpu = '{with_gpu}'
+            WITH_CUDA = '{WITH_CUDA}'
             '''.format(**dict(VersionInfo._asdict()))))
 
 

@@ -441,7 +441,7 @@ def genModelFeedShape(feed):
     modelInfo['feedShape'] = feedShape
     print("\033[32mModel FeedShape set successfully.\033[0m")
 
-def convertToPaddleJSModel(modelDir, modelName, paramsName, outputDir, useGPUOpt):
+def convertToPaddleJSModel(modelDir, modelName, paramsName, outputDir, UseCudaOpt):
     """ 转换fluid modle为paddleJS model """
 
 
@@ -468,7 +468,7 @@ def convertToPaddleJSModel(modelDir, modelName, paramsName, outputDir, useGPUOpt
         for index in rnnList:
             rnn.splice_rnn_op(modelInfo, index)
 
-    if useGPUOpt:
+    if UseCudaOpt:
         # 算子融合
         modelInfo['gpuOpt'] = True
         opListFuse(modelInfo['ops'])
@@ -527,13 +527,13 @@ def main():
         p.add_argument("--outputDir", help='paddleJS模型输出路径，必要参数', required=True)
         p.add_argument("--logModelInfo", type=int, default=0, help='是否输出模型结构信息，非必要参数，0为不输出，1为输出，默认不输出', required=False)
         p.add_argument("--sliceDataSize", type=int, default=4096, help='分片输出参数文件时，每片文件的大小，单位：KB，非必要参数，默认4096KB', required=False)
-        p.add_argument('--useGPUOpt', help='转换模型是否执行GPU优化方法', required=False)
+        p.add_argument('--UseCudaOpt', help='转换模型是否执行GPU优化方法', required=False)
 
         args = p.parse_args()
         modelDir = args.inputDir
         modelPath = args.modelPath
         paramPath = args.paramPath
-        useGPUOpt = args.useGPUOpt
+        UseCudaOpt = args.UseCudaOpt
 
         if not modelDir:
             modelDir, modelName = os.path.split(modelPath)
@@ -547,7 +547,7 @@ def main():
         if args.logModelInfo == 1:
             enableLogModelInfo = True
 
-        convertToPaddleJSModel(modelDir, modelName, paramsName, outputDir, useGPUOpt)
+        convertToPaddleJSModel(modelDir, modelName, paramsName, outputDir, UseCudaOpt)
 
     except Exception as identifier:
         print("\033[31mA fetal error occured. Failed to convert model.\033[0m")

@@ -66,7 +66,7 @@ def build_option(args):
         option.use_cpu()
         option.set_cpu_thread_num(args.cpu_num_threads)
     else:
-        option.use_gpu(args.device_id)
+        option.use_cuda(args.device_id)
     if args.backend == 'paddle':
         option.use_paddle_backend()
     elif args.backend == 'ort':
@@ -120,10 +120,10 @@ class StatBase(object):
 class Monitor(StatBase):
     """Monitor"""
 
-    def __init__(self, use_gpu=False, gpu_id=0, interval=0.1):
+    def __init__(self, use_cuda=False, gpu_id=0, interval=0.1):
         self.result = {}
         self.gpu_id = gpu_id
-        self.use_gpu = use_gpu
+        self.use_cuda = use_cuda
         self.interval = interval
         self.cpu_stat_q = multiprocessing.Queue()
 
@@ -131,7 +131,7 @@ class Monitor(StatBase):
         cmd = '%s --id=%s --query-gpu=%s --format=csv,noheader%s -lms 50' % (
             StatBase.nvidia_smi_path, self.gpu_id, ','.join(StatBase.gpu_keys),
             StatBase.nu_opt)
-        if self.use_gpu:
+        if self.use_cuda:
             self.gpu_stat_worker = subprocess.Popen(
                 cmd,
                 stderr=subprocess.STDOUT,
@@ -148,7 +148,7 @@ class Monitor(StatBase):
 
     def stop(self):
         try:
-            if self.use_gpu:
+            if self.use_cuda:
                 os.killpg(self.gpu_stat_worker.pid, signal.SIGUSR1)
             # os.killpg(p.pid, signal.SIGTERM)
             self.cpu_stat_worker.terminate()
@@ -158,7 +158,7 @@ class Monitor(StatBase):
             return
 
         # gpu
-        if self.use_gpu:
+        if self.use_cuda:
             lines = self.gpu_stat_worker.stdout.readlines()
             lines = [
                 line.strip().decode("utf-8") for line in lines

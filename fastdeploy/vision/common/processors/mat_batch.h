@@ -14,7 +14,7 @@
 #pragma once
 #include "fastdeploy/vision/common/processors/mat.h"
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 #include <cuda_runtime_api.h>
 #endif
 
@@ -43,7 +43,7 @@ struct FASTDEPLOY_DECL FDMatBatch {
   void SetTensor(FDTensor* tensor);
 
  private:
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   cudaStream_t stream = nullptr;
 #endif
   std::shared_ptr<FDTensor> fd_tensor = std::make_shared<FDTensor>();
@@ -53,7 +53,7 @@ struct FASTDEPLOY_DECL FDMatBatch {
   // refer to manager.cc
   FDTensor* input_cache;
   FDTensor* output_cache;
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   cudaStream_t Stream() const { return stream; }
   void SetStream(cudaStream_t s);
 #endif

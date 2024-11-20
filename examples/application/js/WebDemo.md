@@ -89,8 +89,8 @@ Step 1: Convert the model to js format:
 # Install paddlejsconverter
 pip3 install paddlejsconverter
 # Convert the model format, the input model is the inference model
-paddlejsconverter --modelPath=./inference.pdmodel --paramPath=./inference.pdiparams --outputDir=./ --useGPUOpt=True
-# Note: The useGPUOpt option is not enabled by default. If the model is used on the gpu backend (webgl/webgpu), enable useGPUOpt. If the model is running on (wasm/plain js), do not enable it.
+paddlejsconverter --modelPath=./inference.pdmodel --paramPath=./inference.pdiparams --outputDir=./ --UseCudaOpt=True
+# Note: The UseCudaOpt option is not enabled by default. If the model is used on the gpu backend (webgl/webgpu), enable UseCudaOpt. If the model is running on (wasm/plain js), do not enable it.
 ````
 
 After the export is successful, files such as `model.json chunk_1.dat` will appear in the local directory, which are the network structure and model parameter binary files corresponding to the js model.

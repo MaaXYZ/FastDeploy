@@ -89,12 +89,12 @@ bool Processor::operator()(FDMat* mat) {
     FDASSERT(false, "FastDeploy didn't compile with FlyCV.");
 #endif
   } else if (target == ProcLib::CUDA) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
     FDASSERT(mat->Stream() != nullptr,
              "CUDA processor requires cuda stream, please set stream for Mat");
     return ImplByCuda(mat);
 #else
-    FDASSERT(false, "FastDeploy didn't compile with WITH_GPU.");
+    FDASSERT(false, "FastDeploy didn't compile with WITH_CUDA.");
 #endif
   } else if (target == ProcLib::CVCUDA) {
 #ifdef ENABLE_CVCUDA
@@ -126,13 +126,13 @@ bool Processor::operator()(FDMatBatch* mat_batch) {
     FDASSERT(false, "FastDeploy didn't compile with FlyCV.");
 #endif
   } else if (target == ProcLib::CUDA) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
     FDASSERT(
         mat_batch->Stream() != nullptr,
         "CUDA processor requires cuda stream, please set stream for mat_batch");
     return ImplByCuda(mat_batch);
 #else
-    FDASSERT(false, "FastDeploy didn't compile with WITH_GPU.");
+    FDASSERT(false, "FastDeploy didn't compile with WITH_CUDA.");
 #endif
   } else if (target == ProcLib::CVCUDA) {
 #ifdef ENABLE_CVCUDA

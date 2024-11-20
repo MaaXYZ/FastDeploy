@@ -75,7 +75,7 @@ def create_fd_runtime(args):
         option.use_cpu()
         option.set_cpu_thread_num(args.cpu_num_threads)
     else:
-        option.use_gpu(args.device_id)
+        option.use_cuda(args.device_id)
     if args.backend == 'pp':
         option.use_paddle_backend()
     elif args.backend == 'ort':

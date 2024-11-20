@@ -94,7 +94,7 @@ void GetFrameInfo(GstCaps* caps, Frame& frame) {
 
   GstCapsFeatures* features = gst_caps_get_features(caps, 0);
   if (gst_caps_features_contains(features, "memory:NVMM")) {
-    frame.device = Device::GPU;
+    frame.device = Device::CUDA;
   } else {
     frame.device = Device::CPU;
   }

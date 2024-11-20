@@ -32,7 +32,7 @@ def build_option(args):
     option = fd.RuntimeOption()
 
     if args.device.lower() == "gpu":
-        option.use_gpu()
+        option.use_cuda()
 
     if args.backend == "ort":
         option.use_ort_backend()

@@ -101,7 +101,7 @@ class ErnieForSequenceClassificationPredictor(object):
         if args.device == 'cpu':
             option.use_cpu()
         else:
-            option.use_gpu()
+            option.use_cuda()
         if args.backend == 'paddle':
             option.use_paddle_infer_backend()
         elif args.backend == 'onnx_runtime':

@@ -62,9 +62,9 @@ int main(int argc, char* argv[]) {
   if (std::atoi(argv[3]) == 0) {
     option.UseCpu();
   } else if (std::atoi(argv[3]) == 1) {
-    option.UseGpu();
+    option.UseCuda();
   } else if (std::atoi(argv[3]) == 2) {
-    option.UseGpu();
+    option.UseCuda();
     option.UseTrtBackend();
     option.EnablePaddleToTrt();
     option.SetTrtInputShape("images", {1, 3, 384, 1280});

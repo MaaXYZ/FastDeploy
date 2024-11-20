@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
     option.UseCpu();
     option.UseOrtBackend();
   } else if (flag == 1) {
-    option.UseGpu();
+    option.UseCuda();
     option.UseTrtBackend();
   } else if (flag == 2) {
     option.UseKunlunXin();

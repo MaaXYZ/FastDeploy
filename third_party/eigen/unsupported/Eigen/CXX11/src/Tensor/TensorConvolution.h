@@ -600,7 +600,7 @@ struct TensorEvaluator<
 
 // Use an optimized implementation of the evaluation code for GPUs whenever
 // possible.
-#if defined(EIGEN_USE_GPU) && defined(EIGEN_GPUCC)
+#if defined(EIGEN_use_cuda) && defined(EIGEN_GPUCC)
 
 template <int StaticKernelSize>
 struct GetKernelSize {

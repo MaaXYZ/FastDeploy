@@ -50,7 +50,7 @@ void CpuInfer(const std::string& model_file,
 void GpuInfer(const std::string& model_file,
               const std::vector<std::string>& image_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   auto model = fastdeploy::vision::faceid::VPL(model_file, "", option);
   if (!model.Initialized()) {
     std::cerr << "Failed to initialize." << std::endl;
@@ -89,7 +89,7 @@ void GpuInfer(const std::string& model_file,
 void TrtInfer(const std::string& model_file,
               const std::vector<std::string>& image_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   option.UseTrtBackend();
   option.SetTrtInputShape("data", {1, 3, 112, 112});
   auto model = fastdeploy::vision::faceid::VPL(model_file, "", option);

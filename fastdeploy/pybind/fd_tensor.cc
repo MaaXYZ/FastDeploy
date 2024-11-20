@@ -150,7 +150,7 @@ pybind11::capsule FDTensorToDLPack(FDTensor& fd_tensor) {
   dlpack_tensor->dl_tensor.dtype = FDToDlpackType(fd_tensor.dtype);
 
   dlpack_tensor->dl_tensor.device.device_id = fd_tensor.device_id;
-  if (fd_tensor.device == Device::GPU) {
+  if (fd_tensor.device == Device::CUDA) {
     if (fd_tensor.is_pinned_memory) {
       dlpack_tensor->dl_tensor.device.device_type = DLDeviceType::kDLCUDAHost;
     } else {
@@ -202,7 +202,7 @@ FDTensor FDTensorFromDLPack(const std::string& name,
   bool is_pinned_memory = false;
   switch (dl_managed_tensor->dl_tensor.device.device_type) {
     case DLDeviceType::kDLCUDA:
-      device = Device::GPU;
+      device = Device::CUDA;
       device_id = dl_managed_tensor->dl_tensor.device.device_id;
       break;
     case DLDeviceType::kDLCPU:
@@ -268,7 +268,7 @@ void BindFDTensor(pybind11::module& m) {
              Device fd_data_place;
 	     bool copy = false;
              if (data_place.find("gpu") != data_place.npos) {
-               fd_data_place = Device::GPU;
+               fd_data_place = Device::CUDA;
              } else if (data_place.find("cpu") != data_place.npos) {
 	       copy = true;
 	       fd_data_place = Device::CPU;

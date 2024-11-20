@@ -158,7 +158,7 @@ static gboolean gst_fdinfer_start(GstBaseTransform* trans) {
   auto config_file = model_dir + "infer_cfg.yml";
 
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   auto model = fastdeploy::streamer::CreateModel("PPYOLOE", option, model_file,
                                                  params_file, config_file);
 

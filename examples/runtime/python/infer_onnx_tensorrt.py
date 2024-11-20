@@ -25,7 +25,7 @@ option = fd.RuntimeOption()
 option.set_model_path("mobilenetv2.onnx", model_format=ModelFormat.ONNX)
 
 # **** GPU 配置 ***
-option.use_gpu(0)
+option.use_cuda(0)
 option.use_trt_backend()
 
 # 初始化构造runtime

@@ -68,7 +68,7 @@ struct FASTDEPLOY_DECL RuntimeOption {
   /// Use cpu to inference, the runtime will inference on CPU by default
   void UseCpu();
   /// Use Nvidia GPU to inference
-  void UseGpu(int gpu_id = 0);
+  void UseCuda(int gpu_id = 0);
   /// Use RKNPU2 e.g RK3588/RK356X to inference
   void UseRKNPU2(fastdeploy::rknpu2::CpuName rknpu2_name =
                      fastdeploy::rknpu2::CpuName::RK356X,

@@ -12,7 +12,7 @@
 #ifndef EIGEN_CXX11_TENSOR_TENSOR_CONTRACTION_GPU_H
 #define EIGEN_CXX11_TENSOR_TENSOR_CONTRACTION_GPU_H
 
-#if defined(EIGEN_USE_GPU) && defined(EIGEN_GPUCC)
+#if defined(EIGEN_use_cuda) && defined(EIGEN_GPUCC)
 
 namespace Eigen {
 
@@ -1543,5 +1543,5 @@ struct TensorEvaluator<
 
 }  // end namespace Eigen
 
-#endif  // EIGEN_USE_GPU and EIGEN_GPUCC
+#endif  // EIGEN_use_cuda and EIGEN_GPUCC
 #endif  // EIGEN_CXX11_TENSOR_TENSOR_CONTRACTION_GPU_H

@@ -37,8 +37,8 @@
 /* #undef ENABLE_OPENVINO_BACKEND */
 #endif
 
-#ifndef WITH_GPU
-/* #undef WITH_GPU */
+#ifndef WITH_CUDA
+/* #undef WITH_CUDA */
 #endif
 
 #ifndef WITH_KUNLUNXIN

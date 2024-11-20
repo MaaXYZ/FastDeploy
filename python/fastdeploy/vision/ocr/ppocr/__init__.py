@@ -1140,10 +1140,10 @@ class PPStructureV2TableSystem(PPStructureV2Table):
 
 
 class StructureV2SERViLayoutXLMModelPreprocessor():
-    def __init__(self, ser_dict_path, use_gpu=True):
+    def __init__(self, ser_dict_path, use_cuda=True):
         """Create a preprocessor for Ser-Vi-LayoutXLM model.
         :param: ser_dict_path: (str) class file path
-        :param: use_gpu: (bool) whether use gpu to OCR process
+        :param: use_cuda: (bool) whether use gpu to OCR process
         """
         self._manager = None
         from paddleocr import PaddleOCR
@@ -1152,7 +1152,7 @@ class StructureV2SERViLayoutXLMModelPreprocessor():
             det_model_dir=None,
             rec_model_dir=None,
             show_log=False,
-            use_gpu=use_gpu)
+            use_cuda=use_cuda)
 
         pre_process_list = [{
             'VQATokenLabelEncode': {

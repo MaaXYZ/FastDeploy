@@ -22,7 +22,7 @@ namespace fastdeploy {
 
 void PaddleBackend::BuildOption(const PaddleBackendOption& option) {
   option_ = option;
-  if (option.device == Device::GPU) {
+  if (option.device == Device::CUDA) {
 
     auto inference_precision = paddle_infer::PrecisionType::kFloat32;
     if (option_.inference_precision == "float32"){
@@ -42,8 +42,8 @@ void PaddleBackend::BuildOption(const PaddleBackendOption& option) {
               << " float16, bfloat16 and int8" << std::endl;
     }
     config_.Exp_DisableMixedPrecisionOps({"feed","fetch"});
-    config_.EnableUseGpu(option.gpu_mem_init_size, option.device_id, inference_precision);
-    // config_.EnableUseGpu(option.gpu_mem_init_size, option.device_id);
+    config_.EnableUseCuda(option.gpu_mem_init_size, option.device_id, inference_precision);
+    // config_.EnableUseCuda(option.gpu_mem_init_size, option.device_id);
     if (option_.switch_ir_debug) {
       FDINFO << "Will Enable ir_debug for Paddle Backend." << std::endl;
       config_.SwitchIrDebug();
@@ -210,7 +210,7 @@ bool PaddleBackend::InitFromPaddle(const std::string& model,
   }
 
   if (option.is_quantize_model) {
-    if (option.device == Device::GPU) {
+    if (option.device == Device::CUDA) {
       FDWARNING << "The loaded model is a quantized model, while inference on "
                    "GPU, please use TensorRT backend to get better performance."
                 << std::endl;
@@ -259,8 +259,8 @@ bool PaddleBackend::InitFromPaddle(const std::string& model,
         analysis_config.SetModel(model, params);
       }
       if (option.collect_trt_shape_by_device) {
-        if (option.device == Device::GPU) {
-          analysis_config.EnableUseGpu(option.gpu_mem_init_size, option.device_id, 
+        if (option.device == Device::CUDA) {
+          analysis_config.EnableUseCuda(option.gpu_mem_init_size, option.device_id, 
                                        paddle_infer::PrecisionType::kFloat32);
         }
       }
@@ -443,7 +443,7 @@ std::unique_ptr<BaseBackend> PaddleBackend::Clone(RuntimeOption& runtime_option,
   std::unique_ptr<BaseBackend> new_backend =
       utils::make_unique<PaddleBackend>();
   auto casted_backend = dynamic_cast<PaddleBackend*>(new_backend.get());
-  if (device_id > 0 && (option_.device == Device::GPU) &&
+  if (device_id > 0 && (option_.device == Device::CUDA) &&
       device_id != option_.device_id) {
     auto clone_option = option_;
     clone_option.device_id = device_id;

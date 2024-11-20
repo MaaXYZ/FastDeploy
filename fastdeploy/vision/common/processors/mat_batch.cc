@@ -16,7 +16,7 @@
 namespace fastdeploy {
 namespace vision {
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 void FDMatBatch::SetStream(cudaStream_t s) {
   stream = s;
   for (size_t i = 0; i < mats->size(); ++i) {
@@ -58,7 +58,7 @@ void FDMatBatch::SetTensor(FDTensor* tensor) {
 }
 
 FDTensor* CreateCachedGpuInputTensor(FDMatBatch* mat_batch) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   // Get the batched tensor
   FDTensor* src = mat_batch->Tensor();
   // Need to make sure the returned tensor is pointed to the input_cache.
@@ -66,12 +66,12 @@ FDTensor* CreateCachedGpuInputTensor(FDMatBatch* mat_batch) {
     std::swap(mat_batch->input_cache, mat_batch->output_cache);
     std::swap(mat_batch->input_cache->name, mat_batch->output_cache->name);
   }
-  if (src->device == Device::GPU) {
+  if (src->device == Device::CUDA) {
     return src;
   } else if (src->device == Device::CPU) {
     // Batched tensor on CPU, we need copy it to GPU
     mat_batch->output_cache->Resize(src->Shape(), src->Dtype(), "output_cache",
-                                    Device::GPU);
+                                    Device::CUDA);
     FDASSERT(cudaMemcpyAsync(mat_batch->output_cache->Data(), src->Data(),
                              src->Nbytes(), cudaMemcpyHostToDevice,
                              mat_batch->Stream()) == 0,
@@ -83,7 +83,7 @@ FDTensor* CreateCachedGpuInputTensor(FDMatBatch* mat_batch) {
     FDASSERT(false, "FDMatBatch is on unsupported device: %d", src->device);
   }
 #else
-  FDASSERT(false, "FastDeploy didn't compile with WITH_GPU.");
+  FDASSERT(false, "FastDeploy didn't compile with WITH_CUDA.");
 #endif
   return nullptr;
 }

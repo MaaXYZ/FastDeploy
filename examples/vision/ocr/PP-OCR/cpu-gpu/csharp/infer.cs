@@ -46,7 +46,7 @@ namespace Test
             if(device_option==0){
                 runtimeoption.UseCpu();
             }else{
-                runtimeoption.UseGpu();
+                runtimeoption.UseCuda();
             }
             string sep = "\\";
             string det_model_file = det_model_dir + sep + "inference.pdmodel";

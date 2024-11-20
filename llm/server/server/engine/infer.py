@@ -472,7 +472,7 @@ class InferenceEngine(object):
         config = paddle.inference.Config(self.model_file, self.param_file)
 
         config.switch_ir_optim(False)
-        config.enable_use_gpu(100, device_id)
+        config.enable_use_cuda(100, device_id)
 
         # distributed config
         if self.mp_degree > 1:

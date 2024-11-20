@@ -39,7 +39,7 @@ Developers can customize compilation options and generate sln solutions accordin
 
 <div id="CMakeGuiAndVS2019CPU"></div>  
 
-Step 1: Select the compilation option according to the CPU version. Please `do not` select WITH_GPU and ENABLE_TRT_BACKEND
+Step 1: Select the compilation option according to the CPU version. Please `do not` select WITH_CUDA and ENABLE_TRT_BACKEND
 
 ![image](https://user-images.githubusercontent.com/31974251/192095848-b3cfdf19-e378-41e0-b44e-5edb49461eeb.png)
 
@@ -59,7 +59,7 @@ As the default installation path is C drive, we can modify CMAKE_INSTALL_PREFIX 
 ### How to Set for GPU version C++ SDK Compilation
 <div id="CMakeGuiAndVS2019GPU"></div>  
 
-Step 1: Select the compilation option according to the CPU version. Please `do` select WITH_GPU
+Step 1: Select the compilation option according to the CPU version. Please `do` select WITH_CUDA
 
 ![image](https://user-images.githubusercontent.com/31974251/192099254-9f82abb0-8a29-41ce-a0ce-da6aacf23582.png)
 

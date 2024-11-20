@@ -188,7 +188,7 @@ from .contrib.resnet import ResNet
 ```
 mkdir build & cd build
 cmake .. -DENABLE_ORT_BACKEND=ON -DENABLE_VISION=ON -DCMAKE_INSTALL_PREFIX=${PWD/fastdeploy-0.0.3
--DENABLE_PADDLE_BACKEND=ON -DENABLE_TRT_BACKEND=ON -DWITH_GPU=ON -DTRT_DIRECTORY=/PATH/TO/TensorRT/
+-DENABLE_PADDLE_BACKEND=ON -DENABLE_TRT_BACKEND=ON -DWITH_CUDA=ON -DTRT_DIRECTORY=/PATH/TO/TensorRT/
 make -j8
 make install
 ```
@@ -201,7 +201,7 @@ make install
 ```
 export TRT_DIRECTORY=/PATH/TO/TensorRT/    #If TensorRT is used, developers need to fill in the location of TensorRT and enable ENABLE_TRT_BACKEND
 export ENABLE_TRT_BACKEND=ON
-export WITH_GPU=ON
+export WITH_CUDA=ON
 export ENABLE_PADDLE_BACKEND=ON
 export ENABLE_OPENVINO_BACKEND=ON
 export ENABLE_VISION=ON

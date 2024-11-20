@@ -72,7 +72,7 @@ void KunlunXinInfer(const std::string& model_dir, const std::string& image_file)
 
 void GpuInfer(const std::string& model_dir, const std::string& image_file) {
   fastdeploy::RuntimeOption option;
-  option.UseGpu();
+  option.UseCuda();
   option.UseTrtBackend();
   auto model_file = model_dir + sep + "model.pdmodel";
   auto params_file = model_dir + sep + "model.pdiparams";

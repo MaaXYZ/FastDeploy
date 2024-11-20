@@ -21,7 +21,7 @@
 // \brief
 // \author Qi Liu, Xinyu Wang
 
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 #include <opencv2/opencv.hpp>
 
 #include "fastdeploy/vision/utils/cuda_utils.h"

@@ -50,7 +50,7 @@ cmake .. -DENABLE_ORT_BACKEND=ON \
          -DENABLE_PADDLE_BACKEND=ON \
          -DENABLE_OPENVINO_BACKEND=ON \
          -DENABLE_TRT_BACKEND=ON \
-         -DWITH_GPU=ON \
+         -DWITH_CUDA=ON \
          -DTRT_DIRECTORY=/Paddle/TensorRT-8.4.1.5 \
          -DCUDA_DIRECTORY=/usr/local/cuda \
          -DCMAKE_INSTALL_PREFIX=${PWD}/compiled_fastdeploy_sdk \
@@ -83,7 +83,7 @@ cmake .. -G "Visual Studio 16 2019" -A x64 \
          -DENABLE_OPENVINO_BACKEND=ON \
          -DENABLE_TRT_BACKEND=ON
          -DENABLE_VISION=ON \
-         -DWITH_GPU=ON \
+         -DWITH_CUDA=ON \
          -DTRT_DIRECTORY="D:\Paddle\TensorRT-8.4.1.5" \
          -DCUDA_DIRECTORY="C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2" \
          -DCMAKE_INSTALL_PREFIX="D:\Paddle\compiled_fastdeploy"
@@ -129,7 +129,7 @@ export ENABLE_PADDLE_BACKEND=ON
 export ENABLE_OPENVINO_BACKEND=ON
 export ENABLE_VISION=ON
 export ENABLE_TRT_BACKEND=ON
-export WITH_GPU=ON
+export WITH_CUDA=ON
 export TRT_DIRECTORY=/Paddle/TensorRT-8.4.1.5
 export CUDA_DIRECTORY=/usr/local/cuda
 # The OPENCV_DIRECTORY is optional, if not exported, a prebuilt OpenCV library will be downloaded
@@ -159,7 +159,7 @@ set ENABLE_PADDLE_BACKEND=ON
 set ENABLE_OPENVINO_BACKEND=ON
 set ENABLE_VISION=ON
 set ENABLE_TRT_BACKEND=ON
-set WITH_GPU=ON
+set WITH_CUDA=ON
 set TRT_DIRECTORY=D:\Paddle\TensorRT-8.4.1.5
 set CUDA_DIRECTORY=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2
 

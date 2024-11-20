@@ -45,7 +45,7 @@ def build_option(args):
     cls_option = fd.RuntimeOption()
 
     if args.device.lower() == "gpu":
-        cls_option.use_gpu(args.device_id)
+        cls_option.use_cuda(args.device_id)
 
     return cls_option
 

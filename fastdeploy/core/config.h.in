@@ -37,8 +37,8 @@
 #cmakedefine ENABLE_OPENVINO_BACKEND
 #endif
 
-#ifndef WITH_GPU
-#cmakedefine WITH_GPU
+#ifndef WITH_CUDA
+#cmakedefine WITH_CUDA
 #endif
 
 #ifndef WITH_KUNLUNXIN

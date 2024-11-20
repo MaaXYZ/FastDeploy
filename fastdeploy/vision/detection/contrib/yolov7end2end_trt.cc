@@ -16,9 +16,9 @@
 
 #include "fastdeploy/utils/perf.h"
 #include "fastdeploy/vision/utils/utils.h"
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
 #include "fastdeploy/vision/utils/cuda_utils.h"
-#endif  // WITH_GPU
+#endif  // WITH_CUDA
 
 namespace fastdeploy {
 namespace vision {
@@ -75,11 +75,11 @@ YOLOv7End2EndTRT::YOLOv7End2EndTRT(const std::string& model_file,
   runtime_option = custom_option;
   runtime_option.model_format = model_format;
   runtime_option.model_file = model_file;
-  if (runtime_option.device != Device::GPU) {
+  if (runtime_option.device != Device::CUDA) {
     FDWARNING << runtime_option.device
               << " is not support for YOLOv7End2EndTRT,"
-              << "will fallback to Device::GPU." << std::endl;
-    runtime_option.device = Device::GPU;
+              << "will fallback to Device::CUDA." << std::endl;
+    runtime_option.device = Device::CUDA;
   }
   if (runtime_option.backend != Backend::UNKNOWN) {
     if (runtime_option.backend != Backend::TRT) {
@@ -89,13 +89,13 @@ YOLOv7End2EndTRT::YOLOv7End2EndTRT(const std::string& model_file,
       runtime_option.backend = Backend::TRT;
     }
   }
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   cudaSetDevice(runtime_option.device_id);
   cudaStream_t stream;
   CUDA_CHECK(cudaStreamCreate(&stream));
   cuda_stream_ = reinterpret_cast<void*>(stream);
   runtime_option.SetExternalStream(cuda_stream_);
-#endif  // WITH_GPU
+#endif  // WITH_CUDA
   initialized = Initialize();
 }
 
@@ -132,14 +132,14 @@ bool YOLOv7End2EndTRT::Initialize() {
 }
 
 YOLOv7End2EndTRT::~YOLOv7End2EndTRT() {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   if (use_cuda_preprocessing_) {
     CUDA_CHECK(cudaFreeHost(input_img_cuda_buffer_host_));
     CUDA_CHECK(cudaFree(input_img_cuda_buffer_device_));
     CUDA_CHECK(cudaFree(input_tensor_cuda_buffer_device_));
     CUDA_CHECK(cudaStreamDestroy(reinterpret_cast<cudaStream_t>(cuda_stream_)));
   }
-#endif  // WITH_GPU
+#endif  // WITH_CUDA
 }
 
 bool YOLOv7End2EndTRT::Preprocess(
@@ -174,7 +174,7 @@ bool YOLOv7End2EndTRT::Preprocess(
 }
 
 void YOLOv7End2EndTRT::UseCudaPreprocessing(int max_image_size) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   use_cuda_preprocessing_ = true;
   is_scale_up = true;
   if (input_img_cuda_buffer_host_ == nullptr) {
@@ -188,7 +188,7 @@ void YOLOv7End2EndTRT::UseCudaPreprocessing(int max_image_size) {
                           3 * size[0] * size[1] * sizeof(float)));
   }
 #else
-  FDWARNING << "The FastDeploy didn't compile with WITH_GPU=ON." << std::endl;
+  FDWARNING << "The FastDeploy didn't compile with WITH_CUDA=ON." << std::endl;
   use_cuda_preprocessing_ = false;
 #endif
 }
@@ -196,7 +196,7 @@ void YOLOv7End2EndTRT::UseCudaPreprocessing(int max_image_size) {
 bool YOLOv7End2EndTRT::CudaPreprocess(
     Mat* mat, FDTensor* output,
     std::map<std::string, std::array<float, 2>>* im_info) {
-#ifdef WITH_GPU
+#ifdef WITH_CUDA
   if (is_mini_pad != false || is_no_pad != false || is_scale_up != true) {
     FDERROR << "Preprocessing with CUDA is only available when the arguments "
                "satisfy (is_mini_pad=false, is_no_pad=false, is_scale_up=true)."
@@ -226,13 +226,13 @@ bool YOLOv7End2EndTRT::CudaPreprocess(
 
   output->SetExternalData({mat->Channels(), size[0], size[1]}, FDDataType::FP32,
                           input_tensor_cuda_buffer_device_);
-  output->device = Device::GPU;
+  output->device = Device::CUDA;
   output->shape.insert(output->shape.begin(), 1);  // reshape to n, c, h, w
   return true;
 #else
   FDERROR << "CUDA src code was not enabled." << std::endl;
   return false;
-#endif  // WITH_GPU
+#endif  // WITH_CUDA
 }
 
 bool YOLOv7End2EndTRT::Postprocess(

@@ -39,7 +39,7 @@ void CpuInfer(const std::string& model_file, const std::string& image_file) {
 
 void GpuInfer(const std::string& model_file, const std::string& image_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   auto model = fastdeploy::vision::classification::YOLOv5Cls(model_file, "", option);
   if (!model.Initialized()) {
     std::cerr << "Failed to initialize." << std::endl;
@@ -59,7 +59,7 @@ void GpuInfer(const std::string& model_file, const std::string& image_file) {
 
 void TrtInfer(const std::string& model_file, const std::string& image_file) {
   auto option = fastdeploy::RuntimeOption();
-  option.UseGpu();
+  option.UseCuda();
   option.UseTrtBackend();
   option.SetTrtInputShape("images", {1, 3, 224, 224});
   auto model = fastdeploy::vision::classification::YOLOv5Cls(model_file, "", option);

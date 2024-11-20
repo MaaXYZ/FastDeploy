@@ -44,7 +44,7 @@ if os.name != "nt" and os.path.exists(trt_directory):
     logging.basicConfig(level=logging.NOTSET)
 
 from .code_version import version, git_version, extra_version_info
-from .code_version import enable_trt_backend, enable_paddle_backend, with_gpu
+from .code_version import enable_trt_backend, enable_paddle_backend, WITH_CUDA
 
 # Note(zhoushunjie): Fix the import order of paddle and fastdeploy library.
 # This solution will be removed it when the confilct of paddle and
@@ -78,7 +78,7 @@ def should_import_paddle():
 
 
 def should_set_tensorrt():
-    if with_gpu == 'ON' and enable_paddle_backend == 'ON' and enable_trt_backend == 'ON':
+    if WITH_CUDA == 'ON' and enable_paddle_backend == 'ON' and enable_trt_backend == 'ON':
         return True
     return False
 
@@ -125,7 +125,7 @@ from .c_lib_wrap import (
     FDDataType,
     TensorInfo,
     Device,
-    is_built_with_gpu,
+    is_built_WITH_CUDA,
     is_built_with_ort,
     ModelFormat,
     is_built_with_paddle,

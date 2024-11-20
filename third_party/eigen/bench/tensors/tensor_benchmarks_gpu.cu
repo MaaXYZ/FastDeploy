@@ -1,4 +1,4 @@
-#define EIGEN_USE_GPU
+#define EIGEN_use_cuda
 
 #include <cuda.h>
 #include <cuda_runtime.h>
