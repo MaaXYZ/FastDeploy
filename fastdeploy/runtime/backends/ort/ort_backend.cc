@@ -103,7 +103,7 @@ bool OrtBackend::BuildOption(const OrtBackendOption& option) {
           "DML", ORT_API_VERSION, reinterpret_cast<const void**>(&ortDmlApi));
       OrtStatus* onnx_dml_status =
           ortDmlApi->SessionOptionsAppendExecutionProvider_DML(session_options_,
-                                                               0);
+                                                               option_.device_id);
       if (onnx_dml_status != nullptr) {
         FDERROR
             << "DirectML is not support in your machine, the program will exit."
@@ -151,7 +151,7 @@ bool OrtBackend::Init(const RuntimeOption& option) {
   if (option.device != Device::CPU && option.device != Device::CUDA &&
       option.device != Device::DIRECTML) {
     FDERROR
-        << "Backend::ORT only supports Device::CPU/Device::CUDA, but now its "
+        << "Backend::ORT only supports Device::CPU/Device::CUDA/Device::DIRECTML, but now its "
         << option.device << "." << std::endl;
     return false;
   }
@@ -393,7 +393,7 @@ bool OrtBackend::Infer(std::vector<FDTensor>& inputs,
   // from FDTensor to Ort Inputs
   RUNTIME_PROFILE_LOOP_H2D_D2H_BEGIN
   for (size_t i = 0; i < inputs.size(); ++i) {
-    auto ort_value = CreateOrtValue(inputs[i], option_.device == Device::CUDA);
+    auto ort_value = CreateOrtValue(inputs[i]);
     binding_->BindInput(inputs[i].name.c_str(), ort_value);
   }
 
@@ -474,6 +474,10 @@ void OrtBackend::InitCustomOperators() {
     if (option_.device == Device::CUDA) {
       AdaptivePool2dOp* adaptive_pool2d =
           new AdaptivePool2dOp{"CUDAExecutionProvider"};
+      custom_operators_.push_back(adaptive_pool2d);
+    } else if (option_.device == Device::DIRECTML) {
+      AdaptivePool2dOp* adaptive_pool2d =
+          new AdaptivePool2dOp{"DmlExecutionProvider"};
       custom_operators_.push_back(adaptive_pool2d);
     } else {
       AdaptivePool2dOp* adaptive_pool2d =

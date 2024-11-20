@@ -32,8 +32,8 @@ FDDataType GetFdDtype(const ONNXTensorElementDataType& ort_dtype);
 
 // Create Ort::Value
 // is_backend_cuda specify if the onnxruntime use CUDAExectionProvider
-// While is_backend_cuda = true, and tensor.device = Device::CUDA
+// While tensor.device = Device::CUDA
 // Will directly share the cuda data in tensor to OrtValue
-Ort::Value CreateOrtValue(FDTensor& tensor, bool is_backend_cuda = false);
+Ort::Value CreateOrtValue(FDTensor& tensor);
 
 }  // namespace fastdeploy

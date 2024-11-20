@@ -59,10 +59,10 @@ FDDataType GetFdDtype(const ONNXTensorElementDataType& ort_dtype) {
   return FDDataType::FP32;
 }
 
-Ort::Value CreateOrtValue(FDTensor& tensor, bool is_backend_cuda) {
-  FDASSERT(tensor.device == Device::CUDA || tensor.device == Device::CPU,
-           "Only support tensor which device is CPU or GPU for OrtBackend.");
-  if (tensor.device == Device::CUDA && is_backend_cuda) {
+Ort::Value CreateOrtValue(FDTensor& tensor) {
+  FDASSERT(tensor.device == Device::CUDA || tensor.device == Device::DIRECTML || tensor.device == Device::CPU,
+           "Only support tensor which device is Cuda or DirectML or CPU for OrtBackend.");
+  if (tensor.device == Device::CUDA) {
     Ort::MemoryInfo memory_info("Cuda", OrtDeviceAllocator, 0,
                                 OrtMemTypeDefault);
     auto ort_value = Ort::Value::CreateTensor(
@@ -70,11 +70,21 @@ Ort::Value CreateOrtValue(FDTensor& tensor, bool is_backend_cuda) {
         tensor.shape.size(), GetOrtDtype(tensor.dtype));
     return ort_value;
   }
-  Ort::MemoryInfo memory_info("Cpu", OrtDeviceAllocator, 0, OrtMemTypeDefault);
-  auto ort_value = Ort::Value::CreateTensor(
-      memory_info, tensor.Data(), tensor.Nbytes(), tensor.shape.data(),
-      tensor.shape.size(), GetOrtDtype(tensor.dtype));
-  return ort_value;
+  else if (tensor.device == Device::DIRECTML) {
+    Ort::MemoryInfo memory_info("DML", OrtDeviceAllocator, 0,
+                                OrtMemTypeDefault);
+    auto ort_value = Ort::Value::CreateTensor(
+        memory_info, tensor.MutableData(), tensor.Nbytes(), tensor.shape.data(),
+        tensor.shape.size(), GetOrtDtype(tensor.dtype));
+    return ort_value;
+  }
+  else {
+    Ort::MemoryInfo memory_info("Cpu", OrtDeviceAllocator, 0, OrtMemTypeDefault);
+    auto ort_value = Ort::Value::CreateTensor(
+        memory_info, tensor.Data(), tensor.Nbytes(), tensor.shape.data(),
+        tensor.shape.size(), GetOrtDtype(tensor.dtype));
+    return ort_value;
+  }
 }
 
 }  // namespace fastdeploy
