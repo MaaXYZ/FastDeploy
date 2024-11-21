@@ -26,7 +26,11 @@ namespace vision {
  */
 class FASTDEPLOY_DECL ProcessorManager {
  public:
-  ~ProcessorManager();
+  ~ProcessorManager() {
+#ifdef WITH_CUDA
+  if (stream_) cudaStreamDestroy(stream_);
+#endif
+  }
 
   /** \brief Use CUDA to boost the performance of processors
    *
