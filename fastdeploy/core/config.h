@@ -49,6 +49,10 @@
 #define WITH_DIRECTML
 #endif
 
+#ifndef WITH_COREML
+#define WITH_COREML
+#endif
+
 #ifndef ENABLE_TRT_BACKEND
 /* #undef ENABLE_TRT_BACKEND */
 #endif

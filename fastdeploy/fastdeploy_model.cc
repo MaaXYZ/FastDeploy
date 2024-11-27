@@ -82,6 +82,7 @@ bool FastDeployModel::InitRuntimeWithSpecifiedBackend() {
   bool use_timvx = (runtime_option.device == Device::TIMVX);
   bool use_ascend = (runtime_option.device == Device::ASCEND);
   bool use_directml = (runtime_option.device == Device::DIRECTML);
+  bool use_coreml = (runtime_option.device == Device::COREML);
   bool use_kunlunxin = (runtime_option.device == Device::KUNLUNXIN);
 
   if (use_cuda) {
@@ -130,6 +131,13 @@ bool FastDeployModel::InitRuntimeWithSpecifiedBackend() {
     if (!IsSupported(valid_directml_backends, runtime_option.backend)) {
       FDERROR << "The valid directml backends of model " << ModelName()
               << " are " << Str(valid_directml_backends) << ", "
+              << runtime_option.backend << " is not supported." << std::endl;
+      return false;
+    }
+  } else if (use_coreml) {
+    if (!IsSupported(valid_coreml_backends, runtime_option.backend)) {
+      FDERROR << "The valid coreml backends of model " << ModelName()
+              << " are " << Str(valid_coreml_backends) << ", "
               << runtime_option.backend << " is not supported." << std::endl;
       return false;
     }
@@ -185,6 +193,8 @@ bool FastDeployModel::InitRuntimeWithSpecifiedDevice() {
     return CreateASCENDBackend();
   } else if (runtime_option.device == Device::DIRECTML) {
     return CreateDirectMLBackend();
+  } else if (runtime_option.device == Device::COREML) {
+    return CreateCoreMLBackend();
   } else if (runtime_option.device == Device::KUNLUNXIN) {
     return CreateKunlunXinBackend();
   } else if (runtime_option.device == Device::SOPHGOTPUD) {
@@ -199,7 +209,7 @@ bool FastDeployModel::InitRuntimeWithSpecifiedDevice() {
 #endif
   }
   FDERROR << "Only support "
-             "CPU/GPU/IPU/RKNPU/HORIZONNPU/TIMVX/KunlunXin/ASCEND/DirectML now."
+             "CPU/GPU/IPU/RKNPU/HORIZONNPU/TIMVX/KunlunXin/ASCEND/DirectML/CoreML now."
           << std::endl;
   return false;
 }
@@ -423,6 +433,30 @@ bool FastDeployModel::CreateDirectMLBackend() {
     return true;
   }
   FDERROR << "Found no valid directml backend for model: " << ModelName()
+          << std::endl;
+  return false;
+}
+
+bool FastDeployModel::CreateCoreMLBackend() {
+  if (valid_coreml_backends.size() == 0) {
+    FDERROR << "There's no valid coreml backends for model: " << ModelName()
+            << std::endl;
+    return false;
+  }
+
+  for (size_t i = 0; i < valid_coreml_backends.size(); ++i) {
+    if (!IsBackendAvailable(valid_coreml_backends[i])) {
+      continue;
+    }
+    runtime_option.backend = valid_coreml_backends[i];
+    runtime_ = std::unique_ptr<Runtime>(new Runtime());
+    if (!runtime_->Init(runtime_option)) {
+      return false;
+    }
+    runtime_initialized_ = true;
+    return true;
+  }
+  FDERROR << "Found no valid coreml backend for model: " << ModelName()
           << std::endl;
   return false;
 }

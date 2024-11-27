@@ -48,6 +48,9 @@ class FASTDEPLOY_DECL FastDeployModel {
     /** Model's valid directml backends. This member defined all the onnxruntime directml backends have successfully tested for the model
    */
   std::vector<Backend> valid_directml_backends = {Backend::ORT};
+    /** Model's valid coreml backends. This member defined all the onnxruntime coreml backends have successfully tested for the model
+   */
+  std::vector<Backend> valid_coreml_backends = {Backend::ORT};
   /** Model's valid ascend backends. This member defined all the cann backends have successfully tested for the model
    */
   std::vector<Backend> valid_ascend_backends = {};
@@ -163,6 +166,7 @@ class FASTDEPLOY_DECL FastDeployModel {
   bool CreateKunlunXinBackend();
   bool CreateASCENDBackend();
   bool CreateDirectMLBackend();
+  bool CreateCoreMLBackend();
   bool IsSupported(const std::vector<Backend>& backends,
                    Backend backend);
 

@@ -29,6 +29,11 @@
   #include <dml_provider_factory.h>
 #endif
 
+#if defined(WITH_COREML) && __has_include(<coreml_provider_factory.h>)
+  #define ENABLE_COREML
+  #include <coreml_provider_factory.h>
+#endif
+
 #include <memory>
 
 namespace fastdeploy {
@@ -71,9 +76,37 @@ bool OrtBackend::BuildOption(const OrtBackendOption& option) {
 #endif
   }
 
+  // CUDA
+  if (option.device == Device::CUDA) {
+    auto all_providers = Ort::GetAvailableProviders();
+    bool support_cuda = false;
+    std::string providers_msg = "";
+    for (size_t i = 0; i < all_providers.size(); ++i) {
+      providers_msg = providers_msg + all_providers[i] + ", ";
+      if (all_providers[i] == "CUDAExecutionProvider") {
+        support_cuda = true;
+      }
+    }
+    if (!support_cuda) {
+      FDWARNING << "Compiled fastdeploy with onnxruntime doesn't "
+                   "support GPU, the available providers are "
+                << providers_msg << "will fallback to CPUExecutionProvider."
+                << std::endl;
+      option_.device = Device::CPU;
+    } else {
+      OrtCUDAProviderOptions cuda_options;
+      cuda_options.device_id = option.device_id;
+      if (option.external_stream_) {
+        cuda_options.has_user_compute_stream = 1;
+        cuda_options.user_compute_stream = option.external_stream_;
+      }
+      session_options_.AppendExecutionProvider_CUDA(cuda_options);
+    }
+    return true;
+  }
 #ifdef ENABLE_DML
   // If use DirectML
-  if (option.device == Device::DIRECTML) {
+  else if (option.device == Device::DIRECTML) {
     auto all_providers = Ort::GetAvailableProviders();
     bool support_dml = false;
     std::string providers_msg = "";
@@ -115,43 +148,54 @@ bool OrtBackend::BuildOption(const OrtBackendOption& option) {
     return true;
   }
 #endif
-
-  // CUDA
-  if (option.device == Device::CUDA) {
+#ifdef ENABLE_COREML
+  // If use CoreML
+  else if (option.device == Device::COREML) {
     auto all_providers = Ort::GetAvailableProviders();
-    bool support_cuda = false;
+    bool support_coreml = false;
     std::string providers_msg = "";
     for (size_t i = 0; i < all_providers.size(); ++i) {
       providers_msg = providers_msg + all_providers[i] + ", ";
-      if (all_providers[i] == "CUDAExecutionProvider") {
-        support_cuda = true;
+      if (all_providers[i] == "CoreMLExecutionProvider") {
+        support_coreml = true;
       }
     }
-    if (!support_cuda) {
+
+    if (!support_coreml) {
       FDWARNING << "Compiled fastdeploy with onnxruntime doesn't "
-                   "support GPU, the available providers are "
+                   "support CoreML, the available providers are "
                 << providers_msg << "will fallback to CPUExecutionProvider."
+                << "Please check if CoreML is installed successfully."
                 << std::endl;
       option_.device = Device::CPU;
     } else {
-      OrtCUDAProviderOptions cuda_options;
-      cuda_options.device_id = option.device_id;
-      if (option.external_stream_) {
-        cuda_options.has_user_compute_stream = 1;
-        cuda_options.user_compute_stream = option.external_stream_;
+      // // Must set as below when use dml.
+      // session_options_.DisableMemPattern();
+      // session_options_.SetExecutionMode(ExecutionMode(0));
+
+      // CoreML session_option
+      uint32_t coreml_flag = static_cast<uint32_t>(option_.device_id);
+      auto status = OrtSessionOptionsAppendExecutionProvider_CoreML((OrtSessionOptions*)session_options_,
+                                                               coreml_flag);
+      if (!Ort::Status(status).IsOK()) {
+        FDERROR
+            << "CoreML is not support in your machine, the program will exit."
+            << std::endl;
+        return false;
       }
-      session_options_.AppendExecutionProvider_CUDA(cuda_options);
     }
     return true;
   }
+#endif
+
   return true;
 }
 
 bool OrtBackend::Init(const RuntimeOption& option) {
   if (option.device != Device::CPU && option.device != Device::CUDA &&
-      option.device != Device::DIRECTML) {
+      option.device != Device::DIRECTML && option.device != Device::COREML) {
     FDERROR
-        << "Backend::ORT only supports Device::CPU/Device::CUDA/Device::DIRECTML, but now its "
+        << "Backend::ORT only supports Device::CPU/Device::CUDA/Device::DIRECTML/Device::COREML, but now its "
         << option.device << "." << std::endl;
     return false;
   }
@@ -478,6 +522,10 @@ void OrtBackend::InitCustomOperators() {
     } else if (option_.device == Device::DIRECTML) {
       AdaptivePool2dOp* adaptive_pool2d =
           new AdaptivePool2dOp{"DmlExecutionProvider"};
+      custom_operators_.push_back(adaptive_pool2d);
+    } else if (option_.device == Device::COREML) {
+      AdaptivePool2dOp* adaptive_pool2d =
+          new AdaptivePool2dOp{"CoreMLExecutionProvider"};
       custom_operators_.push_back(adaptive_pool2d);
     } else {
       AdaptivePool2dOp* adaptive_pool2d =

@@ -30,7 +30,7 @@ namespace fastdeploy {
 enum Backend {
   UNKNOWN,  ///< Unknown inference backend
   ORT,  //< ONNX Runtime, support Paddle/ONNX format model,
-  //< CPU/ Nvidia GPU DirectML
+  //< CPU/ Nvidia GPU DirectML/CoreML
   TRT,  ///< TensorRT, support Paddle/ONNX format model, Nvidia GPU only
   PDINFER,  ///< Paddle Inference, support Paddle format model, CPU / Nvidia GPU
   POROS,    ///< Poros, support TorchScript format model, CPU / Nvidia GPU
@@ -63,6 +63,7 @@ enum FASTDEPLOY_DECL Device {
   ASCEND,
   SOPHGOTPUD,
   DIRECTML,
+  COREML,
   SUNRISENPU,
 };
 
@@ -105,7 +106,8 @@ static std::map<Device, std::vector<Backend>>
   {Device::KUNLUNXIN, {Backend::LITE, Backend::PDINFER}},
   {Device::ASCEND, {Backend::LITE}},
   {Device::SOPHGOTPUD, {Backend::SOPHGOTPU}},
-  {Device::DIRECTML, {Backend::ORT}}
+  {Device::DIRECTML, {Backend::ORT}},
+  {Device::COREML, {Backend::ORT}}
 };
 
 inline bool Supported(ModelFormat format, Backend backend) {

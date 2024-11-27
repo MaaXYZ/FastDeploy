@@ -84,6 +84,9 @@ struct FASTDEPLOY_DECL RuntimeOption {
   /// Use onnxruntime DirectML to inference
   void UseDirectML(int adapter_id = 0);
 
+  /// Use onnxruntime CoreML to inference
+  void UseCoreML(uint32_t coreml_flag = 0);
+
   /// Use Sophgo to inference
   void UseSophgo();
   /// \brief Turn on KunlunXin XPU.

@@ -60,7 +60,7 @@ FDDataType GetFdDtype(const ONNXTensorElementDataType& ort_dtype) {
 }
 
 Ort::Value CreateOrtValue(FDTensor& tensor) {
-  FDASSERT(tensor.device == Device::CUDA || tensor.device == Device::DIRECTML || tensor.device == Device::CPU,
+  FDASSERT(tensor.device == Device::CUDA || tensor.device == Device::DIRECTML || tensor.device == Device::COREML || tensor.device == Device::CPU,
            "Only support tensor which device is Cuda or DirectML or CPU for OrtBackend.");
   if (tensor.device == Device::CUDA) {
     Ort::MemoryInfo memory_info("Cuda", OrtDeviceAllocator, 0,
@@ -78,7 +78,7 @@ Ort::Value CreateOrtValue(FDTensor& tensor) {
         tensor.shape.size(), GetOrtDtype(tensor.dtype));
     return ort_value;
   }
-  else {
+  else {  // not support coreml now
     Ort::MemoryInfo memory_info("Cpu", OrtDeviceAllocator, 0, OrtMemTypeDefault);
     auto ort_value = Ort::Value::CreateTensor(
         memory_info, tensor.Data(), tensor.Nbytes(), tensor.shape.data(),

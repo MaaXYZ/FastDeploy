@@ -72,6 +72,9 @@ std::ostream& operator<<(std::ostream& out, const Device& d) {
     case Device::DIRECTML:
       out << "Device::DIRECTML";
       break;
+    case Device::COREML:
+      out << "Device::COREML";
+      break;
     default:
       out << "Device::UNKOWN";
   }

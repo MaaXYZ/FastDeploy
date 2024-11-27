@@ -146,6 +146,11 @@ void RuntimeOption::UseDirectML(int adapter_id) {
   device_id = adapter_id;
 }
 
+void RuntimeOption::UseCoreML(uint32_t coreml_flag) {
+  device = Device::COREML;
+  device_id = coreml_flag;
+}
+
 void RuntimeOption::UseSophgo() {
   device = Device::SOPHGOTPUD;
   UseSophgoBackend();

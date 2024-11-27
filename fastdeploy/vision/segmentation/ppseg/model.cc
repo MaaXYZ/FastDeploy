@@ -38,6 +38,7 @@ PaddleSegModel::PaddleSegModel(const std::string& model_file,
   valid_kunlunxin_backends = {Backend::LITE};
   valid_ascend_backends = {Backend::LITE};
   valid_directml_backends = {Backend::ORT};
+  valid_coreml_backends = {Backend::ORT};
 
   runtime_option = custom_option;
   runtime_option.model_format = model_format;
