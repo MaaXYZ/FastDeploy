@@ -436,9 +436,11 @@ bool OrtBackend::Infer(std::vector<FDTensor>& inputs,
 
   // from FDTensor to Ort Inputs
   RUNTIME_PROFILE_LOOP_H2D_D2H_BEGIN
+  std::vector<Ort::Value> ort_inputs;
+  ort_inputs.reserve(inputs.size());
   for (size_t i = 0; i < inputs.size(); ++i) {
-    auto ort_value = CreateOrtValue(inputs[i]);
-    binding_->BindInput(inputs[i].name.c_str(), ort_value);
+    ort_inputs.emplace_back(CreateOrtValue(inputs[i]));
+    binding_->BindInput(inputs[i].name.c_str(), ort_inputs.back());
   }
 
   for (size_t i = 0; i < outputs_desc_.size(); ++i) {
