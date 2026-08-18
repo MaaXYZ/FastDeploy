@@ -53,6 +53,9 @@ std::wstring ToWstring(const std::string& str) {
 
 bool OrtBackend::BuildOption(const OrtBackendOption& option) {
   option_ = option;
+  if (option_.configure_session_callback) {
+    return option_.configure_session_callback(static_cast<OrtSessionOptions*>(session_options_), option_.configure_session_callback_data);
+  }
   if (option.graph_optimization_level >= 0) {
     session_options_.SetGraphOptimizationLevel(
         GraphOptimizationLevel(option.graph_optimization_level));

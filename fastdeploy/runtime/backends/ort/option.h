@@ -21,6 +21,9 @@
 #include <string>
 #include <vector>
 #include <map>
+
+struct OrtSessionOptions;
+
 namespace fastdeploy {
 
 /*! @brief Option object to configure ONNX Runtime backend
@@ -55,5 +58,8 @@ struct OrtBackendOption {
   void DisableOrtFP16OpTypes(const std::vector<std::string>& ops) {
     ort_disabled_ops_.insert(ort_disabled_ops_.end(), ops.begin(), ops.end());
   }
+
+  bool (*configure_session_callback)(OrtSessionOptions* session_options, void* user_data) = nullptr;
+  void* configure_session_callback_data = nullptr;
 };
 }  // namespace fastdeploy
