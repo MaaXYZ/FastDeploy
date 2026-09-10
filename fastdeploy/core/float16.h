@@ -571,10 +571,10 @@ inline bool operator>=(const float16& a, const float16& b) {
 
 namespace std {
 
-#if defined(__linux__) && !defined(__ANDROID__) && defined(_LIBCPP_VERSION)
+#if defined(_LIBCPP_VERSION)
 
-// TODO: 看看是怎么一回事
-// clang + libc++ 在 linux 下无法编译下面的代码
+// LLVM libc++ prohibits user specialization of standard type traits (marked with _LIBCPP_NO_SPECIALIZATIONS)
+// and std::is_pod is deprecated in C++20.
 
 #else
 

@@ -23,15 +23,15 @@ set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PACKAGE_SYS_VERSION}-${FASTDEPLOY
 set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
 
 set(CPACK_DEBIAN_PACKAGE_CONTROL_STRICT_PERMISSION TRUE)
-configure_file(cpack/debian_postinst.in cpack/postinst @ONLY)
-configure_file(cpack/debian_prerm.in cpack/prerm @ONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/cpack/debian_postinst.in ${CMAKE_CURRENT_BINARY_DIR}/cpack/postinst @ONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/cpack/debian_prerm.in ${CMAKE_CURRENT_BINARY_DIR}/cpack/prerm @ONLY)
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA
     "${CMAKE_CURRENT_BINARY_DIR}/cpack/postinst"
     "${CMAKE_CURRENT_BINARY_DIR}/cpack/prerm")
 
 set(CPACK_RPM_PACKAGE_AUTOREQ FALSE)
-configure_file(cpack/rpm_postinst.in cpack/rpm_postinst @ONLY)
-configure_file(cpack/rpm_postrm.in cpack/rpm_postrm @ONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/cpack/rpm_postinst.in ${CMAKE_CURRENT_BINARY_DIR}/cpack/rpm_postinst @ONLY)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/cpack/rpm_postrm.in ${CMAKE_CURRENT_BINARY_DIR}/cpack/rpm_postrm @ONLY)
 set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${CMAKE_CURRENT_BINARY_DIR}/cpack/rpm_postinst")
 set(CPACK_RPM_POST_UNINSTALL_SCRIPT_FILE "${CMAKE_CURRENT_BINARY_DIR}/cpack/rpm_postrm")
 

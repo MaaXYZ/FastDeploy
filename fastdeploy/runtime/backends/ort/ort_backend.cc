@@ -53,6 +53,9 @@ std::wstring ToWstring(const std::string& str) {
 
 bool OrtBackend::BuildOption(const OrtBackendOption& option) {
   option_ = option;
+  if (option_.configure_session_callback) {
+    return option_.configure_session_callback(static_cast<OrtSessionOptions*>(session_options_), option_.configure_session_callback_data);
+  }
   if (option.graph_optimization_level >= 0) {
     session_options_.SetGraphOptimizationLevel(
         GraphOptimizationLevel(option.graph_optimization_level));
@@ -313,7 +316,7 @@ bool OrtBackend::InitFromOnnx(const std::string& model_file,
     paddle2onnx::ConvertFP32ToFP16(model_file.c_str(), model_file.size(),
                                    &model_content_ptr, &model_content_size);
 #else
-    FDERROR << "Didn't compile with PaddlePaddle Frontend, FP16 is not supported" << std::endl;
+    FDERROR << "Didn't compile with ENABLE_PADDLE2ONNX, FP16 is not supported" << std::endl;
     return false;
 #endif
     std::string onnx_model_proto(model_content_ptr,

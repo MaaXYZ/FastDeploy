@@ -53,7 +53,8 @@ class PostProcessor {
 
   std::vector<std::vector<std::vector<int>>> BoxesFromBitmap(
       const cv::Mat pred, const cv::Mat bitmap, const float &box_thresh,
-      const float &det_db_unclip_ratio, const std::string &det_db_score_mode);
+      const float &det_db_unclip_ratio, const std::string &det_db_score_mode,
+      const int &max_candidates = 1000);
 
   std::vector<std::vector<std::vector<int>>> FilterTagDetRes(
       std::vector<std::vector<std::vector<int>>> boxes,

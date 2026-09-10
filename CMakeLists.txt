@@ -8,7 +8,7 @@ find_package(onnxruntime REQUIRED)
 find_package(Eigen3 REQUIRED)
 message("OpenCV_LIBS: ${OpenCV_LIBS} ${OPENCV_core_FOUND} ${OPENCV_WORLD_FOUND}")
 
-option(WITH_CUDA "Whether WITH_CUDA=ON, will enable onnxruntime-gpu/paddle-infernce-gpu/poros-gpu" OFF)
+option(WITH_CUDA "Whether WITH_CUDA=ON, will enable onnxruntime-gpu/paddle-inference-gpu" OFF)
 option(PRINT_INFO "Print more debug info while running" OFF)
 
 if(WITH_CUDA)
@@ -132,7 +132,7 @@ install(TARGETS fastdeploy_ppocr EXPORT fastdeploy_ppocrConfig)
 install(EXPORT fastdeploy_ppocrConfig DESTINATION share/fastdeploy_ppocr)
 install(
   DIRECTORY ${PROJECT_SOURCE_DIR}/fastdeploy
-  DESTINATION ${CMAKE_INSTALL_PREFIX}/include
+  DESTINATION include
   FILES_MATCHING
   PATTERN "*.h"
 )

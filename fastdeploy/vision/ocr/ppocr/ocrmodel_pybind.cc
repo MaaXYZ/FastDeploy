@@ -77,6 +77,9 @@ void BindPPOCRModel(pybind11::module& m) {
       .def_property("use_dilation",
                     &vision::ocr::DBDetectorPostprocessor::GetUseDilation,
                     &vision::ocr::DBDetectorPostprocessor::SetUseDilation)
+      .def_property("det_db_max_candidates",
+                    &vision::ocr::DBDetectorPostprocessor::GetDetDBMaxCandidates,
+                    &vision::ocr::DBDetectorPostprocessor::SetDetDBMaxCandidates)
 
       .def("run",
            [](vision::ocr::DBDetectorPostprocessor& self,

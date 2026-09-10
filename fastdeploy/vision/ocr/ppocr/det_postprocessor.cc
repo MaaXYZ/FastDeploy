@@ -51,7 +51,7 @@ bool DBDetectorPostprocessor::SingleBatchPostprocessor(
 
   boxes = util_post_processor_.BoxesFromBitmap(
       pred_map, bit_map, det_db_box_thresh_, det_db_unclip_ratio_,
-      det_db_score_mode_);
+      det_db_score_mode_, max_candidates_);
 
   boxes = util_post_processor_.FilterTagDetRes(boxes, det_img_info);
 

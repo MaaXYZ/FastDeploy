@@ -12,19 +12,10 @@ repos:
 
 -   repo: local
     hooks:
-    -   id: copyright_checker
-        name: copyright_checker
-        entry: python ./.copyright.hook
-        language: system
-        files: \.(c|cc|cxx|cpp|cu|h|hpp|hxx|proto|py)$
-        exclude: (?!.*third_party)^.*$
-
--   repo: local
-    hooks:
     -   id: clang-format-with-version-check
         name: clang-format
         description: Format files with ClangFormat.
-        entry: bash .clang_format.hook -i
+        entry: bash scripts/hooks/.clang_format.hook -i
         language: system
         files: \.(c|cc|cxx|cpp|cu|hxx|proto)$
 
@@ -33,6 +24,6 @@ repos:
     -   id: cpplint-cpp-source
         name: cpplint
         description: Check C++ code style using cpplint.py.
-        entry: bash .cpplint_pre_commit.hook
+        entry: bash scripts/hooks/.cpplint_pre_commit.hook
         language: system
         files: \.(c|cc|cxx|cpp|cu|h|hpp|hxx)$

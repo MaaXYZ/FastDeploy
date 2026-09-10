@@ -1,16 +1,12 @@
 # FastDeploy
 
-This is a stripped-down version of [PaddlePaddle/FastDeploy](https://github.com/PaddlePaddle/FastDeploy) and [MaaAssistantArknights/FastDeploy](https://github.com/MaaAssistantArknights/FastDeploy).
+This is a stripped-down version of [PaddlePaddle/FastDeploy@v1](https://github.com/PaddlePaddle/FastDeploy/tree/release/1.1.0) and [MaaAssistantArknights/FastDeploy](https://github.com/MaaAssistantArknights/FastDeploy).
 
 ## Key modifications
 
-### For PaddlePaddle/FastDeploy
-
-* ~~Removed unused components~~
-* Use system library (CMake `find_package`) only
-* Library name changed to `fastdeploy_ppocr`
-
-### For MaaAssistantArknights/FastDeploy
-
-* Connect to historical commits for later updates
-* Fixed reading of files instead of passing them through memory
+* ~~Removed unused components and dead code, focusing on `fastdeploy_ppocr`~~
+* Use system libraries (CMake `find_package`) only
+* Support in-memory model and dictionary loading
+* Reorganized project layout (`bindings/`, `services/`)
+* Add support for PP-OCR v5 and v6
+* Add multi-platform build script (`scripts/build.py`)

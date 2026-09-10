@@ -67,6 +67,12 @@ class FASTDEPLOY_DECL DBDetectorPostprocessor {
   /// Get use_dilation of the detection postprocess
   int GetUseDilation() const { return use_dilation_; }
 
+  /// Set det_db_max_candidates for the detection postprocess, default is 1000
+  void SetDetDBMaxCandidates(int max_candidates) {
+    max_candidates_ = max_candidates;
+  }
+  /// Get det_db_max_candidates of the detection postprocess
+  int GetDetDBMaxCandidates() const { return max_candidates_; }
 
  private:
   double det_db_thresh_ = 0.3;
@@ -74,6 +80,7 @@ class FASTDEPLOY_DECL DBDetectorPostprocessor {
   double det_db_unclip_ratio_ = 1.5;
   std::string det_db_score_mode_ = "slow";
   bool use_dilation_ = false;
+  int max_candidates_ = 1000;
   PostProcessor util_post_processor_;
   bool SingleBatchPostprocessor(const float* out_data, int n2, int n3,
                                 const std::array<int, 4>& det_img_info,

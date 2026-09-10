@@ -1,31 +1,89 @@
-name: Build
-on: [pull_request]
+name: Build and Package
+
+on:
+  push:
+  pull_request:
+    branches: [ dev ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  macOS-latest-py:
+  # =========================================================================
+  # 1. macOS ARM64 (Apple Silicon: CoreML & CPU)
+  # =========================================================================
+  build-macos-arm64:
+    name: macOS (arm64)
     runs-on: macos-latest
-
     steps:
-      - name: Clone
-        uses: actions/checkout@v1
-
-      - name: Get CMake
-        uses: lukka/get-cmake@latest
-
-      - name: Get Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v7
+      - uses: lukka/get-cmake@latest
+      - name: Install System Dependencies
+        run: brew install opencv@4 eigen onnxruntime
+      - name: Build & Package
+        run: python3 scripts/build.py --target macos-arm64
+      - uses: actions/upload-artifact@v7
         with:
-          python-version: '3.10'
+          name: fastdeploy_ppocr-macos-arm64
+          path: fastdeploy_ppocr-macos-arm64.tar.gz
 
-      - name: Build FastDeploy
-        working-directory: ./python
-        run: |
-          export ENABLE_ORT_BACKEND=ON
-          export ENABLE_PADDLE_BACKEND=OFF
-          export ENABLE_OPENVINO_BACKEND=OFF
-          export ENABLE_VISION=ON
-          export ENABLE_TEXT=ON
-          python -m pip install wheel
-          python setup.py build
-          python setup.py bdist_wheel
-          ls -l
+  # =========================================================================
+  # 2. Linux x86_64 (CPU)
+  # =========================================================================
+  build-linux-x64:
+    name: Linux (x64)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: lukka/get-cmake@latest
+      - name: Install System Dependencies
+        run: sudo apt-get update && sudo apt-get install -y libopencv-dev libeigen3-dev wget tar
+      - name: Build & Package
+        run: python3 scripts/build.py --target linux-x64
+      - uses: actions/upload-artifact@v7
+        with:
+          name: fastdeploy_ppocr-linux-x64
+          path: fastdeploy_ppocr-linux-x64.tar.gz
+
+  # =========================================================================
+  # 3. Windows x64 (DirectML & CPU)
+  # =========================================================================
+  build-windows-x64:
+    name: Windows (x64)
+    runs-on: windows-latest
+    steps:
+      - name: Enable Git LongPaths
+        run: git config --system core.longpaths true
+      - uses: actions/checkout@v7
+      - uses: TheMrMilchmann/setup-msvc-dev@v4
+        with:
+          arch: x64
+      - uses: lukka/get-cmake@latest
+      - name: Build & Package
+        run: python scripts/build.py --target windows-x64
+      - uses: actions/upload-artifact@v7
+        with:
+          name: fastdeploy_ppocr-windows-x64
+          path: fastdeploy_ppocr-windows-x64.zip
+
+
+  # =========================================================================
+  # 5. Android ARM64-v8a (Google NDK Cross Compilation)
+  # =========================================================================
+  build-android-arm64:
+    name: Android (arm64)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: lukka/get-cmake@latest
+      - name: Install System Dependencies
+        run: sudo apt-get update && sudo apt-get install -y libeigen3-dev wget unzip
+      - name: Build & Package
+        run: python3 scripts/build.py --target android-arm64
+      - uses: actions/upload-artifact@v7
+        with:
+          name: fastdeploy_ppocr-android-arm64
+          path: fastdeploy_ppocr-android-arm64.tar.gz
+
