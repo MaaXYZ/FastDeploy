@@ -33,58 +33,23 @@ class FASTDEPLOY_DECL PPOCRv5 : public PPOCRv4 {
    */
   PPOCRv5(fastdeploy::vision::ocr::DBDetector* det_model,
           fastdeploy::vision::ocr::Classifier* cls_model,
-          fastdeploy::vision::ocr::Recognizer* rec_model)
-          : PPOCRv4(det_model, cls_model, rec_model) {
-    auto preprocess_shape = recognizer_->GetPreprocessor().GetRecImageShape();
-    preprocess_shape[1] = 48;
-    recognizer_->GetPreprocessor().SetRecImageShape(preprocess_shape);
-    if (detector_ != nullptr) {
-      detector_->GetPostprocessor().SetDetDBThresh(0.3);
-      detector_->GetPostprocessor().SetDetDBBoxThresh(0.6);
-      detector_->GetPostprocessor().SetDetDBUnclipRatio(1.5);
-      detector_->GetPostprocessor().SetDetDBMaxCandidates(1000);
-    }
-  }
+          fastdeploy::vision::ocr::Recognizer* rec_model);
   /** \brief Classification model is optional, so this function is set up the detection model path and recognition model path respectively.
    *
    * \param[in] det_model Path of detection model, e.g ./ch_PP-OCRv5_det_infer
    * \param[in] rec_model Path of recognition model, e.g ./ch_PP-OCRv5_rec_infer
    */
   PPOCRv5(fastdeploy::vision::ocr::DBDetector* det_model,
-          fastdeploy::vision::ocr::Recognizer* rec_model)
-          : PPOCRv4(det_model, rec_model) {
-    auto preprocess_shape = recognizer_->GetPreprocessor().GetRecImageShape();
-    preprocess_shape[1] = 48;
-    recognizer_->GetPreprocessor().SetRecImageShape(preprocess_shape);
-    if (detector_ != nullptr) {
-      detector_->GetPostprocessor().SetDetDBThresh(0.3);
-      detector_->GetPostprocessor().SetDetDBBoxThresh(0.6);
-      detector_->GetPostprocessor().SetDetDBUnclipRatio(1.5);
-      detector_->GetPostprocessor().SetDetDBMaxCandidates(1000);
-    }
-  }
+          fastdeploy::vision::ocr::Recognizer* rec_model);
 
   /** \brief Clone a new PPOCRv5 with less memory usage when multiple instances of the same model are created
    *
    * \return new PPOCRv5* type unique pointer
    */
-  std::unique_ptr<PPOCRv5> Clone() const {
-    std::unique_ptr<PPOCRv5> clone_model = utils::make_unique<PPOCRv5>(PPOCRv5(*this));
-    clone_model->detector_ = detector_->Clone().release();
-    if (classifier_ != nullptr) {
-      clone_model->classifier_ = classifier_->Clone().release();
-    }
-    clone_model->recognizer_ = recognizer_->Clone().release();
-    return clone_model;
-  }
+  std::unique_ptr<PPOCRv5> Clone() const;
 };
 
 }  // namespace pipeline
 
-namespace application {
-namespace ocrsystem {
-  typedef pipeline::PPOCRv5 PPOCRSystemv5;
-}  // namespace ocrsystem
-}  // namespace application
-
 }  // namespace fastdeploy
+

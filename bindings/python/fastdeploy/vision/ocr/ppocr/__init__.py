@@ -937,16 +937,6 @@ class PPOCRv6(FastDeployModel):
         self.system_.rec_batch_size = value
 
 
-class PPOCRSystemv6(PPOCRv6):
-    def __init__(self, det_model=None, cls_model=None, rec_model=None):
-        logging.warning(
-            "DEPRECATED: fd.vision.ocr.PPOCRSystemv6 is deprecated, "
-            "please use fd.vision.ocr.PPOCRv6 instead.")
-        super(PPOCRSystemv6, self).__init__(det_model, cls_model, rec_model)
-
-    def predict(self, input_image):
-        return super(PPOCRSystemv6, self).predict(input_image)
-
 
 class PPOCRv5(FastDeployModel):
     def __init__(self, det_model=None, cls_model=None, rec_model=None):
@@ -1012,16 +1002,6 @@ class PPOCRv5(FastDeployModel):
             int), "The value to set `rec_batch_size` must be type of int."
         self.system_.rec_batch_size = value
 
-
-class PPOCRSystemv5(PPOCRv5):
-    def __init__(self, det_model=None, cls_model=None, rec_model=None):
-        logging.warning(
-            "DEPRECATED: fd.vision.ocr.PPOCRSystemv5 is deprecated, "
-            "please use fd.vision.ocr.PPOCRv5 instead.")
-        super(PPOCRSystemv5, self).__init__(det_model, cls_model, rec_model)
-
-    def predict(self, input_image):
-        return super(PPOCRSystemv5, self).predict(input_image)
 
 
 class PPOCRv4(FastDeployModel):

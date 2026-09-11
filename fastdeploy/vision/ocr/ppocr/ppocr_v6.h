@@ -22,6 +22,15 @@ namespace fastdeploy {
  */
 namespace pipeline {
 /*! @brief PPOCRv6 is used to load PP-OCRv6 series models provided by PaddleOCR.
+ *
+ *  Note: For PP-OCRv6, PaddleOCR officially recommends detector postprocessing parameters:
+ *  - det_db_thresh = 0.2
+ *  - det_db_box_thresh = 0.45
+ *  - det_db_unclip_ratio = 1.4
+ *  - det_db_max_candidates = 3000
+ *  To avoid overwriting custom configurations, PPOCRv6 does not modify DBDetector
+ *  parameters in its constructor. Call det_model->GetPostprocessor().SetDetDB*()
+ *  before or after pipeline construction if needed.
  */
 class FASTDEPLOY_DECL PPOCRv6 : public PPOCRv5 {
  public:
@@ -33,58 +42,23 @@ class FASTDEPLOY_DECL PPOCRv6 : public PPOCRv5 {
    */
   PPOCRv6(fastdeploy::vision::ocr::DBDetector* det_model,
           fastdeploy::vision::ocr::Classifier* cls_model,
-          fastdeploy::vision::ocr::Recognizer* rec_model)
-          : PPOCRv5(det_model, cls_model, rec_model) {
-    auto preprocess_shape = recognizer_->GetPreprocessor().GetRecImageShape();
-    preprocess_shape[1] = 48;
-    recognizer_->GetPreprocessor().SetRecImageShape(preprocess_shape);
-    if (detector_ != nullptr) {
-      detector_->GetPostprocessor().SetDetDBThresh(0.2);
-      detector_->GetPostprocessor().SetDetDBBoxThresh(0.45);
-      detector_->GetPostprocessor().SetDetDBUnclipRatio(1.4);
-      detector_->GetPostprocessor().SetDetDBMaxCandidates(3000);
-    }
-  }
+          fastdeploy::vision::ocr::Recognizer* rec_model);
   /** \brief Classification model is optional, so this function is set up the detection model path and recognition model path respectively.
    *
    * \param[in] det_model Path of detection model, e.g ./ch_PP-OCRv6_det_infer
    * \param[in] rec_model Path of recognition model, e.g ./ch_PP-OCRv6_rec_infer
    */
   PPOCRv6(fastdeploy::vision::ocr::DBDetector* det_model,
-          fastdeploy::vision::ocr::Recognizer* rec_model)
-          : PPOCRv5(det_model, rec_model) {
-    auto preprocess_shape = recognizer_->GetPreprocessor().GetRecImageShape();
-    preprocess_shape[1] = 48;
-    recognizer_->GetPreprocessor().SetRecImageShape(preprocess_shape);
-    if (detector_ != nullptr) {
-      detector_->GetPostprocessor().SetDetDBThresh(0.2);
-      detector_->GetPostprocessor().SetDetDBBoxThresh(0.45);
-      detector_->GetPostprocessor().SetDetDBUnclipRatio(1.4);
-      detector_->GetPostprocessor().SetDetDBMaxCandidates(3000);
-    }
-  }
+          fastdeploy::vision::ocr::Recognizer* rec_model);
 
   /** \brief Clone a new PPOCRv6 with less memory usage when multiple instances of the same model are created
    *
    * \return new PPOCRv6* type unique pointer
    */
-  std::unique_ptr<PPOCRv6> Clone() const {
-    std::unique_ptr<PPOCRv6> clone_model = utils::make_unique<PPOCRv6>(PPOCRv6(*this));
-    clone_model->detector_ = detector_->Clone().release();
-    if (classifier_ != nullptr) {
-      clone_model->classifier_ = classifier_->Clone().release();
-    }
-    clone_model->recognizer_ = recognizer_->Clone().release();
-    return clone_model;
-  }
+  std::unique_ptr<PPOCRv6> Clone() const;
 };
 
 }  // namespace pipeline
 
-namespace application {
-namespace ocrsystem {
-  typedef pipeline::PPOCRv6 PPOCRSystemv6;
-}  // namespace ocrsystem
-}  // namespace application
-
 }  // namespace fastdeploy
+
