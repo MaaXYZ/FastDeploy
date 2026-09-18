@@ -53,6 +53,10 @@
 #cmakedefine WITH_COREML
 #endif
 
+#ifndef WITH_WEBGPU
+#cmakedefine WITH_WEBGPU
+#endif
+
 #ifndef ENABLE_TRT_BACKEND
 #cmakedefine ENABLE_TRT_BACKEND
 #endif

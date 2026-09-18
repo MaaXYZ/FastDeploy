@@ -151,6 +151,11 @@ void RuntimeOption::UseCoreML(uint32_t coreml_flag) {
   device_id = coreml_flag;
 }
 
+void RuntimeOption::UseWebGPU(int device_id) {
+  device = Device::WEBGPU;
+  this->device_id = device_id;
+}
+
 void RuntimeOption::UseSophgo() {
   device = Device::SOPHGOTPUD;
   UseSophgoBackend();

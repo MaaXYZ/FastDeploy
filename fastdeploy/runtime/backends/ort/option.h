@@ -63,7 +63,7 @@ struct OrtBackendOption {
    *  \note Complete Takeover Semantics: If this callback is provided, OrtBackend::BuildOption
    *  invokes it and returns immediately. All standard configurations in OrtBackendOption
    *  (e.g., intra/inter op threads, graph optimization level, execution providers like
-   *  DirectML/CoreML/CUDA) will be completely bypassed. The caller is responsible for
+   *  DirectML/CoreML/CUDA/WebGPU) will be completely bypassed. The caller is responsible for
    *  fully configuring the session_options.
    */
   bool (*configure_session_callback)(OrtSessionOptions* session_options, void* user_data) = nullptr;

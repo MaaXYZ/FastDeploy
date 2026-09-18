@@ -75,6 +75,9 @@ std::ostream& operator<<(std::ostream& out, const Device& d) {
     case Device::COREML:
       out << "Device::COREML";
       break;
+    case Device::WEBGPU:
+      out << "Device::WEBGPU";
+      break;
     default:
       out << "Device::UNKOWN";
   }

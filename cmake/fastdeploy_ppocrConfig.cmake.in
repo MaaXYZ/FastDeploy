@@ -1,0 +1,27 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# fastdeploy_ppocr's public headers need OpenCV and the exported target links
+# opencv_core/opencv_imgproc, so those targets have to exist in the consumer.
+find_dependency(OpenCV COMPONENTS core imgproc)
+
+# A static fastdeploy_ppocr carries $<LINK_ONLY:onnxruntime::onnxruntime> in its
+# interface, while a shared one does not. ONNX Runtime does not always install a
+# CMake package discoverable as "onnxruntime", so look through the Find module
+# shipped next to this file first.
+set(fastdeploy_ppocr_STATIC @FASTDEPLOY_PPOCR_STATIC@)
+if(fastdeploy_ppocr_STATIC AND NOT TARGET onnxruntime::onnxruntime)
+  list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+  find_dependency(onnxruntime)
+endif()
+
+# Whether the ONNX Runtime this FastDeploy was built against ships the WebGPU
+# EP. The device path itself is always compiled in and still falls back to
+# Device::CPU at runtime if the EP is missing, so treat this as a hint for
+# choosing devices, not as a guarantee.
+set(fastdeploy_ppocr_WITH_WEBGPU @WITH_WEBGPU@)
+
+include("${CMAKE_CURRENT_LIST_DIR}/fastdeploy_ppocrTargets.cmake")
+
+check_required_components(fastdeploy_ppocr)

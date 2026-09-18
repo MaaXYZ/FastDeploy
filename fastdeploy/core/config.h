@@ -53,6 +53,10 @@
 #define WITH_COREML
 #endif
 
+#ifndef WITH_WEBGPU
+#define WITH_WEBGPU
+#endif
+
 #ifndef ENABLE_TRT_BACKEND
 /* #undef ENABLE_TRT_BACKEND */
 #endif

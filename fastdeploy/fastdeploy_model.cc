@@ -83,6 +83,7 @@ bool FastDeployModel::InitRuntimeWithSpecifiedBackend() {
   bool use_ascend = (runtime_option.device == Device::ASCEND);
   bool use_directml = (runtime_option.device == Device::DIRECTML);
   bool use_coreml = (runtime_option.device == Device::COREML);
+  bool use_webgpu = (runtime_option.device == Device::WEBGPU);
   bool use_kunlunxin = (runtime_option.device == Device::KUNLUNXIN);
 
   if (use_cuda) {
@@ -141,6 +142,13 @@ bool FastDeployModel::InitRuntimeWithSpecifiedBackend() {
               << runtime_option.backend << " is not supported." << std::endl;
       return false;
     }
+  } else if (use_webgpu) {
+    if (!IsSupported(valid_webgpu_backends, runtime_option.backend)) {
+      FDERROR << "The valid webgpu backends of model " << ModelName()
+              << " are " << Str(valid_webgpu_backends) << ", "
+              << runtime_option.backend << " is not supported." << std::endl;
+      return false;
+    }
   } else if (use_kunlunxin) {
     if (!IsSupported(valid_kunlunxin_backends, runtime_option.backend)) {
       FDERROR << "The valid kunlunxin backends of model " << ModelName()
@@ -195,6 +203,8 @@ bool FastDeployModel::InitRuntimeWithSpecifiedDevice() {
     return CreateDirectMLBackend();
   } else if (runtime_option.device == Device::COREML) {
     return CreateCoreMLBackend();
+  } else if (runtime_option.device == Device::WEBGPU) {
+    return CreateWebGPUBackend();
   } else if (runtime_option.device == Device::KUNLUNXIN) {
     return CreateKunlunXinBackend();
   } else if (runtime_option.device == Device::SOPHGOTPUD) {
@@ -209,7 +219,7 @@ bool FastDeployModel::InitRuntimeWithSpecifiedDevice() {
 #endif
   }
   FDERROR << "Only support "
-             "CPU/GPU/IPU/RKNPU/HORIZONNPU/TIMVX/KunlunXin/ASCEND/DirectML/CoreML now."
+             "CPU/GPU/IPU/RKNPU/HORIZONNPU/TIMVX/KunlunXin/ASCEND/DirectML/CoreML/WebGPU now."
           << std::endl;
   return false;
 }
@@ -457,6 +467,30 @@ bool FastDeployModel::CreateCoreMLBackend() {
     return true;
   }
   FDERROR << "Found no valid coreml backend for model: " << ModelName()
+          << std::endl;
+  return false;
+}
+
+bool FastDeployModel::CreateWebGPUBackend() {
+  if (valid_webgpu_backends.size() == 0) {
+    FDERROR << "There's no valid webgpu backends for model: " << ModelName()
+            << std::endl;
+    return false;
+  }
+
+  for (size_t i = 0; i < valid_webgpu_backends.size(); ++i) {
+    if (!IsBackendAvailable(valid_webgpu_backends[i])) {
+      continue;
+    }
+    runtime_option.backend = valid_webgpu_backends[i];
+    runtime_ = std::unique_ptr<Runtime>(new Runtime());
+    if (!runtime_->Init(runtime_option)) {
+      return false;
+    }
+    runtime_initialized_ = true;
+    return true;
+  }
+  FDERROR << "Found no valid webgpu backend for model: " << ModelName()
           << std::endl;
   return false;
 }
